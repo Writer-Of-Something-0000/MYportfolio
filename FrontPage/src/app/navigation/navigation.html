@@ -1,0 +1,57 @@
+<nav>
+<div id="name">
+
+  <h1>{{ displayedText2 }}<span class="cursor">|</span></h1>
+
+</div>
+
+<div id="empty"></div>
+
+<ul>
+
+    <li></li>
+    
+    <li   (mouseenter)="isFire= true"
+         (mouseleave)="isFire = false">Main <i
+         
+     
+        [ngClass]="isFire ? 'fa-solid fa-fire' : ''"></i></li>
+  
+
+    
+    <li   (mouseenter)="isFire2= true"
+         (mouseleave)="isFire2 = false">Prrojects <i
+         
+     
+        [ngClass]="isFire2 ? 'fa-solid fa-fire' : ''"></i></li>
+
+
+    
+    <li   (mouseenter)="isFire3= true"
+         (mouseleave)="isFire3 = false">Cv <i
+         
+     
+        [ngClass]="isFire3 ? 'fa-solid fa-fire' : ''"></i></li>
+    <li></li>
+</ul>
+
+<i class=""></i>
+
+
+
+<div id="empty2"></div>
+
+<div id="page-mode"
+     (mouseenter)="onHoverEnter()"
+     (mouseleave)="onHoverLeave()">
+  
+  <p>
+    {{ displayedText }}   
+    <i class="fa-moon" [ngClass]="isHover2 ? 'fa-solid' : 'fa-regular'"></i>
+  </p>
+
+</div>
+
+
+
+</nav>

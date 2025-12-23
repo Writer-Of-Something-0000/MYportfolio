@@ -1,0 +1,108 @@
+nav{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 1.2rem;
+}
+
+ul{
+    display: flex;
+    gap: 4.5rem;
+  font-family: "Jersey 10", sans-serif;
+  color: rgb(73, 4, 162);
+}
+
+ul li {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    cursor: pointer;
+}
+
+ul li i {
+    font-size: 0.7rem;
+}
+
+
+#page-mode{
+width: 15%;
+height: 100%;
+background-color: rgb(73, 4, 162);
+border-radius: 0px 20px 20px 0px;
+justify-self: end;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+  font-family: "Jersey 10", sans-serif;
+
+  cursor: pointer;
+}
+
+    #page-mode p {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+p .fa-solid {
+    color: gold;
+}
+
+
+
+.typewriter::after,
+.typewriter-second::after {
+  content: '|';
+  animation: blink 0.7s infinite;
+  margin-left: 2px;
+}
+
+.typewriter:empty::after,
+.typewriter-second:empty::after {
+  content: '';
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+
+#empty {
+    width: 15%;
+    height: 100%;
+    background-color: black;
+}
+
+#empty2 {
+    width: 5%;
+    height: 100%;
+    background-color: black;
+}
+
+
+#name {
+    background: black;
+    width: 31%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+
+  font-family: "Jersey 10", sans-serif;
+  color: gold;
+  letter-spacing: 0.2rem;
+}
+
+
+
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1.5s infinite;
+}
