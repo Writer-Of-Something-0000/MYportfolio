@@ -1,29 +1,36 @@
-
-header {
-    width: 90%;
-
-    height: 80px;
-   background: rgba(255, 255, 255, 0.053); /* light glass */
-
-
-  border-radius: 20px;
-
-position: sticky;
-top: 5%;
-
-
-
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1280px;
   margin: 0 auto;
-  margin-top: 2rem;
-
-
-
-
-
 }
 
 
+header {
+  width: 90%;
+  height: 80px;
+
+  border-radius: 20px;
+
+  position: sticky;
+  top: 3rem;
+
+  margin: 2rem auto 0;
+}
+
 
 main {
-    height: 500vh;
+  width: 100%;
+  height: 900px;
+  flex: 1;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  background-color:#0E0E0E;
+}
+
+footer {
+  width: 100%;
+  height: 200px;
+  background: #0E0E0E;
 }

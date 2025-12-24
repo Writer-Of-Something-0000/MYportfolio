@@ -1,0 +1,155 @@
+section {
+    height: 500vh;
+    padding: 4rem;
+
+}
+
+img{
+    width: 200px;
+    height: 250px;
+}
+
+#Article-first {
+
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+
+
+#portfolio-text {
+
+    width: 72%;
+    padding: 0rem 1rem;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  font-family: "Jersey 10", sans-serif;
+}
+
+#title{
+    color:#4904A2 ;
+  font-family: "Jersey 10", sans-serif;
+  font-size: 2rem;
+  height: 2rem;
+}
+
+
+#portfolio-text p {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+
+#Social {
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    background: rgb(27, 27, 27);
+    margin-top: 1rem;
+color: #B5B5B5;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    
+}
+
+
+hr {
+border: 1px solid rgb(140, 135, 135);
+margin: 1rem 0;
+}
+
+
+
+
+
+
+#Subtext{
+
+    color: rgba(255, 255, 255, 0.533);
+  font-family: "Jersey 10", sans-serif;
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+  letter-spacing: 0.2rem;
+
+}
+
+
+#topskills {
+    display: flex; 
+    gap: 1rem;
+}
+
+
+
+
+
+.topskills-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.topskills-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: scroll 20s linear infinite;
+
+}
+
+.topskills-track h5 {
+    padding: 0.5rem 1rem;
+    background: #4904A2;
+    color: rgba(255, 255, 255, 0.533);
+    border-radius: 10px;
+    font-family: "Nunito Sans", sans-serif;
+    cursor: pointer;
+}
+
+/* smooth infinite scroll */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* pause on hover (optional) */
+.topskills-wrapper:hover .topskills-track {
+  animation-play-state: paused;
+}
+
+#languages{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#languages h5 {
+
+    padding: 0.5rem 1rem;
+    background: #4904A2;
+    color: rgba(255, 255, 255, 0.533);
+    border-radius: 10px;
+    font-family: "Nunito Sans", sans-serif;
+    cursor: pointer;
+
+  display: inline-flex;
+  width: fit-content;
+}
+
+
+
+
+#Article-third {
+    margin-top: 5rem;
+}

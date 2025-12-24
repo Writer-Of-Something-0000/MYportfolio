@@ -4,11 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Navigation } from './navigation/navigation';
+import { Home } from './home/home';
 
 @NgModule({
   declarations: [
     App,
-    Navigation
+    Navigation,
+    Home
   ],
   imports: [
     BrowserModule,

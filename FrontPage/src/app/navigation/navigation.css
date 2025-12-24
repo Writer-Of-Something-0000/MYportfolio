@@ -5,16 +5,23 @@ nav{
     align-items: center;
     justify-content: end;
     font-size: 1.2rem;
+    background: none;
+
 }
 
 ul{
     display: flex;
+    align-items: center;
     gap: 4.5rem;
   font-family: "Jersey 10", sans-serif;
   color: rgb(73, 4, 162);
+    background: #0E0E0E;
+    height: 100%;
+    
 }
 
 ul li {
+  height: 31.2px;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
@@ -73,23 +80,28 @@ p .fa-solid {
 #empty {
     width: 15%;
     height: 100%;
-    background-color: black;
+    background:none;
+    opacity: 0;
 }
 
 #empty2 {
     width: 5%;
     height: 100%;
-    background-color: black;
+
+    background:none;
 }
 
 
 #name {
-    background: black;
     width: 31%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+        background-color: black;
+        border-radius: 20px 0px 0px 20px;
+
+        
 }
 
 h1 {
@@ -105,4 +117,57 @@ h1 {
   display: inline-block;
   margin-left: 2px;
   animation: blink 1.5s infinite;
+}
+
+
+
+#ico-container {
+
+
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: -35%;
+
+  display: flex;
+  gap: 1rem;
+
+}
+
+#ico-container img {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  position: relative;
+      animation: macDockBounce 1.4s ease-out;
+              z-index: -1;
+
+}
+
+
+
+
+
+@keyframes macDockBounce {
+  0% {
+    z-index: 1;
+    transform: translateY(0) scale(1);
+  }
+  20% {
+    z-index: 1;
+    transform: translateY(-22px) scale(1.05);
+  }
+  40% {
+    z-index: 1;
+    transform: translateY(0) scale(0.98);
+  }
+  60% {
+    transform: translateY(-12px) scale(1.02);
+  }
+  80% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }
