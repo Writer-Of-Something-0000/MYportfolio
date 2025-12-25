@@ -12,10 +12,10 @@ fullText = "Portfolio";
   index = 0;
   isDeleting = false;
   
-  // პარამეტრები
-  typingSpeed = 150;    // წერის სიჩქარე
-  deletingSpeed = 70;   // წაშლის სიჩქარე
-  pauseDuration = 2000; // პაუზა სიტყვის დასრულებისას (2 წამი)
+
+  typingSpeed = 150;   
+  deletingSpeed = 70;   
+  pauseDuration = 2000; 
 
   private timerId: any;
 
@@ -23,34 +23,34 @@ fullText = "Portfolio";
     this.handleTypewriter();
   }
 
-  // აუცილებელია მეხსიერების გასასუფთავებლად
+
   ngOnDestroy(): void {
     if (this.timerId) clearTimeout(this.timerId);
   }
 
   handleTypewriter() {
     if (!this.isDeleting) {
-      // ვწერთ სიმბოლოებს
+
       this.displayedText = this.fullText.substring(0, this.index + 1);
       this.index++;
     } else {
-      // ვშლით სიმბოლოებს
+
       this.displayedText = this.fullText.substring(0, this.index - 1);
       this.index--;
     }
 
-    // განვსაზღვროთ შემდეგი ნაბიჯის სიჩქარე
+
     let currentSpeed = this.isDeleting ? this.deletingSpeed : this.typingSpeed;
 
-    // თუ სიტყვა ბოლომდე დაიწერა
+
     if (!this.isDeleting && this.index === this.fullText.length) {
-      currentSpeed = this.pauseDuration; // შევჩერდეთ პორტფოლიოს წაკითხვამდე
+      currentSpeed = this.pauseDuration; 
       this.isDeleting = true;
     } 
-    // თუ სიტყვა ბოლომდე წაიშალა
+
     else if (this.isDeleting && this.index === 0) {
       this.isDeleting = false;
-      currentSpeed = 500; // მცირე პაუზა ახალი ციკლის დაწყებამდე
+      currentSpeed = 500; 
     }
 
     this.timerId = setTimeout(() => this.handleTypewriter(), currentSpeed);

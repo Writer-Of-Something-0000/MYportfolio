@@ -66,7 +66,9 @@ margin: 1rem 0;
 }
 
 
-
+.fa-fire {
+  color: #4904A2;
+}
 
 
 
@@ -152,4 +154,68 @@ margin: 1rem 0;
 
 #Article-third {
     margin-top: 5rem;
+}
+
+
+#experience-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+#experience-title {
+  font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.956);
+          font-family: "Nunito Sans", sans-serif;
+}
+
+#experience-where {
+      color: rgba(255, 255, 255, 0.784);
+          font-family: "Nunito Sans", sans-serif;
+}
+
+#experience-time {
+      color: rgba(255, 255, 255, 0.533);
+          font-family: "Nunito Sans", sans-serif;
+}
+
+
+
+#experience-about {
+
+      color: rgba(255, 255, 255, 0.956);
+          font-family: "Nunito Sans", sans-serif;
+          width: 500px;
+}
+
+#experience-settings{
+display: flex;
+flex-direction: column;
+gap: 0.1rem;
+}
+
+#experience {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 272px;
+}
+
+
+#used-skills {
+  display: flex;
+gap: 1rem;
+margin-top: auto;
+}
+
+
+#used-skills i{
+ margin:0rem 0rem 0 0;
+
+}
+#used-skills h5{
+color: #ffffff;
+          font-family: "Nunito Sans", sans-serif;
+  
 }
