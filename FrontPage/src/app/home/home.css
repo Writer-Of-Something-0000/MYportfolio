@@ -476,35 +476,6 @@ gap: 0.5rem 1rem;
 
 
 
-#Article-fifth div {
-width: 45%;
-}
-
-
-
-#proffesion-skills{
-  width: 80%;
-
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-gap: 1rem;
-}
-
-
-#proffesion h3{
-  color: #ffffff;
-          font-family: "Nunito Sans", sans-serif;
-}
-
-
-#proffesion-skills {
-    color: #ffffff;
-          font-family: "Nunito Sans", sans-serif;
-
-}
-
-
-
 
 
 
