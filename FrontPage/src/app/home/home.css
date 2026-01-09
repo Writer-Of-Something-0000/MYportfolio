@@ -1,5 +1,6 @@
 section {
 
+
     padding: 4rem;
 
 }
@@ -9,6 +10,8 @@ img{
     height: 250px;
     border-radius: 1rem 1rem 0 0;
           object-fit: cover;
+  object-position: calc(57% ) center;
+
 }
 
 #Article-first {
@@ -106,6 +109,28 @@ div ul li {
 color: #ffffff;
 
     font-family: "Nunito Sans", sans-serif;
+
+
+    cursor: pointer;
+}
+
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+
+.topskills-wrapper:hover .topskills-track {
+  animation-play-state: paused;
+}
+
+#languages{
+
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -185,7 +210,7 @@ font-size: 1rem;
 
 
 #Article-third {
-    margin-top: 5rem;
+    margin-top: 10rem;
 }
 
 
@@ -345,22 +370,6 @@ gap: 0.5rem 1rem;
 
 
 
-#WhoAmI{
-  width: 960px;
-  height:500px;
-  background: #0E0E0E;
-    margin: 0 auto;
-    border-radius: 3rem;
-    margin-top: 5rem;
-        display: flex;
-    justify-content: center;
-    align-items: center;
-        color:white ;
-  font-family: "Jersey 10", sans-serif;
-  font-size: 4rem;
-}
-
-
 
 
 
@@ -381,8 +390,9 @@ gap: 0.5rem 1rem;
   width: 100%;
   margin-top: 3rem;
   display: flex;
-  justify-content: space-between;
+    justify-content: space-between;
 }
+
 
 #video p{
           font-family: "Nunito Sans", sans-serif;
@@ -451,7 +461,6 @@ gap: 0.5rem 1rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem 1rem;
-
 }
 
 
@@ -465,4 +474,37 @@ gap: 0.5rem 1rem;
 
 
 
+
+
+
+
+
+
+
+
+#WhoAmI video{
+width: 100%;
+height: 100%;
+ object-fit: cover;
+
+    border-radius: 1rem;
+}
+
+
+
+
+#WhoAmI{
+  width: 1280px;
+  height:590px;
+  background: #0E0E0E;
+    margin: 0 auto;
+    border-radius: 1rem;
+    margin-top: 5rem;
+        display: flex;
+    justify-content: center;
+    align-items: center;
+        color:white ;
+  font-family: "Jersey 10", sans-serif;
+  font-size: 4rem;
+}
 
