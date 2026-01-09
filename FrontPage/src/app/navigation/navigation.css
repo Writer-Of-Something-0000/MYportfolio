@@ -26,6 +26,7 @@ ul li {
     flex-direction: column-reverse;
     align-items: center;
     cursor: pointer;
+    font-size: 1.5rem;
 }
 
 ul li i {
