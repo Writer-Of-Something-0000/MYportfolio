@@ -13,10 +13,6 @@ img{
     height: 250px;
     border-radius: 1rem 1rem 0 0;
           object-fit: cover;
-  object-position: calc(57% ) center;
-
-
-        background-color:#0E0E0E;
 }
 
 #Article-first {
