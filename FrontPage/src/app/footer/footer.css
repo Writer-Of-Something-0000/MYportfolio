@@ -6,5 +6,148 @@ section{
     align-items: center;
         color:white ;
   font-family: "Jersey 10", sans-serif;
-  font-size: 4rem;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+article {
+  width: 30%;
+  height: 100%;
+
+    border-radius: 0rem 0 2rem 2rem;
+
+}
+
+
+#top {
+      border-radius: 2rem 0 0rem 2rem;
+      height: 200px;
+      
+border: 0.1rem solid #4904A2;
+border-right: none;
+}
+
+#middle {
+  width: 40%;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+align-items: center;
+gap: 1rem;
+padding: 1rem;
+}
+
+#middle h1 {
+    font-size: 2rem;
+    color: gold;
+}
+
+#bottom{
+      border-radius: 0rem 2rem 2rem 0rem;
+      height: 200px;
+border: 0.1rem solid #4904A2;
+
+border-left: none;
+}
+
+
+form {
+  width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+form button {
+  width: auto;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: none;
+  border: 2px solid #4904A2;
+color: white;
+cursor: pointer;
+}
+
+form button:hover {
+transition: 0.7s;
+  background: #4904A2;
+color: black;
+font-weight: bolder;
+}
+
+form div {
+  width: 100%;
+  display: flex;
+justify-content: space-between;
+}
+
+form div textarea{
+  width: 92%;
+  border-radius: 0.5rem;
+border: 2px solid #4904A2;
+background: rgba(255, 255, 255, 0.087);
+padding-left: 1rem;
+padding-right: 1rem;
+padding-top: 1rem;
+color: white;
+}
+
+form div input {
+  width: 43%;
+height: 2.5rem;
+border-radius: 1rem;
+border: 2px solid #4904A2;
+background: none;
+color: white;
+padding-left: 1rem;
+}
+
+
+#inputs{
+  flex-wrap: wrap;
+}
+
+label {
+  width: 41%;
+  padding:0.1rem 1rem;
+}
+
+#text{
+  display: flex;
+  flex-direction: column;
+}
+
+
+article ul {
+padding: 0rem 2rem 0rem 2rem;
+  display: flex;
+height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.7rem;
+
+}
+
+#bottom ul {
+  align-items: end;
+}
+
+
+#bottom ul li:first-child{
+  color: gold;
+  font-size: 1.5rem;
+}
+
+article ul li {
+font-size: 1.2rem;
+cursor: pointer;
+  color: #464646;
+}
+
+article ul li:hover {
+font-size: 1.5rem;
+color: white;
 }

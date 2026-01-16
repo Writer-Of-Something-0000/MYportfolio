@@ -1,3 +1,4 @@
+import { AudioService } from './../services/audio';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './footer.css',
 })
 export class Footer {
+  constructor(private audio: AudioService) {}
+
+  hover() {
+    this.audio.player();
+  }
+
+  click() {
+ this.audio.clicker();
+  }
 
 }

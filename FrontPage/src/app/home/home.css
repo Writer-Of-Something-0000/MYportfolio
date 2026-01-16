@@ -491,8 +491,8 @@ gap: 0.5rem 1rem;
 
 
 #WhoAmI video{
-width: 100%;
-height: 100%;
+width: 50%;
+
  object-fit: cover;
 
     border-radius: 1rem;
@@ -504,7 +504,7 @@ height: 100%;
 #WhoAmI{
   width: 1280px;
   height:590px;
-  background: #0E0E0E;
+background:  #4904A2 ;
     margin: 0 auto;
     border-radius: 1rem;
     margin-top: 5rem;
