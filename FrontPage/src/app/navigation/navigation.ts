@@ -1,3 +1,4 @@
+import { LanguageService } from './../services/languages';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Navigation  {
  isHover2 = false;
- isFire = true;
+ isFire = false;
  isFire2 = false;
  isFire3 = false;
   // Texts
@@ -92,6 +93,26 @@ export class Navigation  {
         }
       }
     }, this.speed);
+  }
+
+
+
+
+
+
+
+
+
+  languages = ['EN', 'KA'];
+  currentIndex = 0;
+
+  get currentLang() {
+    return this.languages[this.currentIndex];
+  }
+
+  nextLang() {
+    this.currentIndex =
+      (this.currentIndex + 1) % this.languages.length;
   }
 
 

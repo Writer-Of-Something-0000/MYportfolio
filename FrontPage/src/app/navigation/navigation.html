@@ -15,19 +15,30 @@
 
     <li></li>
     
-    <li   (mouseenter)="isFire= true"
-         (mouseleave)="isFire = false">Main <i
-         
-     
-        [ngClass]="isFire ? 'fa-solid fa-fire' : ''"></i></li>
+<li
+  routerLink="/"
+   (mouseenter)="isFire= true"
+         (mouseleave)="isFire = false"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  #mainRla="routerLinkActive"
+>
+  Main
+  <i *ngIf="mainRla.isActive || isFire" class="fa-solid fa-fire"></i>
+</li>
   
 
     
-    <li   (mouseenter)="isFire2= true"
-         (mouseleave)="isFire2 = false">Prrojects <i
-         
-     
-        [ngClass]="isFire2 ? 'fa-solid fa-fire' : ''"></i></li>
+<li
+  routerLink="/projects"
+  routerLinkActive="active"
+   (mouseenter)="isFire2= true"
+         (mouseleave)="isFire2 = false"
+  #projectsRla="routerLinkActive"
+>
+  Projects
+  <i *ngIf="projectsRla.isActive || isFire2" class="fa-solid fa-fire"></i>
+</li>
 
 
     
@@ -43,6 +54,12 @@
 
 
 
+<div id="empty2"></div>
+<div id="languages">
+<span  (click)="nextLang()">
+  {{ currentLang }}
+</span>
+</div>
 <div id="empty2"></div>
 
 <div id="page-mode"

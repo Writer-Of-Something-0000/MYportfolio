@@ -22,7 +22,7 @@ article {
 
 #top {
       border-radius: 2rem 0 0rem 2rem;
-      height: 200px;
+      height: 250px;
       
 border: 0.1rem solid #4904A2;
 border-right: none;
@@ -45,7 +45,7 @@ padding: 1rem;
 
 #bottom{
       border-radius: 0rem 2rem 2rem 0rem;
-      height: 200px;
+      height: 250px;
 border: 0.1rem solid #4904A2;
 
 border-left: none;
@@ -93,6 +93,8 @@ padding-left: 1rem;
 padding-right: 1rem;
 padding-top: 1rem;
 color: white;
+  resize: none;
+
 }
 
 form div input {
@@ -141,6 +143,12 @@ height: 100%;
   font-size: 1.5rem;
 }
 
+
+#top ul li:first-child{
+  color: gold;
+  font-size: 1.5rem;
+}
+
 article ul li {
 font-size: 1.2rem;
 cursor: pointer;
@@ -150,4 +158,20 @@ cursor: pointer;
 article ul li:hover {
 font-size: 1.5rem;
 color: white;
+}
+
+
+
+#last-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+#last-info label {
+  width: auto;
+  margin: 1rem;
+  font-family: "Nunito Sans", sans-serif;
+  color: #716f6f;
 }

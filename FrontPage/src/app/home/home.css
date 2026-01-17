@@ -38,12 +38,6 @@ img{
     border-radius: 20px;
 }
 
-#title{
-    color:#4904A2 ;
-  font-family: "Jersey 10", sans-serif;
-  font-size: 2rem;
-  height: 2rem;
-}
 
 
 #portfolio-text p {
@@ -462,8 +456,13 @@ gap: 0.5rem 1rem;
   margin: 0.5rem 0 0 1rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2rem 1rem;
+  gap: 0.4rem 1rem;
 }
+
+
+
+
+
 #Article-fifth {
   margin-top: 10rem;
   display: flex;
@@ -516,3 +515,56 @@ background:  #4904A2 ;
   font-size: 4rem;
 }
 
+
+
+
+
+
+#article-sixth {
+  margin-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+#feadback-container {
+display: flex;
+flex-wrap: wrap;
+gap: 2rem 2rem;
+}
+
+#feadback {
+
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+
+
+}
+
+
+#feadbacker-name {
+          font-family: "Nunito Sans", sans-serif;
+     color: white;
+     font-size: 1.2rem;
+}
+
+
+#whos {
+          font-family: "Nunito Sans", sans-serif;
+     color: white;
+     font-size: 1rem;
+}
+
+
+#stars{
+  color: gold;
+  margin-top: 0.7rem;
+}
+
+
+#description {
+  color: white;
+  font-family: "Nunito Sans", sans-serif;
+  margin-top: 1rem;
+}

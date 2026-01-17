@@ -172,3 +172,47 @@ h1 {
     transform: translateY(0) scale(1);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+select {
+  background: none;
+  border: none;
+    appearance: none;          /* Chrome, Edge, Safari */
+  -webkit-appearance: none;  /* Safari */
+  -moz-appearance: none;   
+  
+width: auto;
+
+  font-size: 2rem;
+  letter-spacing: 0.2rem;
+align-items: center;
+
+
+}
+
+#languages {
+      background: #0E0E0E;
+      height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+}
+
+span{
+  margin-top: 0.4rem;
+  font-size: 1.5rem;
+  font-family: "Jersey 10", sans-serif;
+  color: rgb(73, 4, 162);
+  cursor: pointer;
+}
