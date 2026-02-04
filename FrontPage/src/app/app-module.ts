@@ -4,9 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Navigation } from './navigation/navigation';
-import { Home } from './home/home';
+import { Home } from './MAIN/home/home';
 import { Footer } from './footer/footer';
 import { Projects } from './PROJECT/projects/projects';
+import { Hero } from './MAIN/hero-folder/hero/hero';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { Projects } from './PROJECT/projects/projects';
     Navigation,
     Home,
     Footer,
-    Projects
+    Projects,
+    Hero,
   ],
   imports: [
     BrowserModule,

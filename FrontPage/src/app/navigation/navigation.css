@@ -15,8 +15,20 @@ ul{
     gap: 4.5rem;
   font-family: "Jersey 10", sans-serif;
   color: rgb(73, 4, 162);
-    background: #0E0E0E;
+
     height: 100%;
+
+          background: rgba(20, 20, 20, 0.45);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+color: #ffffff;
+
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
     
 }
 
@@ -37,7 +49,19 @@ ul li i {
 #page-mode{
 width: 15%;
 height: 100%;
-background-color: rgb(73, 4, 162);
+
+
+          background: rgba(20, 20, 20, 0.45);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+color: #ffffff;
+
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 border-radius: 0px 20px 20px 0px;
 justify-self: end;
 display: flex;
@@ -99,7 +123,17 @@ p .fa-solid {
     display: flex;
     align-items: center;
     justify-content: center;
-        background-color: black;
+          background: rgba(20, 20, 20, 0.45);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+color: #ffffff;
+
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
         border-radius: 20px 0px 0px 20px;
 
         
@@ -201,18 +235,29 @@ align-items: center;
 }
 
 #languages {
-      background: #0E0E0E;
+          background: rgba(20, 20, 20, 0.45);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+color: #ffffff;
+
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
       height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100px;
+      cursor: pointer;
 }
 
 span{
   margin-top: 0.4rem;
   font-size: 1.5rem;
   font-family: "Jersey 10", sans-serif;
-  color: rgb(73, 4, 162);
-  cursor: pointer;
+
+
 }
