@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener  } from '@angular/core';
 
 @Component({
   selector: 'app-hero',
@@ -21,6 +21,17 @@ fullText = "Portfolio";
 
   ngOnInit(): void {
     this.handleTypewriter();
+        setInterval(() => {
+      // start fade out
+      this.fade = false;
+
+      setTimeout(() => {
+        // change content after fade out
+        this.currentIndex = (this.currentIndex + 1) % this.feedbacks.length;
+        // fade in
+        this.fade = true;
+      }, 500); // must match CSS transition time
+    }, 5000); 
   }
 
 
@@ -57,6 +68,65 @@ fullText = "Portfolio";
   }
 
 
+
+
+
+
+
+
+  feedbacks = [
+    {
+      name: 'Tengo Tadumbadze',
+      role: 'Co-Founder of @Talesbox',
+      stars: 5,
+      text: `A true discovery of 2025 for me — an energetic,
+hardworking, and highly motivated professional who consistently
+delivers high-quality results, often exceeding expectations.`
+    },
+    {
+      name: 'Anna Smith',
+      role: 'Product Manager at @StartupX',
+      stars: 4,
+      text: 'Amazing to work with. Always delivers on time and with great quality.'
+    },
+    {
+      name: 'Giorgi K.',
+      role: 'CTO at @TechLab',
+      stars: 5,
+      text: 'Very professional and reliable. Highly recommended.'
+    }
+  ];
+
+  currentIndex = 0;
+  fade = true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   scrolled = false;
 
   @HostListener('window:scroll', [])
@@ -64,6 +134,13 @@ fullText = "Portfolio";
     // toggle animation based on scroll position
     this.scrolled = window.scrollY > 1;
   }
+
+
+
+
+
+
+
 
 
 

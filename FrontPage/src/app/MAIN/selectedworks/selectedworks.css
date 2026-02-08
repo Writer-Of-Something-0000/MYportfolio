@@ -1,0 +1,120 @@
+
+
+
+#Article-fifth {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  gap: 5rem;
+
+}
+
+
+#video-container {
+  width: 100%;
+  margin-top: 3rem;
+  display: flex;
+    justify-content: space-between;
+
+
+    
+}
+
+
+#video p{
+          font-family: "Nunito Sans", sans-serif;
+  font-size: 0.8rem;
+
+  margin: 1vh 0 0 1rem;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+
+#video {
+    width:341.34px;
+    
+}
+
+
+#video-player {
+  width:341.34px;
+  height: 192px;
+  background-color: #0E0E0E;
+  border-radius: 1rem;
+
+  position: relative;
+
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(52, 51, 51, 0.58);
+border-right: none;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+border-left: none;
+}
+
+#video-player button {
+  background: none;
+  border: 0;
+  position: absolute;
+  bottom: 20%;
+  right: 15%;
+  color: white;
+  font-size: 1.2rem;
+}
+#video-player i {
+  color: #ffffff;
+    position: absolute;
+  top: 10%;
+  left: 5%;
+}
+
+
+#headline{
+
+    color:#ffffff ;
+          font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  height: 2rem;
+  width: 90%;
+  margin: 1vh 0 0 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#headline span i {
+  color: #4904A2;
+}
+
+#tags {
+    color:#ffffff ;
+          font-family: "Nunito Sans", sans-serif;
+  font-size: 0.7rem;
+
+  margin: 0.5rem 0 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+}
+
+
+
+
+
+#Article-fifth {
+
+  display: flex;
+  justify-content: space-between;
+}
+
+
+

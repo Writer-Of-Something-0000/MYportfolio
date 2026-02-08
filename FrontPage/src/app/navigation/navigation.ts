@@ -1,5 +1,5 @@
 import { LanguageService } from './../services/languages';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
@@ -116,5 +116,7 @@ export class Navigation  {
   }
 
 
+    
+ 
 
 }

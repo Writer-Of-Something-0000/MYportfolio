@@ -24,8 +24,22 @@ article {
       border-radius: 2rem 0 0rem 2rem;
       height: 250px;
       
-border: 0.1rem solid #4904A2;
+border: 0.1rem solid rgb(73, 4, 162);
+
+
+
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(73, 5, 162, 0.58);
 border-right: none;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+padding: 1rem;
+border-left: none;
 }
 
 #middle {
@@ -48,6 +62,17 @@ padding: 1rem;
       height: 250px;
 border: 0.1rem solid #4904A2;
 
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(73, 5, 162, 0.58);
+border-right: none;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
 border-left: none;
 }
 
@@ -69,6 +94,21 @@ form button {
   border: 2px solid #4904A2;
 color: white;
 cursor: pointer;
+
+
+
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(73, 5, 162, 0.58);
+border-right: none;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+border-left: none;
 }
 
 form button:hover {
@@ -95,6 +135,20 @@ padding-top: 1rem;
 color: white;
   resize: none;
 
+
+    background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(73, 5, 162, 0.58);
+border-right: none;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+border-left: none;
+
 }
 
 form div input {
@@ -105,6 +159,20 @@ border: 2px solid #4904A2;
 background: none;
 color: white;
 padding-left: 1rem;
+
+
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(73, 5, 162, 0.58);
+border-right: none;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+border-left: none;
 }
 
 

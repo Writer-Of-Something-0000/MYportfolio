@@ -31,8 +31,8 @@
 
 </p>
 
-<button>Catch UP
-    <i class="fa-solid fa-arrow-down"></i>
+<button class="cta-btn">Catch UP
+
 </button>
             </div>
 
@@ -48,6 +48,35 @@
         </div>
 <div id="background">
     <div id="video"></div>
+    
+    <div id="feadback">
+<h1>Feadback's</h1>
+<div id="feadbackinfo" [class.fade-in]="fade" [class.fade-out]="!fade">
+
+  <h5 id="feadbacker-name">
+    {{ feedbacks[currentIndex].name }}
+  </h5>
+
+  <label id="whos">
+    {{ feedbacks[currentIndex].role }}
+  </label>
+
+  <div id="stars">
+    <ng-container *ngFor="let s of [1,2,3,4,5]; let i = index">
+      <i
+        class="fa-star"
+        [ngClass]="i < feedbacks[currentIndex].stars ? 'fa-solid' : 'fa-regular'">
+      </i>
+    </ng-container>
+  </div>
+
+  <p id="description">
+    {{ feedbacks[currentIndex].text }}
+  </p>
+
+</div>
+    </div>
+
     <i class="fa-solid fa-arrow-down"
       [class.no-animation]="scrolled"></i>
 </div>

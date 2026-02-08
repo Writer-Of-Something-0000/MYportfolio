@@ -25,10 +25,19 @@ z-index: 5;
 
 main {
   width: 1280px;
+
   flex: 1;
   margin-top: 2rem;
   margin-bottom: 2rem;
 
+}
+
+
+
+@media (orientation: portrait) {
+  main {
+    background-color: rgb(0, 191, 255) !important;
+  }
 }
 
 footer {

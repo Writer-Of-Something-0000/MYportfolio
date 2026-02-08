@@ -1,0 +1,37 @@
+.fire-cursor {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -9;
+
+  font-size: 250px; /* საჭიროების მიხედვით გაზარდე */
+  color: #300762;
+
+  /* Neon Glow + intense blur */
+  text-shadow: 
+    0 0 20px #300762,
+    0 0 40px #4b0f9b,
+    0 0 60px #6a1fcc,
+    0 0 800px #36007d,
+    0 0 1000px #8000ff,
+    0 0 4000px #692ca6;
+
+  filter: blur(10px); /* გაბლური ეფექტისთვის */
+  
+  /* subtle pulse */
+  animation: firePulse 1s infinite ease-in-out;
+}
+
+/* Pulse / movement */
+@keyframes firePulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -52%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Mobile-ზე გამორთვა */
+@media (max-width: 600px) {
+  .fire-cursor {
+    display: none;
+  }
+}

@@ -1,0 +1,89 @@
+
+
+#Article-third {
+
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    margin-top: 50rem;
+    margin-bottom: 50rem;
+}
+
+
+#experience-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6rem;
+  width: 100%;
+
+}
+
+#experience-title {
+  font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.956);
+          font-family: "Nunito Sans", sans-serif;
+}
+
+
+
+
+#experience-about,
+#experience-time,
+#experience-where  {
+
+      color: rgba(255, 255, 255, 0.956);
+          font-family: "Nunito Sans", sans-serif;
+
+}
+
+#experience-settings{
+display: flex;
+flex-direction: column;
+gap: 0.1rem;
+}
+
+#experience {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+
+
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+padding: 1rem;
+
+
+  width: 500px;
+ 
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+
+#used-skills {
+  display: flex;
+gap: 1rem;
+margin-top: auto;
+}
+
+
+#used-skills i{
+color: #ffffff;
+
+}
+#used-skills h5{
+color: #ffffff;
+          font-family: "Nunito Sans", sans-serif;
+  
+}
+

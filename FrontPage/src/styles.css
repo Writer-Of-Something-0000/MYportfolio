@@ -18,7 +18,7 @@ box-sizing: border-box;
 #title{
     color:#4904A2 ;
   font-family: "Jersey 10", sans-serif;
-  font-size: 2rem;
+  font-size: 5rem;
   height: 2rem;
 }
 
@@ -31,3 +31,5 @@ html, body {
 body {
   background-color: black;
 }
+
+

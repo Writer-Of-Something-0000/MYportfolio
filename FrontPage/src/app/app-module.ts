@@ -7,7 +7,12 @@ import { Navigation } from './navigation/navigation';
 import { Home } from './MAIN/home/home';
 import { Footer } from './footer/footer';
 import { Projects } from './PROJECT/projects/projects';
-import { Hero } from './MAIN/hero-folder/hero/hero';
+import { Hero } from './hero/hero';
+import { CursorInteractive } from './cursor-interactive/cursor-interactive';
+import { Experience } from './MAIN/experience/experience';
+import { Selectedworks } from './MAIN/selectedworks/selectedworks';
+import { Education } from './MAIN/education/education';
+import { Skills } from './MAIN/skills/skills';
 
 @NgModule({
   declarations: [
@@ -17,6 +22,11 @@ import { Hero } from './MAIN/hero-folder/hero/hero';
     Footer,
     Projects,
     Hero,
+    CursorInteractive,
+    Experience,
+    Selectedworks,
+    Education,
+    Skills,
   ],
   imports: [
     BrowserModule,

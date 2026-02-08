@@ -1,24 +1,26 @@
 nav{
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
+    display: grid;
+grid-template-columns: repeat(15, 1fr);
+grid-template-rows: 1fr;
     font-size: 1.2rem;
     background: none;
-
+ position: relative;
 }
 
 ul{
     display: flex;
     align-items: center;
-    gap: 4.5rem;
+    justify-content: space-evenly;
+
   font-family: "Jersey 10", sans-serif;
   color: rgb(73, 4, 162);
-
+grid-column-start:7 ;
+grid-column-end:11 ;
     height: 100%;
 
-          background: rgba(20, 20, 20, 0.45);
+          background: rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 
@@ -47,11 +49,11 @@ ul li i {
 
 
 #page-mode{
-width: 15%;
-height: 100%;
+grid-column-start:14 ;
+grid-column-end:16 ;
 
 
-          background: rgba(20, 20, 20, 0.45);
+          background: rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 
@@ -63,7 +65,7 @@ color: #ffffff;
     0 10px 30px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 border-radius: 0px 20px 20px 0px;
-justify-self: end;
+
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -102,28 +104,15 @@ p .fa-solid {
 }
 
 
-#empty {
-    width: 15%;
-    height: 100%;
-    background:none;
-    opacity: 0;
-}
-
-#empty2 {
-    width: 5%;
-    height: 100%;
-
-    background:none;
-}
-
 
 #name {
-    width: 31%;
+  grid-column-start:1 ;
+    grid-column-end:5 ;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-          background: rgba(20, 20, 20, 0.45);
+          background: rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 
@@ -144,6 +133,7 @@ h1 {
   font-family: "Jersey 10", sans-serif;
   color: gold;
   letter-spacing: 0.2rem;
+
 }
 
 
@@ -218,24 +208,12 @@ h1 {
 
 
 
-select {
-  background: none;
-  border: none;
-    appearance: none;          /* Chrome, Edge, Safari */
-  -webkit-appearance: none;  /* Safari */
-  -moz-appearance: none;   
-  
-width: auto;
-
-  font-size: 2rem;
-  letter-spacing: 0.2rem;
-align-items: center;
-
-
-}
-
 #languages {
-          background: rgba(20, 20, 20, 0.45);
+
+  grid-column-start: 12;
+  grid-column-end: 13;
+
+          background: rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 
@@ -250,7 +228,7 @@ color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
+
       cursor: pointer;
 }
 
@@ -260,4 +238,68 @@ span{
   font-family: "Jersey 10", sans-serif;
 
 
+}
+
+
+
+
+
+
+
+
+#scroll-divider {
+  grid-column-start: 11;
+    grid-column-end: 12;
+background: #9000ff;
+  display: flex;
+justify-content: center;
+  align-items: center;
+  opacity: 0;             /* initially invisible */
+  transition: opacity 0.7s ease; /* smooth fade in/out */
+}
+#scroll-divider.visible {
+  opacity: 1;             /* visible when scrolled */
+}
+
+
+
+.cta-btn {
+
+margin-left: 1rem;
+
+  padding: 0.6rem 2rem;
+  border-radius: 999px;
+
+  background: #0e0e0e;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+
+box-shadow: 0 0 10px #9000ff;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  /* 👇 rotate / wiggle animation */
+  animation: wiggle 1.3s infinite ease-in-out;
+  transform-origin: center;
+}
+
+
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg) scale(1.05);
+  }
+  25% {
+    transform: rotate(-6deg) scale(1.05);
+  }
+  50% {
+    transform: rotate(6deg) scale(1.05);
+  }
+  75% {
+    transform: rotate(-5deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(5deg) scale(1.05);
+  }
 }

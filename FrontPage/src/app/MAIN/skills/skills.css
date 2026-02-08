@@ -1,0 +1,195 @@
+
+
+
+
+
+#Social {
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    background: rgb(27, 27, 27);
+    margin-top: 1rem;
+color: #B5B5B5;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    
+}
+
+
+
+
+.fa-fire {
+  color: #4904A2;
+}
+
+
+
+#Subtext{
+
+    color: rgba(255, 255, 255, 0.533);
+  font-family: "Jersey 10", sans-serif;
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+  letter-spacing: 0.2rem;
+
+}
+
+
+#Soft-skills,#Tools,#Personal {
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 4rem;
+}
+
+
+
+div ul h4 {
+  margin-bottom: 0.5rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+  font-family: "Jersey 10", sans-serif;
+  color: white;
+}
+
+
+div ul li {
+color: #ffffff;
+
+    font-family: "Nunito Sans", sans-serif;
+
+
+    cursor: pointer;
+}
+
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+
+.topskills-wrapper:hover .topskills-track {
+  animation-play-state: paused;
+}
+
+#languages{
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+div ul li span {
+  font-size: 0.7rem;
+    color: rgba(255, 255, 255);
+}
+
+
+
+#tools {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+
+}
+
+#tools h4 {
+    margin-bottom: 1rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+  font-family: "Jersey 10", sans-serif;
+  color: white;
+}
+
+
+#tools ul {
+display: flex;
+margin-left: 2rem;
+gap: 1rem;
+margin-bottom: 1rem;
+font-size: 0.9rem;
+}
+
+
+#texter{
+  width: 6rem;
+}
+
+#languages li span{
+font-size: 1rem;
+}
+
+#txt{
+  margin-left: 2rem;
+
+    font-family: "Nunito Sans", sans-serif;
+  color: white;
+  font-size: 0.8rem;
+}
+
+#Languages{
+  margin-top: 2rem;
+}
+
+#languages h5 {
+
+    padding: 0.5rem 1rem;
+    background: #4904A2;
+    color: rgba(255, 255, 255, 0.533);
+    border-radius: 10px;
+    font-family: "Nunito Sans", sans-serif;
+    cursor: pointer;
+
+  display: inline-flex;
+  width: fit-content;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
