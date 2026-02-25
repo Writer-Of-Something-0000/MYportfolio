@@ -10,11 +10,12 @@
   z-index: -1;
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* arrow at bottom */
+  align-items: flex-end; 
   padding-bottom: 10rem;
   font-size: 5rem;
   color: white;
 background: #0E0E0E;
+
 }
 
 
@@ -58,8 +59,8 @@ opacity: 0.6;
 }
 
 #Article-first {
-margin-top: 5rem;
-margin-bottom: 50vh;
+
+
     display: flex;
 
 
