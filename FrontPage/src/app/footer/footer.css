@@ -6,7 +6,6 @@ section{
     align-items: center;
         color:white ;
   font-family: "Jersey 10", sans-serif;
-
   display: flex;
   justify-content: space-between;
 }

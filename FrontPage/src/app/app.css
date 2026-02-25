@@ -19,7 +19,7 @@ header {
   position: sticky;
   top: 3rem;
 z-index: 5;
-  margin: 2rem auto 0;
+
 }
 
 
@@ -27,8 +27,14 @@ main {
   width: 1280px;
 
   flex: 1;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+
+
+}
+
+
+#hero-section {
+  width: 1280px;
+height: 100vh;
 
 }
 
@@ -43,6 +49,6 @@ main {
 footer {
   width: 1280px;
 
-margin:2rem  auto 0;
+
 }
 
