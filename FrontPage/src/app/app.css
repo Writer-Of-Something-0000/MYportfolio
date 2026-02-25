@@ -12,12 +12,14 @@ align-items: center;
 
 header {
   width: 1280px;
-  height: 80px;
+  height: 160px;
 
-  border-radius: 20px;
+display: flex;
+flex-direction: column;
+justify-content: center;
 
   position: sticky;
-  top: 3rem;
+
 z-index: 5;
 
 }
