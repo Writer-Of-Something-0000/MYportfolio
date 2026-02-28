@@ -60,7 +60,7 @@ opacity: 0.6;
 
 #Article-first {
 
-
+height: 80vh;
     display: flex;
   justify-content: space-between;
   
@@ -239,6 +239,10 @@ padding: 1rem;
 
 
 
+.RMfont{
+    font-family: "Roboto Mono", monospace !important;
+    
+}
 
 
 

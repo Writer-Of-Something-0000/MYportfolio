@@ -12,7 +12,7 @@ align-items: center;
 
 header {
   width: 1280px;
-  height: 160px;
+  height: 20vh;
 
 display: flex;
 flex-direction: column;
@@ -36,7 +36,7 @@ main {
 
 #hero-section {
   width: 1280px;
-height: 100vh;
+height: 80vh;
 
 }
 
