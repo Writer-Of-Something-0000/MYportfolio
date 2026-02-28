@@ -19,7 +19,7 @@ flex-direction: column;
 justify-content: center;
 
   position: sticky;
-color: red;
+background-color: red;
 z-index: 5;
 
 }
