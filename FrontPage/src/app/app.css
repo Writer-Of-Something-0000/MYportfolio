@@ -52,4 +52,17 @@ footer {
 
 
 }
-
+#tester {
+  opacity: 0.6;
+  background-image: url("/portfolio.gif");
+  background-size: cover;  
+  background-repeat: no-repeat;
+  background-position: center;
+  position: fixed;
+  z-index: -9;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: red;
+}
