@@ -19,6 +19,8 @@ padding: 0;
 list-style: none;
 outline: none;
 box-sizing: border-box !important;
+outline: none;
+border: none;
 
 }
 
@@ -47,3 +49,6 @@ body {
   height: 2rem;
 }
 
+p{
+  color: #fff;
+}

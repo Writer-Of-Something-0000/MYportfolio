@@ -13,6 +13,7 @@ import { Experience } from './MAIN/experience/experience';
 import { Selectedworks } from './MAIN/selectedworks/selectedworks';
 import { Education } from './MAIN/education/education';
 import { Skills } from './MAIN/skills/skills';
+import { Projectsfilter } from './PROJECT/projectsfilter/projectsfilter';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { Skills } from './MAIN/skills/skills';
     Selectedworks,
     Education,
     Skills,
+    Projectsfilter,
   ],
   imports: [
     BrowserModule,
