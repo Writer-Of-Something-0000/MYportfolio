@@ -8,6 +8,7 @@ section{
   font-family: "Jersey 10", sans-serif;
   display: flex;
   justify-content: space-between;
+  margin-top: 5rem;
 }
 
 article {

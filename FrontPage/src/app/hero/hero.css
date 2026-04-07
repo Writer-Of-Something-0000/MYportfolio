@@ -114,6 +114,12 @@ gap: 1rem;
 #socials i {
 
       background: rgba(20, 20, 20, 0.45);
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.03) 50%, 
+    rgba(0, 0, 0, 0.1) 100%
+  );
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 
@@ -313,25 +319,43 @@ padding: 1rem;
 
 
 #portfolio-paragraph {
-
   display: flex;
   flex-direction: column;
   gap: 1rem;
   font-family: "Jersey 10", sans-serif;
-
-  background: rgba(20, 20, 20, 0.45);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-
-  border: 1px solid rgba(255, 255, 255, 0.18);
-
   padding: 2rem;
-  border-radius: 20px;
+  border-radius: 24px; /* ოდნავ მეტი მომრგვალება უფრო რბილს ხდის მინას */
+  color: #ffffff;
 
+  /* 1. გამჭვირვალე ფონი დახრილი გრადიენტით (შუშის არეკვლისთვის) */
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.03) 50%, 
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  
+  /* 2. გაძლიერებული ბლერი */
+  backdrop-filter: blur(25px) saturate(160%);
+  -webkit-backdrop-filter: blur(25px) saturate(160%);
+
+  /* 3. თხელი, ნახევრად გამჭვირვალე ჩარჩო */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  /* 4. მთავარი 3D "Glossy" ეფექტი */
   box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* გარე რბილი სიღრმე */
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    /* ზედა თეთრი ნათება (Highlight) - ქმნის მინის ზედა კიდეს */
+    inset 0 1px 2px rgba(255, 255, 255, 0.4),
+    /* ქვედა მუქი ჩრდილი (Depth) - აძლევს სისქეს */
+    inset 0 -2px 8px rgba(0, 0, 0, 0.3),
+    /* ზოგადი შიდა ნათება */
+    inset 0 0 15px rgba(255, 255, 255, 0.05);
 
+  /* 5. ოდნავი პრიალა "ბზინვარების" იმიტაცია */
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #portfolio-paragraph .cta-btn {
@@ -341,13 +365,11 @@ padding: 1rem;
   padding: 0.6rem 2rem;
   border-radius: 999px;
 
-  background: #0E0E0E;
+background: none;
   color: #fff;
   border: 1px solid rgba(255,255,255,0.2);
 
-  box-shadow:
-    0 0 10px rgba(128, 0, 255, 0.6),
-    0 0 20px rgba(128, 0, 255, 0.4);
+
 
   cursor: pointer;
   transition: 0.2s ease;
@@ -414,6 +436,12 @@ padding: 1rem;
 
 #jobs li {
       background: rgba(20, 20, 20, 0.45);
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.03) 50%, 
+    rgba(0, 0, 0, 0.1) 100%
+  );
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 
@@ -425,5 +453,38 @@ padding: 1rem;
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    cursor: pointer;
+
+    opacity: 0.5;
+
+}
+
+#justit {
+  opacity: 1.0 !important;
+      cursor: pointer;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 850px) {
+  #Article-first {
+    flex-direction: column;
+    height: auto;
+    gap: 3rem;
+  }
+  #profile-img-div {
+    width: 100%;
+    align-items: center;
+  }
+  #portfolio-text {
+    width: 100%;
+    height: auto;
+  }
+  #feadback {
+    position: relative;
+    width: 100%;
+    left: auto;
+    bottom: auto;
+  }
+  #jobs {
+    flex-wrap: wrap;
+  }
 }

@@ -2,11 +2,11 @@ section {
 
 
 
-
+display: flex;
 flex-direction: column;
 align-items: start;
-
-
+gap: 5rem;
+width: 1280px;
 
 
 }

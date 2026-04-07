@@ -7,7 +7,10 @@ gap: 3rem 0;
 color: white;
 
 
+
 }
+
+
 
 
 article ul {
@@ -16,7 +19,16 @@ display: flex;
 gap: 1rem;
 }
 
+article ul h4 {
+    font-family: "Montserrat", sans-serif;
+}
 
+article ul li {
+    font-family: "inter", sans-serif;
+    font-weight: 100;
+}
+
+ 
 #Subtext{
   grid-row-start: 1;
   grid-row-end: 2;
@@ -49,6 +61,7 @@ gap: 1rem;
 
   grid-column-start: 7;
   grid-column-end: 9;
+
 }
 
 #mindset-ul{
@@ -150,6 +163,15 @@ align-self: center;
 gap: 1rem;
     
 }
+
+
+.txttxt{
+  font-family: "inter", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 
 #codeing-ul li {
             background: rgba(0, 0, 0, 0.05);

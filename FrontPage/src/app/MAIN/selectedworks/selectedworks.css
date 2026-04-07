@@ -6,7 +6,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+width: 1270px;
+  width: 100%;
+  max-width: 1270px;
   gap: 5rem;
 
 }
@@ -89,6 +91,19 @@ border-left: none;
   margin: 1vh 0 0 1rem;
   display: flex;
   justify-content: space-between;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 850px) {
+  #video-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+  #video, #video-player {
+    width: 100%;
+    max-width: 350px;
+  }
 }
 
 #headline span i {
