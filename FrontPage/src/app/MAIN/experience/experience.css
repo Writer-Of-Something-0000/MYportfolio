@@ -95,5 +95,9 @@ color: #ffffff;
     width: 100%;
     max-width: 500px;
   }
+  /* the skills row must wrap, otherwise it forces the card wider than the screen */
+  #used-skills {
+    flex-wrap: wrap;
+  }
 }
 
