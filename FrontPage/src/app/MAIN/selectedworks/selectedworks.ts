@@ -114,6 +114,7 @@ export class Selectedworks implements OnInit {
   private dragged = false;
 
   dragStart(event: PointerEvent) {
+    if (event.pointerType !== 'mouse') return; // on touch the browser scrolls natively
     this.isDown = true;
     this.dragged = false;
     this.startX = event.clientX;

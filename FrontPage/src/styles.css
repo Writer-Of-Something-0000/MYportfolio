@@ -31,7 +31,9 @@ border: none;
 
 html, body {
   height: 100%;
-
+  width: 100%;
+  /* nothing is allowed to create page-level horizontal scroll */
+  overflow-x: hidden;
 }
 
 body {
