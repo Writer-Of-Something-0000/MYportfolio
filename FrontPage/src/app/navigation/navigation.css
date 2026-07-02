@@ -261,14 +261,14 @@ justify-content: center;
   nav ul {
     flex: 1 1 auto;
     border-radius: 20px;
-    padding: 0.4rem 1rem;
+    padding: 0.7rem 1rem;
     gap: 1.5rem;
   }
 
   #page-mode {
     flex: 0 0 auto;
     border-radius: 20px;
-    padding: 0.4rem 1rem;
+    padding: 0.7rem 1rem;
   }
 }
 

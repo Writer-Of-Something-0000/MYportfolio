@@ -61,5 +61,7 @@ footer {
     height: auto;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    /* keep the whole navigation pinned to the top while scrolling */
+    top: 0;
   }
 }
