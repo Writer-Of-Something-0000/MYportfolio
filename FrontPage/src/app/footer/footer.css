@@ -7,39 +7,8 @@ section{
         color:white ;
   font-family: "Jersey 10", sans-serif;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 5rem;
-}
-
-article {
-  width: 30%;
-  height: 100%;
-
-    border-radius: 0rem 0 2rem 2rem;
-
-}
-
-
-#top {
-      border-radius: 2rem 0 0rem 2rem;
-      height: 250px;
-      
-border: 0.1rem solid rgb(73, 4, 162);
-
-
-
-  background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-
-  border: 1px solid rgba(73, 5, 162, 0.58);
-border-right: none;
-
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-padding: 1rem;
-border-left: none;
 }
 
 #middle {
@@ -56,26 +25,6 @@ padding: 1rem;
     font-size: 2rem;
     color: gold;
 }
-
-#bottom{
-      border-radius: 0rem 2rem 2rem 0rem;
-      height: 250px;
-border: 0.1rem solid #4904A2;
-
-  background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-
-  border: 1px solid rgba(73, 5, 162, 0.58);
-border-right: none;
-
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-
-border-left: none;
-}
-
 
 form {
   width: 90%;
@@ -189,45 +138,6 @@ label {
   display: flex;
   flex-direction: column;
 }
-
-
-article ul {
-padding: 0rem 2rem 0rem 2rem;
-  display: flex;
-height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.7rem;
-
-}
-
-#bottom ul {
-  align-items: end;
-}
-
-
-#bottom ul li:first-child{
-  color: gold;
-  font-size: 1.5rem;
-}
-
-
-#top ul li:first-child{
-  color: gold;
-  font-size: 1.5rem;
-}
-
-article ul li {
-font-size: 1.2rem;
-cursor: pointer;
-  color: #464646;
-}
-
-article ul li:hover {
-font-size: 1.5rem;
-color: white;
-}
-
 
 
 #last-info {

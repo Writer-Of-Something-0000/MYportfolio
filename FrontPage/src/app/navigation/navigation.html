@@ -43,22 +43,16 @@
 
     
     <li   (mouseenter)="isFire3= true"
-         (mouseleave)="isFire3 = false">Cv <i
-         
-     
+         (mouseleave)="isFire3 = false"
+         (click)="downloadCV()">Cv <i
+
+
         [ngClass]="isFire3 ? 'fa-solid fa-fire' : ''"></i></li>
 
 </ul>
 
 
 
-
-
-<div  (click)="nextLang()"  id="languages">
-<span>
-  {{ currentLang }}
-</span>
-</div>
 
 
 <div id="page-mode"

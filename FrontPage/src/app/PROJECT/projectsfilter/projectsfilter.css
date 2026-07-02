@@ -1,47 +1,40 @@
 section {
-    width: 100%;
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-    margin-bottom: 15vh;
-gap: 5rem;
-
-
-}
-
-
-
-
-
-
-
-
-
-#video p{
-          font-family: "Nunito Sans", sans-serif;
-  font-size: 0.8rem;
-
-  margin: 1vh 0 0 1rem;
-  color: #ffffff;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  width: 90%;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 3rem;
+  margin-bottom: 15vh;
 }
 
-#video {
+.state {
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+#video-container {
+  width: 100%;
+  max-width: 1270px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 3rem;
+}
+
+.video {
     width:341.34px;
-grid-column: span 4;
-
 }
 
-
-#video-player {
+.video-player {
   width:341.34px;
   height: 192px;
   background-color: #0E0E0E;
   border-radius: 1rem;
 
   position: relative;
+  overflow: hidden;
+  cursor: pointer;
 
   background: rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(18px) saturate(140%);
@@ -57,73 +50,66 @@ border-right: none;
 border-left: none;
 }
 
-#video-player button {
-  background: none;
+.video-player img,
+.video-player iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border: 0;
+  display: block;
+}
+
+.video-player button {
   position: absolute;
-  bottom: 20%;
-  right: 15%;
+  inset: 0;
+  margin: auto;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.55);
   color: white;
   font-size: 1.2rem;
-}
-#video-player i {
-  color: #ffffff;
-    position: absolute;
-  top: 10%;
-  left: 5%;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
+.video-player:hover button {
+  background: #4904A2;
+  transform: scale(1.1);
+}
 
-#headline{
+.headline{
 
     color:#ffffff ;
           font-family: "Nunito Sans", sans-serif;
   font-size: 1rem;
-  height: 2rem;
+  line-height: 1.4;
+  min-height: 2.8rem; /* always reserve two title lines so tags align across cards */
   width: 90%;
   margin: 1vh 0 0 1rem;
-  display: flex;
-  justify-content: space-between;
 }
 
-#headline span i {
-  color: #4904A2;
-}
-
-#tags {
+.tags {
     color:#ffffff ;
           font-family: "Nunito Sans", sans-serif;
   font-size: 0.7rem;
 
-  margin: 0.5rem 0 0 1rem;
+  margin: 0.9rem 0 0 1rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1rem;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-#MoreButton {
-    
-
-
-  background: none;
-
-  color: #ffffff;
-  font-size: 0.8rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  margin: 0 auto;
+.tags li.newskill {
+  color: #7d3cf0;
+  font-weight: bold;
 }
 
-
+/* Mobile Responsiveness */
+@media (max-width: 850px) {
+  .video, .video-player {
+    width: 100%;
+    max-width: 350px;
+  }
+}

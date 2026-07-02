@@ -208,30 +208,6 @@ h1 {
 
 
 
-#languages {
-
-  grid-column-start: 12;
-  grid-column-end: 13;
-
-          background: rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-
-  border: 1px solid rgba(255, 255, 255, 0.18);
-color: #ffffff;
-
-
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-      cursor: pointer;
-}
-
 span{
   margin-top: 0.4rem;
   font-size: 1.5rem;

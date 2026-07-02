@@ -1,72 +1,31 @@
 <section>
 
+  <p class="state" *ngIf="loading">Loading videos…</p>
+  <p class="state" *ngIf="!loading && !videos.length">New videos are on the way 🎬</p>
 
+  <div id="video-container">
+    <div class="video" *ngFor="let video of videos">
+      <div class="video-player" (click)="play(video)">
 
+        <iframe
+          *ngIf="playingId === video.id"
+          [src]="embedUrl"
+          [title]="video.title"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
 
-    
-                  <div id="video">
-                <div id="video-player">
-                  <i class="fa-regular fa-file-video"></i>
-<button><i class="fa-solid fa-play"></i></button>
+        <ng-container *ngIf="playingId !== video.id">
+          <img [src]="video.thumbnail" [alt]="video.title">
+          <button type="button"><i class="fa-solid fa-play"></i></button>
+        </ng-container>
 
-                </div>
-                <p><span>3 month</span>  <span>7.07min</span></p>
-                <h4 id="headline">Americans 6th visit <span>95 <i class="fa-solid fa-heart"></i></span></h4>
-                <ul id="tags"> 
-                  <li>#Premiere pro</li>
-                  <li>#Drone</li>
-                  <li>#Camera</li>
-                  <li>#Audio Design</li>
-                  <li>#Video storytelling</li>
-                  <li>#Cinematography</li>
-                </ul>
+      </div>
+      <h4 class="headline">{{ video.title }}</h4>
+      <ul class="tags">
+        <li *ngFor="let tag of video.tags" [class.newskill]="tag.toLowerCase() === 'newskill'">#{{ tag }}</li>
+      </ul>
+    </div>
+  </div>
 
-
-              </div>
-
-
-    
-                  <div id="video">
-                <div id="video-player">
-                  <i class="fa-regular fa-file-video"></i>
-<button><i class="fa-solid fa-play"></i></button>
-
-                </div>
-                <p><span>3 month</span>  <span>7.07min</span></p>
-                <h4 id="headline">Americans 6th visit <span>95 <i class="fa-solid fa-heart"></i></span></h4>
-                <ul id="tags"> 
-                  <li>#Premiere pro</li>
-                  <li>#Drone</li>
-                  <li>#Camera</li>
-                  <li>#Audio Design</li>
-                  <li>#Video storytelling</li>
-                  <li>#Cinematography</li>
-                </ul>
-              </div>    
-
-                  <div id="video">
-                <div id="video-player">
-                  <i class="fa-regular fa-file-video"></i>
-<button><i class="fa-solid fa-play"></i></button>
-
-                </div>
-                <p><span>3 month</span>  <span>7.07min</span></p>
-                <h4 id="headline">Americans 6th visit <span>95 <i class="fa-solid fa-heart"></i></span></h4>
-                <ul id="tags"> 
-                  <li>#Premiere pro</li>
-                  <li>#Drone</li>
-                  <li>#Camera</li>
-                  <li>#Audio Design</li>
-                  <li>#Video storytelling</li>
-                  <li>#Cinematography</li>
-                </ul>
-              </div>
-                  
-
-
-
-
-
-                <button id="MoreButton">View More</button>
 </section>
-

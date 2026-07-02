@@ -1,4 +1,3 @@
-import { LanguageService } from './../services/languages';
 import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
@@ -73,6 +72,13 @@ export class Navigation  {
     this.loopTypewriter();
   }
 
+  downloadCV() {
+    const link = document.createElement('a');
+    link.href = 'Video-Editor-CV.docx';
+    link.download = 'Video Editor CV.docx';
+    link.click();
+  }
+
   loopTypewriter() {
     setInterval(() => {
       if (this.typingForward) {
@@ -102,21 +108,5 @@ export class Navigation  {
 
 
 
-
-  languages = ['EN', 'KA'];
-  currentIndex = 0;
-
-  get currentLang() {
-    return this.languages[this.currentIndex];
-  }
-
-  nextLang() {
-    this.currentIndex =
-      (this.currentIndex + 1) % this.languages.length;
-  }
-
-
-    
- 
 
 }

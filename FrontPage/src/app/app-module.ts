@@ -6,7 +6,6 @@ import { App } from './app';
 import { Navigation } from './navigation/navigation';
 import { Home } from './MAIN/home/home';
 import { Footer } from './footer/footer';
-import { Projects } from './PROJECT/projects/projects';
 import { Hero } from './hero/hero';
 import { CursorInteractive } from './cursor-interactive/cursor-interactive';
 import { Experience } from './MAIN/experience/experience';
@@ -21,7 +20,6 @@ import { Projectsfilter } from './PROJECT/projectsfilter/projectsfilter';
     Navigation,
     Home,
     Footer,
-    Projects,
     Hero,
     CursorInteractive,
     Experience,
