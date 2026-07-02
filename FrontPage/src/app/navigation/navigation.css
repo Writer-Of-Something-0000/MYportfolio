@@ -248,6 +248,13 @@ justify-content: center;
     gap: 0.6rem;
   }
 
+  /* pinned bars need a darker glass so the content behind stays unreadable */
+  #name,
+  nav ul,
+  #page-mode {
+    background: rgba(0, 0, 0, 0.55);
+  }
+
   #name {
     width: 100%;
     border-radius: 20px;

@@ -1,5 +1,10 @@
 
 
+:host {
+  display: block;
+  width: 100%;
+}
+
 #Article-fourth {
 
   display: flex;
@@ -100,16 +105,22 @@ gap: 0.5rem 1rem;
   width: 60px;
 }
 
-/* Mobile Responsiveness */
+/* Mobile Responsiveness: cards stack like a deck, tap brings the next one forward */
 @media (max-width: 850px) {
   #education-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+    position: relative;
   }
   #education {
+    position: absolute;
+    top: 28px;
+    left: 50%;
     width: 100%;
     max-width: 500px;
+    transform: translateX(-50%) translateY(calc(var(--pos, 0) * -14px)) scale(calc(1 - var(--pos, 0) * 0.05));
+    transform-origin: top center;
+    z-index: calc(10 - var(--pos, 0));
+    transition: transform 0.4s ease;
+    cursor: pointer;
   }
   #badge i {
     margin-left: 0;

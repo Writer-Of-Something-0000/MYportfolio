@@ -1,5 +1,10 @@
 
 
+:host {
+  display: block;
+  width: 100%;
+}
+
 #Article-third {
 
     display: flex;
@@ -85,15 +90,22 @@ color: #ffffff;
 
 }
 
-/* Mobile Responsiveness */
+/* Mobile Responsiveness: cards stack like a deck, tap brings the next one forward */
 @media (max-width: 850px) {
   #experience-container {
-    gap: 3rem;
-    justify-content: center;
+    position: relative;
   }
   #experience {
+    position: absolute;
+    top: 14px;
+    left: 50%;
     width: 100%;
     max-width: 500px;
+    transform: translateX(-50%) translateY(calc(var(--pos, 0) * -14px)) scale(calc(1 - var(--pos, 0) * 0.05));
+    transform-origin: top center;
+    z-index: calc(10 - var(--pos, 0));
+    transition: transform 0.4s ease;
+    cursor: pointer;
   }
   /* the skills row must wrap, otherwise it forces the card wider than the screen */
   #used-skills {
