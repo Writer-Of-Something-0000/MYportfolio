@@ -78,6 +78,9 @@ align-items: center;
     #page-mode p {
         display: flex;
         gap: 0.5rem;
+        align-items: center;
+        /* constant height so the typewriter text doesn't push the moon around */
+        height: 2.2rem;
     }
 
 p .fa-solid {
@@ -276,6 +279,11 @@ justify-content: center;
     flex: 0 0 auto;
     border-radius: 20px;
     padding: 0.7rem 1rem;
+  }
+
+  /* the "Dark Mode" typewriter text is desktop-only */
+  #page-mode .mode-text {
+    display: none;
   }
 }
 

@@ -57,11 +57,12 @@
 
 <div id="page-mode"
      (mouseenter)="onHoverEnter()"
-     (mouseleave)="onHoverLeave()">
-  
+     (mouseleave)="onHoverLeave()"
+     (click)="toggleMoon()">
+
   <p>
-    {{ displayedText }}   
-    <i class="fa-moon" [ngClass]="isHover2 ? 'fa-solid' : 'fa-regular'"></i>
+    <span class="mode-text">{{ displayedText }}</span>
+    <i class="fa-moon" [ngClass]="isHover2 || moonOn ? 'fa-solid' : 'fa-regular'"></i>
   </p>
 
 </div>

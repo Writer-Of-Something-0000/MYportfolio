@@ -2,22 +2,22 @@
 
 <article id="middle">
     <h1>Catch UP</h1>
-    <form action="">
-        <div id="inputs">     
+    <form (submit)="send($event, who, channel, msg)">
+        <div id="inputs">
                 <label>Who’s Reaching Out</label>
-                    <label>Contact Channel</label>   
-            <input type="text" name="" id="" placeholder="Giorgi · Tech Lead">
-                <input type="text" name="" id="" placeholder="Example@gmail.com">
+                    <label>Contact Channel</label>
+            <input #who type="text" name="name" placeholder="Giorgi · Tech Lead">
+                <input #channel type="text" name="email" placeholder="Example@gmail.com">
             </div>
        <div id="text">
-                            <label>Context & Intent</label>   
-        <textarea name="" id="" rows="8" 
+                            <label>Context & Intent</label>
+        <textarea #msg name="message" rows="8"
         placeholder="Why you’re
-reaching out 
+reaching out
 and how we can work together."></textarea>
        </div>
 
-        <button>Start the Conversation</button>
+        <button type="submit" [disabled]="sending">{{ buttonText }}</button>
     </form>
 </article>
 </section>

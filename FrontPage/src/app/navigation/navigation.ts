@@ -50,17 +50,31 @@ export class Navigation  {
     this.displayedText = "";
   }
 
-  // --- Combined hover events ---
+  // --- Combined hover events (desktop only) ---
   onHoverEnter() {
+    if (this.isMobile()) return;
     this.isHover2 = true;
     this.startTyping();
 
   }
 
   onHoverLeave() {
+    if (this.isMobile()) return;
     this.isHover2 = false;
     this.resetTyping();
 
+  }
+
+  // --- Mobile: tap toggles the moon fill ---
+  moonOn = false;
+
+  toggleMoon() {
+    if (!this.isMobile()) return;
+    this.moonOn = !this.moonOn;
+  }
+
+  private isMobile() {
+    return window.matchMedia('(max-width: 850px)').matches;
   }
 
 
