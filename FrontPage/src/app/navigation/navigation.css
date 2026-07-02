@@ -239,6 +239,39 @@ justify-content: center;
 
 
 
+/* Mobile / tablet: grid becomes a wrapping flex bar */
+@media (max-width: 850px) {
+  nav {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  #name {
+    width: 100%;
+    border-radius: 20px;
+    padding: 0.6rem 1rem;
+  }
+
+  #ico-container {
+    display: none;
+  }
+
+  nav ul {
+    flex: 1 1 auto;
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    gap: 1.5rem;
+  }
+
+  #page-mode {
+    flex: 0 0 auto;
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+  }
+}
+
 .cta-btn {
 
 margin-left: 1rem;

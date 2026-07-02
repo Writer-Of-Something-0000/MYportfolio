@@ -103,16 +103,19 @@ border-left: none;
   margin: 1vh 0 0 1rem;
 }
 
-/* Mobile Responsiveness */
+/* Mobile Responsiveness: one full card + ~15% of the next one peeking */
 @media (max-width: 850px) {
   #video-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+    gap: 1.2rem;
   }
-  .video, .video-player {
+  .video {
+    flex: 0 0 85%;
+    width: auto;
+  }
+  .video-player {
     width: 100%;
-    max-width: 350px;
+    height: auto;
+    aspect-ratio: 16 / 9;
   }
 }
 

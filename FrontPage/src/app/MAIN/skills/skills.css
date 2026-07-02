@@ -227,4 +227,17 @@ padding: 0px 10px;
 
 }
 
+/* Mobile / tablet: stack the grid sections in document order */
+@media (max-width: 850px) {
+  #Article-second {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  #editing-ul,
+  #codeing-ul {
+    flex-wrap: wrap;
+  }
+}
+
 

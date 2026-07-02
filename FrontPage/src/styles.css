@@ -52,6 +52,13 @@ body {
   height: 2rem;
 }
 
+@media (max-width: 850px) {
+  #title {
+    font-size: 3rem;
+    height: auto;
+  }
+}
+
 p{
   color: #fff;
 }

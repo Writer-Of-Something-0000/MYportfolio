@@ -474,15 +474,18 @@ background: none;
     width: 100%;
     align-items: center;
   }
+  #profile-img-bg {
+    max-width: 340px;
+  }
   #portfolio-text {
     width: 100%;
     height: auto;
   }
   #feadback {
-    position: relative;
-    width: 100%;
-    left: auto;
-    bottom: auto;
+    display: none;
+  }
+  #background .fa-arrow-down {
+    display: none;
   }
   #jobs {
     flex-wrap: wrap;

@@ -153,3 +153,31 @@ label {
   font-family: "Nunito Sans", sans-serif;
   color: #716f6f;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 850px) {
+  #middle {
+    width: 100%;
+  }
+  #inputs {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  /* keep each label above its own input when stacked */
+  #inputs label:nth-of-type(1) { order: 1; }
+  #inputs input:nth-of-type(1) { order: 2; margin-bottom: 0.7rem; }
+  #inputs label:nth-of-type(2) { order: 3; }
+  #inputs input:nth-of-type(2) { order: 4; }
+  #inputs label,
+  #inputs input,
+  form div textarea {
+    width: 100%;
+  }
+  #last-info {
+    flex-direction: column;
+    align-items: center;
+  }
+  #last-info label {
+    margin: 0.3rem;
+  }
+}

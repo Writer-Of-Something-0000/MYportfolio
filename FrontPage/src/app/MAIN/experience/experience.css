@@ -82,6 +82,16 @@ color: #ffffff;
 #used-skills h5{
 color: #ffffff;
           font-family: "Nunito Sans", sans-serif;
-  
+
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 850px) {
+  #experience-container {
+    gap: 3rem;
+  }
+  #experience {
+    width: 100%;
+  }
 }
 

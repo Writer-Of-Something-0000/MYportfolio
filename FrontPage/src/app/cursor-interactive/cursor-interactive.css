@@ -29,8 +29,8 @@
   100% { transform: translate(-50%, -50%) scale(1); }
 }
 
-/* Mobile-ზე გამორთვა */
-@media (max-width: 600px) {
+/* Mobile-ზე და touch მოწყობილობებზე გამორთვა */
+@media (max-width: 850px), (hover: none) {
   .fire-cursor {
     display: none;
   }

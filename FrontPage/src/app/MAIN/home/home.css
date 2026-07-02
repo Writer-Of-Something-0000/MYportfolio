@@ -6,7 +6,8 @@ display: flex;
 flex-direction: column;
 align-items: start;
 gap: 5rem;
-width: 1280px;
+width: 100%;
+max-width: 1280px;
 
 
 }

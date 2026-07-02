@@ -99,3 +99,17 @@ gap: 0.5rem 1rem;
 #education img {
   width: 60px;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 850px) {
+  #education-container {
+    flex-direction: column;
+    gap: 3rem;
+  }
+  #education {
+    width: 100%;
+  }
+  #badge i {
+    margin-left: 0;
+  }
+}
