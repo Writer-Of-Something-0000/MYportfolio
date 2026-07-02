@@ -89,9 +89,11 @@ color: #ffffff;
 @media (max-width: 850px) {
   #experience-container {
     gap: 3rem;
+    justify-content: center;
   }
   #experience {
     width: 100%;
+    max-width: 500px;
   }
 }
 
