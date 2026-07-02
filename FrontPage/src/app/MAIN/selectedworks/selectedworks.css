@@ -136,7 +136,19 @@ border-left: none;
   margin: 0.9rem 0 0 1rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 1rem;
+  gap: 0.4rem 0.5rem;
+}
+
+/* dark chips keep the hashtags readable on the busy mobile background */
+@media (max-width: 850px) {
+  .tags li {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+  }
 }
 
 .tags li.newskill {

@@ -32,8 +32,10 @@ border: none;
 html, body {
   height: 100%;
   width: 100%;
-  /* nothing is allowed to create page-level horizontal scroll */
+  /* nothing is allowed to create page-level horizontal scroll;
+     clip (unlike hidden) keeps scrolling on the window, hidden stays as fallback */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {

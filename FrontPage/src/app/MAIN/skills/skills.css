@@ -25,8 +25,14 @@ article ul h4 {
 
 article ul li {
     font-family: "inter", sans-serif;
-    font-weight: 100;
+    font-weight: 300;
 }
+
+/* invisible on desktop so the four lists stay direct grid items */
+#skills-deck {
+  display: contents;
+}
+
 
  
 #Subtext{
@@ -237,6 +243,42 @@ padding: 0px 10px;
   #editing-ul,
   #codeing-ul {
     flex-wrap: wrap;
+  }
+  /* the busy mobile background needs a darker glass to stay readable */
+  #mindset-ul,
+  #collaboration-ul,
+  #Storytelling-ul,
+  #Editing-ul,
+  #hobies-ul,
+  #languages-ul {
+    background: rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* the four skill lists stack like a deck, tap brings the next one forward */
+  #skills-deck {
+    display: block;
+    position: relative;
+  }
+  #skills-deck ul {
+    position: absolute;
+    top: 42px;
+    left: 50%;
+    width: 100%;
+    max-width: 500px;
+    transform: translateX(-50%) translateY(calc(var(--pos, 0) * -14px)) scale(calc(1 - var(--pos, 0) * 0.05));
+    transform-origin: top center;
+    z-index: calc(10 - var(--pos, 0));
+    transition: transform 0.4s ease;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.65);
   }
 }
 

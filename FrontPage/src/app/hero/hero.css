@@ -484,6 +484,10 @@ background: none;
   #feadback {
     display: none;
   }
+  /* on mobile the video background stays behind the whole page */
+  #background {
+    position: fixed;
+  }
   #background .fa-arrow-down {
     display: none;
   }
