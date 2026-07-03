@@ -127,6 +127,11 @@ delivers high-quality results, often exceeding expectations.`
 
 
 
+  // "Catch UP" button smoothly scrolls to the contact form in the footer
+  scrollToFooter() {
+    document.querySelector('footer')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
   scrolled = false;
 
   @HostListener('window:scroll', [])

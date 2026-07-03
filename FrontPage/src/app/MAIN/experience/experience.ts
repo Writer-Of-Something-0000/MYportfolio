@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-experience',
@@ -6,43 +6,28 @@ import { AfterViewInit, Component, ElementRef, HostListener } from '@angular/cor
   templateUrl: './experience.html',
   styleUrl: './experience.css',
 })
-export class Experience implements AfterViewInit {
-  // mobile-only card deck: tapping the top card brings the next one forward
-  private cards: HTMLElement[] = [];
-  private container: HTMLElement | null = null;
-  private active = 0;
+export class Experience {
+  // --- drag-to-scroll slider (same behaviour as Selected Works) ---
+  @ViewChild('slider') slider!: ElementRef<HTMLDivElement>;
 
-  constructor(private el: ElementRef<HTMLElement>) {}
+  private isDown = false;
+  private startX = 0;
+  private scrollStart = 0;
 
-  ngAfterViewInit() {
-    this.container = this.el.nativeElement.querySelector('#experience-container');
-    this.cards = Array.from(this.el.nativeElement.querySelectorAll('#experience'));
-    this.cards.forEach((card) => card.addEventListener('click', () => this.next()));
-    this.layout();
-    // card heights change while the typewriter runs — keep the deck height in sync
-    const ro = new ResizeObserver(() => this.layout());
-    this.cards.forEach((card) => ro.observe(card));
+  dragStart(event: PointerEvent) {
+    if (event.pointerType !== 'mouse') return; // on touch the browser scrolls natively
+    this.isDown = true;
+    this.startX = event.clientX;
+    this.scrollStart = this.slider.nativeElement.scrollLeft;
   }
 
-  @HostListener('window:resize')
-  layout() {
-    if (!this.container || !this.cards.length) return;
-    const n = this.cards.length;
-    if (!window.matchMedia('(max-width: 850px)').matches) {
-      this.container.style.height = '';
-      return;
-    }
-    let tallest = 0;
-    this.cards.forEach((card, i) => {
-      card.style.setProperty('--pos', String((i - this.active + n) % n));
-      tallest = Math.max(tallest, card.offsetHeight);
-    });
-    this.container.style.height = tallest + (n - 1) * 14 + 'px';
+  dragMove(event: PointerEvent) {
+    if (!this.isDown) return;
+    const dx = event.clientX - this.startX;
+    this.slider.nativeElement.scrollLeft = this.scrollStart - dx;
   }
 
-  private next() {
-    if (!window.matchMedia('(max-width: 850px)').matches) return;
-    this.active = (this.active + 1) % this.cards.length;
-    this.layout();
+  dragEnd() {
+    this.isDown = false;
   }
 }

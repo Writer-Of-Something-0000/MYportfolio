@@ -8,14 +8,13 @@ export interface ChatTurn {
 @Injectable({
   providedIn: 'root',
 })
-export class GeminiService {
-  // Get a free key at https://aistudio.google.com/apikey and paste it here.
-  // Restrict it to the "Generative Language API" in Google Cloud Console.
-  private readonly apiKey = 'AIzaSyBGMP2PDmrd3jTE_ZA5yB851ygNxr08IL8';
+export class ChatService {
+  // Groq — free, fast, generous limits. Get a key at https://console.groq.com/keys
+  private readonly apiKey = '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';
 
-  // Lightest / cheapest model, "latest" alias so it stays current. Swap for
-  // 'gemini-2.5-flash' if the lite model is ever temporarily overloaded.
-  private readonly model = 'gemini-flash-lite-latest';
+  // Fast model with the highest free limits. Swap for 'llama-3.3-70b-versatile'
+  // for smarter answers (slightly lower limits).
+  private readonly model = 'llama-3.1-8b-instant';
 
   // The assistant answers ONLY from the knowledge below (Luka's CV + portfolio site).
   private readonly systemPrompt = `
@@ -97,30 +96,34 @@ FEEDBACK
 
   async send(history: ChatTurn[]): Promise<string> {
     if (!this.isConfigured) {
-      return 'The chat isn’t connected yet — a Gemini API key still needs to be added.';
+      return 'The chat isn’t connected yet — a Groq API key still needs to be added.';
     }
 
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: this.systemPrompt }] },
-          contents: history.map((turn) => ({
-            role: turn.role,
-            parts: [{ text: turn.text }],
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.apiKey}`,
+      },
+      body: JSON.stringify({
+        model: this.model,
+        temperature: 0.7,
+        max_tokens: 512,
+        messages: [
+          { role: 'system', content: this.systemPrompt },
+          ...history.map((turn) => ({
+            role: turn.role === 'model' ? 'assistant' : 'user',
+            content: turn.text,
           })),
-          generationConfig: { temperature: 0.7, maxOutputTokens: 512 },
-        }),
-      }
-    );
+        ],
+      }),
+    });
 
-    if (!res.ok) throw new Error(`Gemini request failed: ${res.status}`);
+    if (!res.ok) throw new Error(`Groq request failed: ${res.status}`);
 
     const data = await res.json();
     return (
-      data?.candidates?.[0]?.content?.parts?.map((p: any) => p.text).join('') ??
+      data?.choices?.[0]?.message?.content ??
       'Sorry, I couldn’t come up with a reply just now.'
     );
   }

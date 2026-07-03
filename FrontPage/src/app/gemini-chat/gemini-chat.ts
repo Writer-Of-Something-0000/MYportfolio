@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ChatTurn, GeminiService } from '../services/gemini';
+import { ChatService, ChatTurn } from '../services/chat';
 
 @Component({
   selector: 'app-gemini-chat',
@@ -14,7 +14,7 @@ export class GeminiChat {
 
   @ViewChild('scroll') private scrollRef?: ElementRef<HTMLDivElement>;
 
-  constructor(private gemini: GeminiService) {}
+  constructor(private chat: ChatService) {}
 
   toggle() {
     this.open = !this.open;
@@ -31,7 +31,7 @@ export class GeminiChat {
     this.scrollDown();
 
     try {
-      const reply = await this.gemini.send(this.messages);
+      const reply = await this.chat.send(this.messages);
       this.messages.push({ role: 'model', text: reply });
     } catch {
       this.messages.push({ role: 'model', text: 'Something went wrong. Please try again.' });

@@ -105,6 +105,20 @@ gap: 0.5rem 1rem;
   width: 60px;
 }
 
+/* logo + institution name sit on one row at the top of each card */
+#education-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+#education-head img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
 /* Mobile Responsiveness: cards stack like a deck, tap brings the next one forward */
 @media (max-width: 850px) {
   #education-container {

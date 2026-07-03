@@ -15,11 +15,23 @@
 
 #experience-container {
   margin-top: 2rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6rem;
   width: 100%;
+  display: flex;
+  gap: 3rem;
+  overflow-x: auto;
+  cursor: grab;
+  /* horizontal swipe stays inside the slider, vertical goes to the page */
+  touch-action: pan-x pan-y;
+  /* hide the scrollbar, keep it scrollable */
+  scrollbar-width: none;
+}
 
+#experience-container::-webkit-scrollbar {
+  display: none;
+}
+
+#experience-container:active {
+  cursor: grabbing;
 }
 
 #experience-title {
@@ -65,9 +77,10 @@ gap: 0.1rem;
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 padding: 1rem;
 
-
+  /* fixed width so cards line up in a single scrollable row */
+  flex: 0 0 500px;
   width: 500px;
- 
+
     padding: 2rem;
     border-radius: 10px;
 }
@@ -90,22 +103,15 @@ color: #ffffff;
 
 }
 
-/* Mobile Responsiveness: cards stack like a deck, tap brings the next one forward */
+/* Mobile Responsiveness: one full card + a peek of the next, swipe horizontally */
 @media (max-width: 850px) {
   #experience-container {
-    position: relative;
+    gap: 1.2rem;
   }
   #experience {
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    width: 100%;
-    max-width: 500px;
-    transform: translateX(-50%) translateY(calc(var(--pos, 0) * -14px)) scale(calc(1 - var(--pos, 0) * 0.05));
-    transform-origin: top center;
-    z-index: calc(10 - var(--pos, 0));
-    transition: transform 0.4s ease;
-    cursor: pointer;
+    flex: 0 0 85%;
+    width: auto;
+    padding: 1.5rem;
   }
   /* the skills row must wrap, otherwise it forces the card wider than the screen */
   #used-skills {
