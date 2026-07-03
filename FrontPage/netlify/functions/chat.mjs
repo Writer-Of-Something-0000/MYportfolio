@@ -1,11 +1,12 @@
-// Serverless proxy for the portfolio chat (OpenRouter).
-// The API key lives ONLY here, as the OPENROUTER_API_KEY environment variable
+// Serverless proxy for the portfolio chat (Groq).
+// The API key lives ONLY here, as the GROQ_API_KEY environment variable
 // set in the Netlify dashboard — it is never sent to the browser.
 
-// 'openrouter/free' auto-routes to whatever free model is currently available,
-// so it dodges the per-model rate limits. Swap for a specific id like
-// 'nvidia/nemotron-3-super-120b-a12b:free' if you want a fixed model.
-const MODEL = 'openrouter/free';
+// Groq free models, tried in order. 70B is smarter; 8B is the fast fallback.
+const MODELS = [
+  'llama-3.3-70b-versatile',
+  'llama-3.1-8b-instant',
+];
 
 // The assistant answers ONLY from the knowledge below (Luka's CV + portfolio site).
 const SYSTEM_PROMPT = `
@@ -91,7 +92,7 @@ const json = (obj, status = 200) =>
 export default async (req) => {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
 
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) return json({ error: 'Chat is not configured on the server.' }, 500);
 
   let body;
@@ -113,34 +114,33 @@ export default async (req) => {
 
   if (!turns.length) return json({ error: 'No message provided.' }, 400);
 
-  try {
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-        'HTTP-Referer': 'https://gengashvili-luka.space',
-        'X-Title': 'Luka Portfolio',
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        temperature: 0.7,
-        max_tokens: 512,
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...turns],
-      }),
-    });
+  const messages = [{ role: 'system', content: SYSTEM_PROMPT }, ...turns];
+  let lastDetail = '';
 
-    if (!res.ok) {
-      const detail = await res.text().catch(() => '');
-      return json({ error: `Upstream error ${res.status}`, detail: detail.slice(0, 500) }, 502);
+  for (const model of MODELS) {
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({ model, temperature: 0.7, max_tokens: 512, messages }),
+      });
+
+      if (!res.ok) {
+        lastDetail = (await res.text().catch(() => '')).slice(0, 300);
+        continue; // rate-limited or unavailable → try the next model
+      }
+
+      const data = await res.json();
+      const reply = data?.choices?.[0]?.message?.content?.trim();
+      if (reply) return json({ reply });
+      lastDetail = JSON.stringify(data).slice(0, 300);
+    } catch (e) {
+      lastDetail = String(e).slice(0, 300);
     }
-
-    const data = await res.json();
-    const reply =
-      data?.choices?.[0]?.message?.content ??
-      'Sorry, I couldn’t come up with a reply just now.';
-    return json({ reply });
-  } catch {
-    return json({ error: 'Failed to reach the model.' }, 502);
   }
+
+  return json({ error: 'All models are busy right now.', detail: lastDetail }, 502);
 };
