@@ -1,0 +1,50 @@
+<!-- floating round launcher, bottom-right -->
+<button
+  class="chat-fab"
+  [class.hidden]="open"
+  (click)="toggle()"
+  aria-label="Chat with Luka">
+  <span class="fab-label">Ask me</span>
+  <img src="/profileIMGearpods.png" alt="Luka" />
+</button>
+
+<div class="chat-panel" *ngIf="open">
+
+  <div class="chat-head">
+    <span class="title"><i class="fa-solid fa-wand-magic-sparkles"></i> Ask me anything about Luka</span>
+    <button class="close" (click)="toggle()" aria-label="Close chat">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="chat-messages" #scroll>
+    <div class="msg model" *ngIf="!messages.length">
+      Hi! 👋 I’m Luka’s assistant. Ask me about his work, skills, or experience.
+    </div>
+
+    <div
+      class="msg"
+      *ngFor="let m of messages"
+      [class.user]="m.role === 'user'"
+      [class.model]="m.role === 'model'">
+      {{ m.text }}
+    </div>
+
+    <div class="msg model typing" *ngIf="sending">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <form class="chat-composer" (submit)="$event.preventDefault(); send(msgInput)">
+    <input
+      #msgInput
+      type="text"
+      placeholder="Type a message…"
+      autocomplete="off"
+      [disabled]="sending" />
+    <button type="submit" [disabled]="sending" aria-label="Send message">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </form>
+
+</div>

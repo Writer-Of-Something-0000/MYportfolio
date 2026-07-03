@@ -1,10 +1,54 @@
 <section>
 
+  <div id="filters" *ngIf="!loading && videos.length">
+
+    <label class="sort-field">
+      <span>Sort by</span>
+      <select [value]="sortOrder" (change)="setSort($any($event.target).value)">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+      </select>
+    </label>
+
+    <div class="switch-group">
+      <div class="ratio-switch" role="group" aria-label="Aspect ratio">
+        <button
+          type="button"
+          [class.active]="orientation === '169'"
+          (click)="setOrientation('169')">16:9</button>
+        <button
+          type="button"
+          [class.active]="orientation === '916'"
+          (click)="setOrientation('916')">9:16</button>
+      </div>
+
+      <div class="ratio-switch" role="group" aria-label="Video length">
+        <button
+          type="button"
+          [class.active]="!length"
+          (click)="setLength(null)">All</button>
+        <button
+          type="button"
+          [class.active]="length === 'long'"
+          (click)="setLength('long')">Long</button>
+        <button
+          type="button"
+          [class.active]="length === 'short'"
+          (click)="setLength('short')">Shorts</button>
+      </div>
+    </div>
+
+  </div>
+
   <p class="state" *ngIf="loading">Loading videos…</p>
   <p class="state" *ngIf="!loading && !videos.length">New videos are on the way 🎬</p>
+  <p class="state" *ngIf="!loading && videos.length && !visibleVideos.length">
+    No {{ orientation === '916' ? '9:16' : '16:9' }}
+    {{ length === 'short' ? 'shorts' : length === 'long' ? 'long videos' : 'videos' }} yet 🎬
+  </p>
 
-  <div id="video-container">
-    <div class="video" *ngFor="let video of videos">
+  <div id="video-container" [class.vertical]="orientation === '916'">
+    <div class="video" *ngFor="let video of visibleVideos">
       <div class="video-player" (click)="play(video)">
 
         <iframe

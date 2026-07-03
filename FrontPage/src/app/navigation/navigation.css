@@ -49,7 +49,8 @@ ul li i {
 
 
 #page-mode{
-grid-column-start:14 ;
+/* desktop: span 3 of 15 columns (was 2) → 50% wider. Ignored in the mobile flex nav. */
+grid-column-start:13 ;
 grid-column-end:16 ;
 
 
@@ -268,17 +269,31 @@ justify-content: center;
     display: none;
   }
 
+  /* menu bar and moon button share the exact same height */
+  nav ul,
+  #page-mode {
+    height: 3.4rem;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 0 1rem;
+  }
+
   nav ul {
     flex: 1 1 auto;
-    border-radius: 20px;
-    padding: 0.7rem 1rem;
     gap: 1.5rem;
   }
 
   #page-mode {
     flex: 0 0 auto;
-    border-radius: 20px;
-    padding: 0.7rem 1rem;
+  }
+
+  /* on mobile only the moon shows, so it needn't reserve the desktop text height */
+  #page-mode p {
+    height: auto;
+  }
+
+  #page-mode .fa-moon {
+    font-size: 1.3rem;
   }
 
   /* the "Dark Mode" typewriter text is desktop-only */

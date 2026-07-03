@@ -13,22 +13,111 @@ section {
   font-family: "Nunito Sans", sans-serif;
 }
 
-#video-container {
+/* --- filter bar --- */
+#filters {
   width: 100%;
   max-width: 1270px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.sort-field {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.sort-field select {
+  appearance: none;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 0.5rem 2rem 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.42)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")
+    no-repeat right 0.8rem center;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  transition: border-color 0.25s;
+}
+
+.sort-field select:hover,
+.sort-field select:focus-visible {
+  border-color: #7d3cf0;
+  outline: none;
+}
+
+.sort-field option {
+  color: #000;
+}
+
+.switch-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.ratio-switch {
+  display: inline-flex;
+  padding: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.ratio-switch button {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.85rem;
+  padding: 0.4rem 1.1rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  transition: background 0.25s, color 0.25s;
+}
+
+.ratio-switch button.active {
+  color: #ffffff;
+  background: #4904A2;
+}
+
+#video-container {
+  width: 100%;
+  max-width: 1270px;
+  display: grid;
+  /* auto-fill stretches each row's cards to fill the full width — no right gutter */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 3rem;
 }
 
+/* 9:16 vertical videos pack more columns since each card is narrower */
+#video-container.vertical {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
 .video {
-    width:341.34px;
+    width: 100%;
+}
+
+#video-container.vertical .video-player {
+  aspect-ratio: 9 / 16;
 }
 
 .video-player {
-  width:341.34px;
-  height: 192px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   background-color: #0E0E0E;
   border-radius: 1rem;
 
@@ -120,8 +209,20 @@ border-left: none;
 
 /* Mobile Responsiveness */
 @media (max-width: 850px) {
-  .video, .video-player {
+  /* smaller min so narrow phones still fit one filled column and tablets fit two */
+  #video-container {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  #video-container.vertical {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  /* push the length filter to the right, aspect switch stays on the left */
+  .switch-group {
     width: 100%;
-    max-width: 350px;
+    justify-content: space-between;
+    gap: 0.6rem;
   }
 }

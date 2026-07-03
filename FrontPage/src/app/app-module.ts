@@ -13,6 +13,7 @@ import { Selectedworks } from './MAIN/selectedworks/selectedworks';
 import { Education } from './MAIN/education/education';
 import { Skills } from './MAIN/skills/skills';
 import { Projectsfilter } from './PROJECT/projectsfilter/projectsfilter';
+import { GeminiChat } from './gemini-chat/gemini-chat';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { Projectsfilter } from './PROJECT/projectsfilter/projectsfilter';
     Education,
     Skills,
     Projectsfilter,
+    GeminiChat,
   ],
   imports: [
     BrowserModule,
