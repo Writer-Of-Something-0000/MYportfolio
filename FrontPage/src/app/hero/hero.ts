@@ -1,4 +1,5 @@
 import { Component, HostListener  } from '@angular/core';
+import { FeedbackService, Feedback } from '../services/feedback';
 
 @Component({
   selector: 'app-hero',
@@ -7,6 +8,7 @@ import { Component, HostListener  } from '@angular/core';
   styleUrl: './hero.css',
 })
 export class Hero {
+  constructor(private feedbackService: FeedbackService) {}
 fullText = "Portfolio";
   displayedText = "";
   index = 0;
@@ -21,6 +23,7 @@ fullText = "Portfolio";
 
   ngOnInit(): void {
     this.handleTypewriter();
+    this.loadFeedbacks();
         setInterval(() => {
       // start fade out
       this.fade = false;
@@ -74,7 +77,8 @@ fullText = "Portfolio";
 
 
 
-  feedbacks = [
+  // Default feedbacks — used until the API responds, and as a fallback if it fails.
+  feedbacks: Feedback[] = [
     {
       name: 'Tengo Tadumbadze',
       role: 'Co-Founder of @Talesbox',
@@ -99,6 +103,19 @@ delivers high-quality results, often exceeding expectations.`
 
   currentIndex = 0;
   fade = true;
+
+  private async loadFeedbacks(): Promise<void> {
+    try {
+      const loaded = await this.feedbackService.load();
+      if (loaded.length) {
+        this.feedbacks = loaded;
+        this.currentIndex = 0;
+      }
+    } catch (err) {
+      // Keep the built-in defaults if the API is unavailable.
+      console.error('Failed to load feedbacks:', err);
+    }
+  }
 
 
 
