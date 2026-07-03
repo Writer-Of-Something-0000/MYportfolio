@@ -52,7 +52,7 @@
     
     <div id="feadback">
 <h1>Feadback's</h1>
-<div id="feadbackinfo" [class.fade-in]="fade" [class.fade-out]="!fade">
+<div id="feadbackinfo" *ngIf="feedbacks.length" [class.fade-in]="fade" [class.fade-out]="!fade">
 
   <h5 id="feadbacker-name">
     {{ feedbacks[currentIndex].name }}

@@ -29,8 +29,10 @@ fullText = "Portfolio";
       this.fade = false;
 
       setTimeout(() => {
-        // change content after fade out
-        this.currentIndex = (this.currentIndex + 1) % this.feedbacks.length;
+        // change content after fade out (skip when there are no feedbacks)
+        if (this.feedbacks.length) {
+          this.currentIndex = (this.currentIndex + 1) % this.feedbacks.length;
+        }
         // fade in
         this.fade = true;
       }, 500); // must match CSS transition time
@@ -77,42 +79,19 @@ fullText = "Portfolio";
 
 
 
-  // Default feedbacks — used until the API responds, and as a fallback if it fails.
-  feedbacks: Feedback[] = [
-    {
-      name: 'Tengo Tadumbadze',
-      role: 'Co-Founder of @Talesbox',
-      stars: 5,
-      text: `A true discovery of 2025 for me — an energetic,
-hardworking, and highly motivated professional who consistently
-delivers high-quality results, often exceeding expectations.`
-    },
-    {
-      name: 'Anna Smith',
-      role: 'Product Manager at @StartupX',
-      stars: 4,
-      text: 'Amazing to work with. Always delivers on time and with great quality.'
-    },
-    {
-      name: 'Giorgi K.',
-      role: 'CTO at @TechLab',
-      stars: 5,
-      text: 'Very professional and reliable. Highly recommended.'
-    }
-  ];
+  // Feedbacks come entirely from the API — nothing is hardcoded.
+  feedbacks: Feedback[] = [];
 
   currentIndex = 0;
   fade = true;
 
   private async loadFeedbacks(): Promise<void> {
     try {
-      const loaded = await this.feedbackService.load();
-      if (loaded.length) {
-        this.feedbacks = loaded;
-        this.currentIndex = 0;
-      }
+      this.feedbacks = await this.feedbackService.load();
+      this.currentIndex = 0;
     } catch (err) {
-      // Keep the built-in defaults if the API is unavailable.
+      // No local reserve — if the API is unavailable, show nothing.
+      this.feedbacks = [];
       console.error('Failed to load feedbacks:', err);
     }
   }
