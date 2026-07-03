@@ -287,6 +287,43 @@ justify-content: center;
   }
 }
 
+/* very narrow phones (iPhone 4/5, folded Fold): keep the full name on one line
+   and the menu + moon on one row */
+@media (max-width: 380px) {
+  #name h1 {
+    font-size: 1.4rem;
+    letter-spacing: 0.1rem;
+    white-space: nowrap;
+  }
+
+  nav ul {
+    gap: 0.8rem;
+    padding: 0 0.6rem;
+  }
+
+  nav ul li {
+    font-size: 1.2rem;
+    /* no reserved space for the fire icon — center the text itself */
+    height: auto;
+    justify-content: center;
+  }
+
+  /* no fire icons on tiny screens */
+  nav ul li i {
+    display: none;
+  }
+
+  /* menu bar and moon button share the same height */
+  nav ul,
+  #page-mode {
+    height: 3.2rem;
+  }
+
+  #page-mode {
+    padding: 0 0.7rem;
+  }
+}
+
 .cta-btn {
 
 margin-left: 1rem;

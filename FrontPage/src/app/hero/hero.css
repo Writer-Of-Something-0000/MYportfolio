@@ -110,6 +110,10 @@ gap: 1rem;
     gap: 1rem;
 }
 
+#socials a {
+    text-decoration: none;
+}
+
 
 #socials i {
 
@@ -247,7 +251,44 @@ padding: 1rem;
 
 .RMfont{
     font-family: "Roboto Mono", monospace !important;
-    
+
+}
+
+/* short screens don't have room for the feedback at all */
+@media (max-height: 799px) {
+  #feadback {
+    display: none;
+  }
+}
+
+/* laptop / regular desktop: compact feedback so it sits clear of the profile column,
+   same bottom-left placement as on 2K screens */
+@media (min-width: 851px) and (max-width: 1800px) {
+  #feadback {
+    width: 360px;
+    height: auto;
+    bottom: 2%;
+    left: 2%;
+    gap: 0.5rem;
+  }
+  #feadback h1 {
+    font-size: 1.2rem;
+    padding: 0.5rem 0.8rem;
+  }
+  #feadbacker-name {
+    font-size: 1rem;
+  }
+  #whos {
+    font-size: 0.8rem;
+  }
+  #stars {
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+  }
+  #description {
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
 }
 
 
@@ -461,6 +502,38 @@ background: none;
 #justit {
   opacity: 1.0 !important;
       cursor: pointer;
+}
+
+/* job buttons appear one by one once #jobs scrolls into view */
+#jobs li {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#jobs:not(.revealed) #justit {
+  opacity: 0 !important;
+}
+
+#jobs.revealed li {
+  opacity: 0.5;
+  transform: none;
+}
+
+#jobs.revealed li:nth-child(2) { transition-delay: 0.15s; }
+#jobs.revealed li:nth-child(3) { transition-delay: 0.3s; }
+#jobs.revealed li:nth-child(4) { transition-delay: 0.45s; }
+#jobs.revealed li:nth-child(5) { transition-delay: 0.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  #jobs li {
+    opacity: 0.5;
+    transform: none;
+    transition: none;
+  }
+  #jobs:not(.revealed) #justit {
+    opacity: 1 !important;
+  }
 }
 
 /* Mobile Responsiveness */

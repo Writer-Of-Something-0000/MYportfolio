@@ -19,6 +19,9 @@ export class Skills implements AfterViewInit {
     this.cards = Array.from(this.container?.querySelectorAll('ul') ?? []);
     this.cards.forEach((card) => card.addEventListener('click', () => this.next()));
     this.layout();
+    // card heights change while the typewriter runs — keep the deck height in sync
+    const ro = new ResizeObserver(() => this.layout());
+    this.cards.forEach((card) => ro.observe(card));
   }
 
   @HostListener('window:resize')
