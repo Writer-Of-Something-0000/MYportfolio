@@ -1,8 +1,11 @@
-// Serverless proxy for the portfolio chat.
-// The Gemini API key lives ONLY here, as the GEMINI_API_KEY environment variable
+// Serverless proxy for the portfolio chat (OpenRouter).
+// The API key lives ONLY here, as the OPENROUTER_API_KEY environment variable
 // set in the Netlify dashboard — it is never sent to the browser.
 
-const MODEL = 'gemini-flash-lite-latest'; // swap for 'gemini-2.5-flash' if ever overloaded
+// 'openrouter/free' auto-routes to whatever free model is currently available,
+// so it dodges the per-model rate limits. Swap for a specific id like
+// 'nvidia/nemotron-3-super-120b-a12b:free' if you want a fixed model.
+const MODEL = 'openrouter/free';
 
 // The assistant answers ONLY from the knowledge below (Luka's CV + portfolio site).
 const SYSTEM_PROMPT = `
@@ -88,7 +91,7 @@ const json = (obj, status = 200) =>
 export default async (req) => {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) return json({ error: 'Chat is not configured on the server.' }, 500);
 
   let body;
@@ -100,29 +103,32 @@ export default async (req) => {
 
   // client sends the conversation as [{ role: 'user' | 'model', text: string }]
   const history = Array.isArray(body?.messages) ? body.messages : [];
-  const contents = history
+  const turns = history
     .filter((m) => m && typeof m.text === 'string' && m.text.trim())
     .slice(-20) // keep the payload small
     .map((m) => ({
-      role: m.role === 'model' ? 'model' : 'user',
-      parts: [{ text: String(m.text) }],
+      role: m.role === 'model' ? 'assistant' : 'user',
+      content: String(m.text),
     }));
 
-  if (!contents.length) return json({ error: 'No message provided.' }, 400);
+  if (!turns.length) return json({ error: 'No message provided.' }, 400);
 
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents,
-          generationConfig: { temperature: 0.7, maxOutputTokens: 512 },
-        }),
-      }
-    );
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+        'HTTP-Referer': 'https://gengashvili-luka.space',
+        'X-Title': 'Luka Portfolio',
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        temperature: 0.7,
+        max_tokens: 512,
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...turns],
+      }),
+    });
 
     if (!res.ok) {
       const detail = await res.text().catch(() => '');
@@ -131,7 +137,7 @@ export default async (req) => {
 
     const data = await res.json();
     const reply =
-      data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join('') ??
+      data?.choices?.[0]?.message?.content ??
       'Sorry, I couldn’t come up with a reply just now.';
     return json({ reply });
   } catch {
