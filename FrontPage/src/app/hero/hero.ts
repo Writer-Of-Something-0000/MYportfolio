@@ -21,10 +21,21 @@ fullText = "Portfolio";
 
   private timerId: any;
 
+  private feedbackTimer: any;
+
   ngOnInit(): void {
     this.handleTypewriter();
     this.loadFeedbacks();
-        setInterval(() => {
+    this.scheduleFeedbackRotation();
+  }
+
+  // Rotates to the next feedback after a hold that scales with the current
+  // feedback's length, so longer testimonials stay on screen longer.
+  private scheduleFeedbackRotation(): void {
+    clearTimeout(this.feedbackTimer);
+    const hold = this.holdDuration(this.feedbacks[this.currentIndex]?.text);
+
+    this.feedbackTimer = setTimeout(() => {
       // start fade out
       this.fade = false;
 
@@ -35,13 +46,23 @@ fullText = "Portfolio";
         }
         // fade in
         this.fade = true;
+        this.scheduleFeedbackRotation();
       }, 500); // must match CSS transition time
-    }, 5000); 
+    }, hold);
+  }
+
+  // Reading-time based hold, in ms: 1s base + 0.4s per word.
+  // (5 words -> 3s, 10 words -> 5s.) Clamped so extremes stay reasonable.
+  private holdDuration(text: string | undefined): number {
+    const words = (text ?? '').trim().split(/\s+/).filter(Boolean).length;
+    const seconds = 1 + words * 0.4;
+    return Math.min(10, Math.max(3, seconds)) * 1000;
   }
 
 
   ngOnDestroy(): void {
     if (this.timerId) clearTimeout(this.timerId);
+    if (this.feedbackTimer) clearTimeout(this.feedbackTimer);
   }
 
   handleTypewriter() {
@@ -89,6 +110,7 @@ fullText = "Portfolio";
     try {
       this.feedbacks = await this.feedbackService.load();
       this.currentIndex = 0;
+      this.scheduleFeedbackRotation();
     } catch (err) {
       // No local reserve — if the API is unavailable, show nothing.
       this.feedbacks = [];

@@ -48,6 +48,11 @@ footer {
   max-width: 1280px;
 }
 
+/* mobile-only "use desktop" notice — hidden on desktop by default */
+#mobile-notice {
+  display: none;
+}
+
 /* fluid width below the desktop layout */
 @media (max-width: 1300px) {
   header, main, footer {
@@ -63,5 +68,75 @@ footer {
     padding-bottom: 1rem;
     /* keep the whole navigation pinned to the top while scrolling */
     top: 0;
+  }
+
+  /* full-screen dimmed backdrop, centers the card */
+  #mobile-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    animation: mobile-notice-fade 0.25s ease-out;
+  }
+
+  #mobile-notice-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    max-width: 320px;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    border-radius: 1.25rem;
+    background: rgba(46, 16, 101, 0.98);
+    color: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: mobile-notice-pop 0.25s ease-out;
+  }
+
+  #mobile-notice-card i {
+    font-size: 2rem;
+    color: #c4b5fd;
+  }
+
+  #mobile-notice-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  #mobile-notice-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+
+  #mobile-notice-card button {
+    margin-top: 0.5rem;
+    padding: 0.6rem 2rem;
+    border: none;
+    border-radius: 999px;
+    background: #7c3aed;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  @keyframes mobile-notice-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes mobile-notice-pop {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
   }
 }

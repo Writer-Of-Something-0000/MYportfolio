@@ -9,6 +9,18 @@ import { AfterViewInit, Component, NgZone, signal } from '@angular/core';
 export class App implements AfterViewInit {
   protected readonly title = signal('FrontPage');
 
+  // Mobile-only "best on desktop" notice. Hidden once dismissed for the session.
+  protected showMobileNotice =
+    typeof sessionStorage === 'undefined' ||
+    sessionStorage.getItem('mobileNoticeDismissed') !== '1';
+
+  dismissMobileNotice() {
+    this.showMobileNotice = false;
+    try {
+      sessionStorage.setItem('mobileNoticeDismissed', '1');
+    } catch {}
+  }
+
   // scroll-reveal: fade-in + slide-up when elements enter the viewport.
   // Native IntersectionObserver — no library, zero network cost.
   private readonly revealSelector = [
