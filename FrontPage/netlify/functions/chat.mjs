@@ -124,7 +124,10 @@ export default async (req) => {
       }
     );
 
-    if (!res.ok) return json({ error: `Upstream error ${res.status}` }, 502);
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '');
+      return json({ error: `Upstream error ${res.status}`, detail: detail.slice(0, 500) }, 502);
+    }
 
     const data = await res.json();
     const reply =
