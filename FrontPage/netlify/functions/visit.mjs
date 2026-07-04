@@ -72,14 +72,24 @@ async function geo(ip) {
   return null;
 }
 
-// Returns true if this IP hasn't been seen within the dedup window.
-async function shouldNotify(ip) {
+// Small stable fingerprint of a string (used to tell devices apart on one network).
+function fingerprint(s = '') {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return (h >>> 0).toString(36);
+}
+
+// Returns true if this device (IP + user-agent) hasn't been seen within the window.
+// Keying on IP+device means several people on the same WiFi each get reported,
+// while a single device reloading the page stays quiet.
+async function shouldNotify(ip, ua) {
   try {
     const store = getStore('visitor-dedup');
-    const last = await store.get(ip);
+    const key = `${ip}_${fingerprint(ua)}`;
+    const last = await store.get(key);
     const now = Date.now();
     if (last && now - Number(last) < DEDUP_MINUTES * 60 * 1000) return false;
-    await store.set(ip, String(now));
+    await store.set(key, String(now));
     return true;
   } catch {
     return true; // if dedup storage fails, err on the side of notifying
@@ -119,7 +129,7 @@ export default async (req, context) => {
 
   // Ignore bots and requests without an IP.
   if (isBot(ua) || !ip) return new Response('ok');
-  if (!(await shouldNotify(ip))) return new Response('ok');
+  if (!(await shouldNotify(ip, ua))) return new Response('ok');
 
   const g = await geo(ip);
   const { device, os, browser } = parseUA(ua);
