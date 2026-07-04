@@ -6,10 +6,27 @@ platformBrowser().bootstrapModule(AppModule, {
 })
   .catch(err => console.error(err));
 
-// Fire-and-forget visitor ping → notifies the visitor-tracker Telegram bot.
-// Runs once per browser session; the server also de-dupes by IP.
+// Owner opt-out: opening the site once with "?owner=1" flags THIS device so it
+// is never tracked again (works per-device, independent of network/IP).
 try {
-  if (sessionStorage.getItem('visitPinged') !== '1') {
+  if (new URLSearchParams(location.search).get('owner') === '1') {
+    localStorage.setItem('ownerVisit', '1');
+  }
+} catch {}
+
+function isOwnerDevice(): boolean {
+  try {
+    return localStorage.getItem('ownerVisit') === '1';
+  } catch {
+    return false;
+  }
+}
+(window as any).__isOwnerDevice = isOwnerDevice;
+
+// Fire-and-forget visitor ping → notifies the visitor-tracker Telegram bot.
+// Skipped on the owner's own devices; runs once per browser session otherwise.
+try {
+  if (!isOwnerDevice() && sessionStorage.getItem('visitPinged') !== '1') {
     sessionStorage.setItem('visitPinged', '1');
     fetch('/.netlify/functions/visit', {
       method: 'POST',

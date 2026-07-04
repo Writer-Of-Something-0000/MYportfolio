@@ -60,6 +60,13 @@ export class SessionTracker {
 
   private flush() {
     if (this.sent) return;
+    // Don't report the owner's own devices (flagged via "?owner=1").
+    try {
+      if (localStorage.getItem('ownerVisit') === '1') {
+        this.sent = true;
+        return;
+      }
+    } catch {}
     const durationSec = Math.round((Date.now() - this.start) / 1000);
     this.sent = true;
 
