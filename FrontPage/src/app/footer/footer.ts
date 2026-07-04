@@ -18,7 +18,7 @@ export class Footer {
  this.audio.clicker();
   }
 
-  // contact form → FormSubmit → gengashvili05@gmail.com
+  // contact form → Netlify function → instant Telegram notification + email backup
   buttonText = 'Start the Conversation';
   sending = false;
 
@@ -44,15 +44,10 @@ export class Footer {
     this.buttonText = 'Sending…';
 
     try {
-      const res = await fetch('https://formsubmit.co/ajax/gengashvili05@gmail.com', {
+      const res = await fetch('/.netlify/functions/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          message,
-          _subject: `Portfolio contact from ${name}`,
-        }),
+        body: JSON.stringify({ name, email, message }),
       });
       if (!res.ok) throw new Error('send failed');
 
