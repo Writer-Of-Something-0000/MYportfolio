@@ -1,14 +1,18 @@
 // Serverless handler for the footer contact form.
 // When someone submits the form it:
 //   1. Runs an AI analysis of the sender (email origin, legitimacy, trust).
-//   2. Sends an instant Telegram message to the site owner (message + analysis).
-//   3. Forwards the raw message to email via FormSubmit (backup).
+//   2. Stores the contact with a sequential id (#1, #2 …) so the Telegram bot
+//      can answer questions about it later.
+//   3. Sends an instant Telegram message to the site owner (id + message + analysis).
+//   4. Forwards the raw message to email via FormSubmit (backup).
 //
 // Secrets live ONLY here, as Netlify environment variables — never in the browser:
 //   TELEGRAM_BOT_TOKEN  — from @BotFather
 //   TELEGRAM_CHAT_ID    — your personal chat id (from @userinfobot)
 //   GROQ_API_KEY        — same key the chat function uses
 //   CONTACT_EMAIL       — optional; defaults to gengashvili05@gmail.com
+
+import { saveContact } from '../lib/store.mjs';
 
 const OWNER_EMAIL = process.env.CONTACT_EMAIL || 'gengashvili05@gmail.com';
 
@@ -74,13 +78,14 @@ async function analyzeSender(name, email, message) {
   return '';
 }
 
-async function sendTelegram(name, email, message, analysis) {
+async function sendTelegram({ id, name, email, message, analysis }) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return { ok: false, skipped: true };
 
+  const idTag = id ? ` <b>#${id}</b>` : '';
   let text =
-    `📬 <b>New portfolio message</b>\n\n` +
+    `📬 <b>New portfolio message</b>${idTag}\n\n` +
     `👤 <b>${esc(name)}</b>\n` +
     `✉️ ${esc(email)}\n\n` +
     `💬 ${esc(message)}`;
@@ -142,9 +147,19 @@ export default async (req) => {
     analysis = '';
   }
 
+  // Persist the contact and assign a sequential id (#1, #2 …) so it can be looked
+  // up later from the Telegram bot. A storage failure must not block the notification.
+  let id = null;
+  try {
+    const saved = await saveContact({ name, email, message, analysis });
+    id = saved.id;
+  } catch {
+    id = null;
+  }
+
   // Run both notifications; don't let one failure block the other.
   const [tg, mail] = await Promise.allSettled([
-    sendTelegram(name, email, message, analysis),
+    sendTelegram({ id, name, email, message, analysis }),
     sendEmail(name, email, message),
   ]);
 
