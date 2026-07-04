@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, NgZone, signal } from '@angular/core';
+import { SessionTracker } from './services/session-tracker';
 
 @Component({
   selector: 'app-root',
@@ -52,7 +53,8 @@ export class App implements AfterViewInit {
     '#experience',
   ].join(',');
 
-  constructor(private zone: NgZone) {}
+  // SessionTracker is injected here so it initializes on app start (route + leave listeners).
+  constructor(private zone: NgZone, private session: SessionTracker) {}
 
   ngAfterViewInit() {
     // timers/observers run outside Angular so typing doesn't trigger change detection
@@ -67,6 +69,7 @@ export class App implements AfterViewInit {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('revealed');
+            this.session.trackSection(entry.target.id);
             revealIO.unobserve(entry.target);
           }
         });

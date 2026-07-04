@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SessionTracker } from '../../services/session-tracker';
 
 interface Work {
   title: string;
@@ -41,7 +42,7 @@ export class Selectedworks implements OnInit {
   // "UU..." = uploads playlist of the @lukagengashvili channel
   private readonly uploadsPlaylistId = 'UUiymhMkwi-AaW3XxfrhdWHg';
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer, private session: SessionTracker) {}
 
   // Channel videos marked with #top replace the hardcoded fallback list
   ngOnInit(): void {
@@ -99,6 +100,7 @@ export class Selectedworks implements OnInit {
 
   play(work: Work) {
     if (this.dragged) return; // a drag that ended on a card is not a click
+    this.session.trackVideo(work.youtubeId, work.title);
     this.playingId = work.youtubeId;
     this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       `https://www.youtube.com/embed/${work.youtubeId}?autoplay=1&rel=0`

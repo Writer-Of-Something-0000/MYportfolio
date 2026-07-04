@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SessionTracker } from '../../services/session-tracker';
 
 interface ChannelVideo {
   id: string;
@@ -40,7 +41,7 @@ export class Projectsfilter implements OnInit {
   orientation: Orientation = '169';
   length: Length | null = null; // null = show both long videos and shorts
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer, private session: SessionTracker) {}
 
   // videos shown in the grid: filtered by orientation + length, then sorted by date
   get visibleVideos(): ChannelVideo[] {
@@ -146,6 +147,7 @@ export class Projectsfilter implements OnInit {
   }
 
   play(video: ChannelVideo) {
+    this.session.trackVideo(video.id, video.title);
     this.playingId = video.id;
     this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       `https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0`
