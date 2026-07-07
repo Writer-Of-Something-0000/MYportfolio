@@ -49,17 +49,171 @@ body {
 
 
 
+/* clean, bold, brutalist heading — no gradient, no glow */
 #title{
-    color:#4904A2 ;
+  color: #ffffff;
   font-family: "Jersey 10", sans-serif;
   font-size: 5rem;
   height: 2rem;
+  letter-spacing: 1px;
+}
+
+#title i {
+  color: #ffffff;
+  font-size: 0.55em;
+  opacity: 0.85;
+  vertical-align: middle;
 }
 
 @media (max-width: 850px) {
   #title {
     font-size: 3rem;
     height: auto;
+  }
+}
+
+/* ── Neo-brutalist glass card ──────────────────────────────────
+   frosted dark glass + a hard, un-blurred offset shadow in the brand
+   purple. hover presses the card into its shadow for a tactile,
+   springy feel — the whole language is: soft glass, hard edges. */
+.nb-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  box-shadow: 6px 6px 0 rgba(73, 4, 162, 0.45);
+  transition:
+    transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.4),
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.nb-card:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0 rgba(73, 4, 162, 0.7);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+/* hold a card down and it presses fully into its own shadow */
+.nb-card:active {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 rgba(73, 4, 162, 0);
+  transition: transform 0.09s ease, box-shadow 0.09s ease;
+}
+
+/* ── Playful "toy" chips ───────────────────────────────────────
+   magnetically lean toward the cursor, boing when poked, and toggle a
+   lit/pressed state so the whole row behaves like a soundboard. */
+.toy {
+  --tx: 0px;
+  --ty: 0px;
+  transform: translate(var(--tx), var(--ty));
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.4),
+    box-shadow 0.16s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.toy.pop {
+  animation: toyPop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+
+@keyframes toyPop {
+  0%   { transform: translate(var(--tx), var(--ty)) scale(1) rotate(0); }
+  30%  { transform: translate(var(--tx), var(--ty)) scale(0.84) rotate(-5deg); }
+  60%  { transform: translate(var(--tx), var(--ty)) scale(1.14) rotate(4deg); }
+  100% { transform: translate(var(--tx), var(--ty)) scale(1) rotate(0); }
+}
+
+/* poked "on" state — button stays pressed and lit in the brand purple */
+.toy.lit {
+  background: rgba(73, 4, 162, 0.55) !important;
+  border-color: rgba(180, 130, 255, 0.65) !important;
+  color: #ffffff !important;
+  box-shadow:
+    inset 3px 3px 6px rgba(0, 0, 0, 0.4),
+    0 0 18px rgba(128, 0, 255, 0.4) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nb-card { transition: none; }
+  .nb-card:hover,
+  .nb-card:active { transform: none; }
+  .toy { transition: none; }
+  .toy.pop { animation: none; }
+}
+
+/* ── Skills compacted into the showcase's right-hand column ─────
+   the section normally spans a full 8-col grid; here we fold it into a
+   tidy vertical panel that sits next to the 3D carousel. Desktop only —
+   the phone layout keeps its own stacked deck. */
+@media (min-width: 851px) {
+  .showcase #Article-second {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    grid-template-columns: none;
+    grid-template-rows: none;
+  }
+
+  .showcase #Subtext,
+  .showcase #tools-txt,
+  .showcase #personal-txt,
+  .showcase #editing-txt,
+  .showcase #codeing-txt,
+  .showcase #editing-ul,
+  .showcase #codeing-ul,
+  .showcase #hobies-ul,
+  .showcase #languages-ul {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  /* the four "mindset / collaboration / …" lists become a 2×2 of glass cards */
+  .showcase #skills-deck {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .showcase #skills-deck > ul,
+  .showcase #hobies-ul,
+  .showcase #languages-ul {
+    grid-column: auto;
+    grid-row: auto;
+    flex-direction: column;
+    padding: 1.1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1.5px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 5px 5px 0 rgba(73, 4, 162, 0.4);
+  }
+
+  /* tools + personal-side labels and chip rows stack full width */
+  .showcase #tools-txt,
+  .showcase #personal-txt {
+    margin-top: 0.5rem;
+  }
+
+  .showcase #editing-txt,
+  .showcase #codeing-txt {
+    align-self: start;
+    margin-bottom: -0.5rem;
+  }
+
+  .showcase #editing-ul,
+  .showcase #codeing-ul {
+    flex-wrap: wrap;
+    align-self: stretch;
   }
 }
 

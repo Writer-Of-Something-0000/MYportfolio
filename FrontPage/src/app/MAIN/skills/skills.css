@@ -174,8 +174,29 @@ gap: 1rem;
 .txttxt{
   font-family: "inter", sans-serif;
   font-size: 1.6rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+/* tool chips: frosted glass with a hard brutalist offset that presses in */
+#editing-ul li,
+#codeing-ul li {
+  border-radius: 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 4px 4px 0 rgba(73, 4, 162, 0.45);
+  transition:
+    transform 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.4),
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
+  cursor: default;
+}
+
+#editing-ul li:hover,
+#codeing-ul li:hover {
+  box-shadow: 1px 1px 0 rgba(73, 4, 162, 0.7);
+  border-color: rgba(255, 255, 255, 0.28);
 }
 
 

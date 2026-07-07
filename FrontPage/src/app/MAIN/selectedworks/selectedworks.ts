@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SessionTracker } from '../../services/session-tracker';
 
@@ -14,7 +14,7 @@ interface Work {
   templateUrl: './selectedworks.html',
   styleUrl: './selectedworks.css',
 })
-export class Selectedworks implements OnInit {
+export class Selectedworks implements OnInit, AfterViewInit, OnDestroy {
   // youtubeId is the part after "watch?v=" in the YouTube link
   works: Work[] = [
     {
@@ -42,7 +42,115 @@ export class Selectedworks implements OnInit {
   // "UU..." = uploads playlist of the @lukagengashvili channel
   private readonly uploadsPlaylistId = 'UUiymhMkwi-AaW3XxfrhdWHg';
 
-  constructor(private sanitizer: DomSanitizer, private session: SessionTracker) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private session: SessionTracker,
+    private zone: NgZone,
+  ) {}
+
+  // ─────────────────────────────────────────────────────────────
+  //  3D circular carousel
+  // ─────────────────────────────────────────────────────────────
+  @ViewChild('stage') stage!: ElementRef<HTMLDivElement>;
+
+  // one carousel card's footprint (px)
+  readonly cardW = 300;
+
+  get count(): number {
+    return Math.max(this.works.length, 1);
+  }
+  // angle between neighbouring cards around the ring
+  get step(): number {
+    return 360 / this.count;
+  }
+  // ring radius: big enough that cards never overlap, capped so it fits the column
+  get radius(): number {
+    if (this.count <= 1) return 0;
+    const geometric = this.cardW / 2 / Math.tan(Math.PI / this.count);
+    return Math.round(Math.min(Math.max(this.cardW * 0.8, geometric), 300));
+  }
+  // static per-card placement on the ring (evaluated once by the template)
+  cardTransform(i: number): string {
+    return `rotateY(${i * this.step}deg) translateZ(${this.radius}px)`;
+  }
+
+  // motion state (driven outside Angular in a rAF loop)
+  private rotation = 0;
+  private velocity = 0;
+  private readonly auto = 0.12; // idle spin speed, deg per frame
+  private dragging = false;
+  private hovered = false;
+  private startX = 0;
+  private startRot = 0;
+  private lastX = 0;
+  private dragged = false;
+  private rafId = 0;
+
+  // where velocity eases back to when the user isn't touching it
+  private get targetVelocity(): number {
+    if (this.playingId || this.hovered) return 0; // freeze while watching / hovering
+    return this.auto;
+  }
+
+  ngAfterViewInit(): void {
+    this.zone.runOutsideAngular(() => this.loop());
+  }
+
+  ngOnDestroy(): void {
+    cancelAnimationFrame(this.rafId);
+  }
+
+  private loop = (): void => {
+    this.rafId = requestAnimationFrame(this.loop);
+    if (!this.dragging) {
+      this.velocity += (this.targetVelocity - this.velocity) * 0.06; // gentle ease
+    }
+    this.rotation += this.velocity;
+    if (this.stage) {
+      this.stage.nativeElement.style.transform =
+        `translateZ(${-this.radius}px) rotateY(${this.rotation}deg)`;
+    }
+  };
+
+  // grab & spin (mouse only; touch keeps native page scroll + tap-to-play)
+  dragStart(event: PointerEvent): void {
+    if (event.pointerType !== 'mouse') return;
+    this.dragging = true;
+    this.dragged = false;
+    this.startX = event.clientX;
+    this.lastX = event.clientX;
+    this.startRot = this.rotation;
+    this.velocity = 0;
+  }
+
+  dragMove(event: PointerEvent): void {
+    if (!this.dragging) return;
+    const dx = event.clientX - this.startX;
+    if (Math.abs(dx) > 4) this.dragged = true;
+    this.rotation = this.startRot + dx * 0.35;
+    this.velocity = (event.clientX - this.lastX) * 0.35; // carries as fling momentum
+    this.lastX = event.clientX;
+  }
+
+  dragEnd(): void {
+    this.dragging = false;
+  }
+
+  onEnter(): void {
+    this.hovered = true;
+  }
+  onLeave(): void {
+    this.hovered = false;
+    this.dragging = false;
+  }
+
+  // arrow buttons nudge the ring one step and let it settle back to idle spin
+  prev(): void {
+    this.velocity = this.step * 0.14;
+  }
+  next(): void {
+    this.velocity = -this.step * 0.14;
+  }
 
   // Channel videos marked with #top replace the hardcoded fallback list
   ngOnInit(): void {
@@ -105,32 +213,5 @@ export class Selectedworks implements OnInit {
     this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       `https://www.youtube.com/embed/${work.youtubeId}?autoplay=1&rel=0`
     );
-  }
-
-  // --- drag-to-scroll slider ---
-  @ViewChild('slider') slider!: ElementRef<HTMLDivElement>;
-
-  private isDown = false;
-  private startX = 0;
-  private scrollStart = 0;
-  private dragged = false;
-
-  dragStart(event: PointerEvent) {
-    if (event.pointerType !== 'mouse') return; // on touch the browser scrolls natively
-    this.isDown = true;
-    this.dragged = false;
-    this.startX = event.clientX;
-    this.scrollStart = this.slider.nativeElement.scrollLeft;
-  }
-
-  dragMove(event: PointerEvent) {
-    if (!this.isDown) return;
-    const dx = event.clientX - this.startX;
-    if (Math.abs(dx) > 5) this.dragged = true;
-    this.slider.nativeElement.scrollLeft = this.scrollStart - dx;
-  }
-
-  dragEnd() {
-    this.isDown = false;
   }
 }

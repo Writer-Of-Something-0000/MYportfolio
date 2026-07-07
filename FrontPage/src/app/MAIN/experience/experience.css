@@ -35,9 +35,11 @@
 }
 
 #experience-title {
-  font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.956);
-          font-family: "Nunito Sans", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+  letter-spacing: 0.2px;
 }
 
 
@@ -63,26 +65,11 @@ gap: 0.1rem;
   flex-direction: column;
   gap: 1rem;
 
-
-
-  background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-
-  border: 1px solid rgba(255, 255, 255, 0.18);
-
-
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-padding: 1rem;
-
-  /* fixed width so cards line up in a single scrollable row */
+  /* fixed width so cards line up in a single scrollable row;
+     glass / border / shadow all come from .nb-card */
   flex: 0 0 500px;
   width: 500px;
-
-    padding: 2rem;
-    border-radius: 10px;
+  padding: 2rem;
 }
 
 

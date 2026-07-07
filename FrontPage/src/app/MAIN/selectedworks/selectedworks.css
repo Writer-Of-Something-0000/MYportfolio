@@ -1,73 +1,62 @@
-
-
-#Article-fifth {
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1270px;
-  gap: 5rem;
-
-}
-
-
 :host {
   display: block;
   width: 100%;
   min-width: 0;
 }
 
-#video-container {
-  width: 100%;
-  margin-top: 3rem;
+#Article-fifth {
   display: flex;
-  gap: 3rem;
-  overflow-x: auto;
+  flex-direction: column;
+  width: 100%;
+  gap: 2.5rem;
+}
+
+/* ── 3D circular carousel ──────────────────────────────────────
+   a perspective viewport holds a preserve-3d stage; each card is
+   parked around a ring with rotateY + translateZ, and JS spins the
+   whole stage. */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  perspective: 1500px;
+  perspective-origin: 50% 45%;
   cursor: grab;
-  /* horizontal swipe stays inside the slider, vertical goes to the page */
-  touch-action: pan-x pan-y;
-  /* hide the scrollbar, keep it scrollable */
-  scrollbar-width: none;
+  touch-action: pan-y;
 }
 
-#video-container::-webkit-scrollbar {
-  display: none;
-}
-
-#video-container:active {
+.carousel:active {
   cursor: grabbing;
 }
 
-
-.video {
-    flex: 0 0 341.34px;
-    width:341.34px;
+.carousel-stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  will-change: transform;
 }
 
+.carousel-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 262px;
+  margin-left: -150px;
+  margin-top: -131px;
+  padding: 0;
+  overflow: hidden;
+  /* glass / border / hard shadow come from .nb-card */
+}
 
 .video-player {
-  width:341.34px;
-  height: 192px;
-  background-color: #0E0E0E;
-  border-radius: 1rem;
-
+  width: 300px;
+  height: 169px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
-
-  background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-
-  border: 1px solid rgba(52, 51, 51, 0.58);
-border-right: none;
-
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-
-border-left: none;
+  border-radius: 16px 16px 0 0;
 }
 
 .video-player img,
@@ -77,6 +66,12 @@ border-left: none;
   object-fit: cover;
   border: 0;
   display: block;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
+}
+
+.carousel-card:hover .video-player img {
+  transform: scale(1.06);
+  filter: brightness(1.08) saturate(1.1);
 }
 
 .video-player button {
@@ -94,53 +89,117 @@ border-left: none;
   transition: 0.3s;
 }
 
-.video-player:hover button {
+.carousel-card:hover .video-player button {
   background: #4904A2;
-  transform: scale(1.1);
+  transform: scale(1.15);
+  border-color: rgba(180, 130, 255, 0.7);
+  box-shadow:
+    0 0 20px rgba(128, 0, 255, 0.9),
+    0 0 40px rgba(128, 0, 255, 0.5);
 }
 
+.headline {
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  min-height: 2.6rem;
+  margin: 0.7rem 1rem 0;
+}
 
-.headline{
+.tags {
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.7rem;
+  margin: 0.4rem 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.45rem;
+  max-height: 1.6rem;
+  overflow: hidden;
+}
 
-    color:#ffffff ;
-          font-family: "Nunito Sans", sans-serif;
+.tags li.newskill {
+  color: #7d3cf0;
+  font-weight: bold;
+}
+
+/* navigation arrows */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
   font-size: 1rem;
-  line-height: 1.4;
-  min-height: 2.8rem; /* always reserve two title lines so tags align across cards */
-  width: 90%;
-  margin: 1vh 0 0 1rem;
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 4px 4px 0 rgba(73, 4, 162, 0.45);
+  transition:
+    transform 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.4),
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
 
-/* Mobile Responsiveness: one full card + ~15% of the next one peeking */
+.nav:hover {
+  border-color: rgba(140, 60, 255, 0.55);
+}
+
+.nav:active {
+  transform: translateY(-50%) translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(73, 4, 162, 0.7);
+}
+
+.nav.prev { left: 2%; }
+.nav.next { right: 2%; }
+
+/* Mobile: the spatial ring is a desktop treat; fall back to a simple
+   horizontally scrollable row of cards. */
 @media (max-width: 850px) {
-  #video-container {
-    gap: 1.2rem;
+  .carousel {
+    height: auto;
+    perspective: none;
+    cursor: default;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
   }
-  .video {
-    flex: 0 0 85%;
+  .carousel::-webkit-scrollbar { display: none; }
+
+  .carousel-stage {
+    position: static;
+    transform: none !important;
+    display: flex;
+    gap: 1.2rem;
+    padding: 0.5rem;
+    transform-style: flat;
+  }
+  .carousel-card {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 0;
+    flex: 0 0 82%;
     width: auto;
+    height: auto;
+    transform: none !important;
   }
   .video-player {
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
   }
-}
-
-
-.tags {
-    color:#ffffff ;
-          font-family: "Nunito Sans", sans-serif;
-  font-size: 0.7rem;
-
-  margin: 0.9rem 0 0 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.5rem;
-}
-
-/* dark chips keep the hashtags readable on the busy mobile background */
-@media (max-width: 850px) {
   .tags li {
     background: rgba(0, 0, 0, 0.55);
     backdrop-filter: blur(10px);
@@ -149,9 +208,5 @@ border-left: none;
     border-radius: 999px;
     padding: 0.15rem 0.6rem;
   }
-}
-
-.tags li.newskill {
-  color: #7d3cf0;
-  font-weight: bold;
+  .nav { display: none; }
 }
