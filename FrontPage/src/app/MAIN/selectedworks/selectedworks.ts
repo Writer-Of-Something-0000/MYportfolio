@@ -140,8 +140,9 @@ export class Selectedworks implements OnInit, OnDestroy {
     this.startAuto();
   }
 
+  // works for both mouse drag and touch swipe (touch-action: pan-y lets the
+  // page still scroll vertically while horizontal swipes flip the cards)
   dragStart(event: PointerEvent): void {
-    if (event.pointerType !== 'mouse') return;
     this.dragging = true;
     this.dragged = false;
     this.startX = event.clientX;
@@ -157,6 +158,11 @@ export class Selectedworks implements OnInit, OnDestroy {
     const dx = event.clientX - this.startX;
     if (dx > 45) this.prev();
     else if (dx < -45) this.next();
+    this.startAuto();
+  }
+  // vertical scroll interrupts the swipe — reset without flipping
+  dragCancel(): void {
+    this.dragging = false;
     this.startAuto();
   }
 
