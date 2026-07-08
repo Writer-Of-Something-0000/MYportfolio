@@ -63,7 +63,6 @@ opacity: 0.6;
 height: 80vh;
     display: flex;
   justify-content: space-between;
-  
 
 }
 
@@ -154,11 +153,12 @@ align-items: center;
 
 #feadback{
   width: 500px;
-  height: 300px;
+  height: auto;
 
   position: absolute;
   bottom: 5%;
   left: 5%;
+  z-index: 10;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -216,6 +216,33 @@ padding: 1rem;
   font-family: "Nunito Sans", sans-serif;
   margin-top: 1rem;
   font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+/* when a long testimonial is fully expanded, cap its height so it never
+   runs off the top of the screen */
+#description {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* the toggle is an inline continuation of the sentence: same font, just
+   bold + underlined so it stands out */
+.see-toggle {
+  display: inline;
+  padding: 0;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.see-toggle:hover {
+  opacity: 0.75;
 }
 
 

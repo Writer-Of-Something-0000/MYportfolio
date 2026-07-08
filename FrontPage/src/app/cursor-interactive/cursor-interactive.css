@@ -4,19 +4,17 @@
   pointer-events: none;
   z-index: -9;
 
-  font-size: 250px; /* საჭიროების მიხედვით გაზარდე */
-  color: #300762;
+  font-size: 90px; /* subtle ambient orb, not a giant blob */
+  color: #2a0658;
 
-  /* Neon Glow + intense blur */
-  text-shadow: 
+  /* soft, contained glow */
+  text-shadow:
     0 0 20px #300762,
-    0 0 40px #4b0f9b,
-    0 0 60px #6a1fcc,
-    0 0 800px #36007d,
-    0 0 1000px #8000ff,
-    0 0 4000px #692ca6;
+    0 0 45px #4b0f9b,
+    0 0 90px #5a189c;
 
-  filter: blur(10px); /* გაბლური ეფექტისთვის */
+  filter: blur(14px);
+  opacity: 0.55;
   
   /* subtle pulse */
   animation: firePulse 1s infinite ease-in-out;

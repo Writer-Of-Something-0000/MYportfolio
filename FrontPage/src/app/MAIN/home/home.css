@@ -22,7 +22,7 @@ section {
   padding: 0 2.5rem;
   display: flex;
   gap: 3.5rem;
-  align-items: flex-start;
+  align-items: center;
 }
 
 /* carousel gets the lion's share of the width, skills the rest */

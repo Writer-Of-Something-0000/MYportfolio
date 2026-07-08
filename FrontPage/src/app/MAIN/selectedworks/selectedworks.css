@@ -8,46 +8,52 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
-/* ── 3D circular carousel ──────────────────────────────────────
-   a perspective viewport holds a preserve-3d stage; each card is
-   parked around a ring with rotateY + translateZ, and JS spins the
-   whole stage. */
-.carousel {
+/* ── Cover-flow carousel ───────────────────────────────────────
+   shallow, refined 3D: the active card is flat & front, neighbours
+   fan back. Per-card transforms are set inline from the component. */
+.coverflow {
   position: relative;
   width: 100%;
-  height: 360px;
-  perspective: 1500px;
-  perspective-origin: 50% 45%;
+  height: 300px;
+  perspective: 1600px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
   cursor: grab;
   touch-action: pan-y;
 }
 
-.carousel:active {
+.coverflow:active {
   cursor: grabbing;
 }
 
-.carousel-stage {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  transform-origin: 50% 50%;
-  will-change: transform;
-}
-
-.carousel-card {
+.cf-card {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 300px;
-  height: 262px;
+  height: 210px;
   margin-left: -150px;
-  margin-top: -131px;
+  margin-top: -105px;
   padding: 0;
   overflow: hidden;
+  border-radius: 18px;
+  transition:
+    transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.45s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
   /* glass / border / hard shadow come from .nb-card */
+}
+
+/* the front card gets a stronger purple presence */
+.cf-card.active {
+  border-color: rgba(140, 60, 255, 0.5);
+  box-shadow:
+    8px 8px 0 rgba(73, 4, 162, 0.55),
+    0 0 40px rgba(128, 0, 255, 0.25);
 }
 
 .video-player {
@@ -69,8 +75,8 @@
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.4s ease;
 }
 
-.carousel-card:hover .video-player img {
-  transform: scale(1.06);
+.cf-card.active:hover .video-player img {
+  transform: scale(1.05);
   filter: brightness(1.08) saturate(1.1);
 }
 
@@ -78,50 +84,42 @@
   position: absolute;
   inset: 0;
   margin: auto;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3.4rem;
+  height: 3.4rem;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(0, 0, 0, 0.55);
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.carousel-card:hover .video-player button {
+.cf-card.active:hover .video-player button {
   background: #4904A2;
-  transform: scale(1.15);
+  transform: scale(1.12);
   border-color: rgba(180, 130, 255, 0.7);
   box-shadow:
     0 0 20px rgba(128, 0, 255, 0.9),
     0 0 40px rgba(128, 0, 255, 0.5);
 }
 
-.headline {
+/* only the active card shows its title — keeps the row clean */
+.cf-title {
   color: #ffffff;
   font-family: "Nunito Sans", sans-serif;
   font-size: 0.95rem;
-  line-height: 1.35;
-  min-height: 2.6rem;
-  margin: 0.7rem 1rem 0;
-}
-
-.tags {
-  color: #ffffff;
-  font-family: "Nunito Sans", sans-serif;
-  font-size: 0.7rem;
-  margin: 0.4rem 1rem 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem 0.45rem;
-  max-height: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0.6rem 0.8rem 0;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
-
-.tags li.newskill {
-  color: #7d3cf0;
-  font-weight: bold;
+.cf-card.active .cf-title {
+  opacity: 1;
 }
 
 /* navigation arrows */
@@ -129,15 +127,15 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 5;
-  width: 46px;
-  height: 46px;
+  z-index: 200;
+  width: 44px;
+  height: 44px;
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
 
   background: rgba(255, 255, 255, 0.04);
@@ -154,59 +152,44 @@
 .nav:hover {
   border-color: rgba(140, 60, 255, 0.55);
 }
-
 .nav:active {
   transform: translateY(-50%) translate(2px, 2px);
   box-shadow: 1px 1px 0 rgba(73, 4, 162, 0.7);
 }
+.nav.prev { left: 0; }
+.nav.next { right: 0; }
 
-.nav.prev { left: 2%; }
-.nav.next { right: 2%; }
+/* dots */
+.cf-dots {
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  z-index: 200;
+}
+.cf-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.cf-dots span.on {
+  width: 22px;
+  border-radius: 5px;
+  background: #7d3cf0;
+}
 
-/* Mobile: the spatial ring is a desktop treat; fall back to a simple
-   horizontally scrollable row of cards. */
+/* Mobile: keep the fan but pull the neighbours in a little via a
+   smaller viewport height; dots drive navigation, arrows hide. */
 @media (max-width: 850px) {
-  .carousel {
-    height: auto;
-    perspective: none;
-    cursor: default;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x pan-y;
-  }
-  .carousel::-webkit-scrollbar { display: none; }
-
-  .carousel-stage {
-    position: static;
-    transform: none !important;
-    display: flex;
-    gap: 1.2rem;
-    padding: 0.5rem;
-    transform-style: flat;
-  }
-  .carousel-card {
-    position: relative;
-    top: auto;
-    left: auto;
-    margin: 0;
-    flex: 0 0 82%;
-    width: auto;
-    height: auto;
-    transform: none !important;
-  }
-  .video-player {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-  }
-  .tags li {
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-    padding: 0.15rem 0.6rem;
+  .coverflow {
+    height: 250px;
+    perspective: 1100px;
   }
   .nav { display: none; }
 }

@@ -2,38 +2,35 @@
 <article id="Article-fifth">
              <h2 id="title">Selected Works   <i class="fa-solid fa-fire"></i></h2>
 
-             <div class="carousel"
+             <div class="coverflow"
                   (pointerdown)="dragStart($event)"
                   (pointermove)="dragMove($event)"
-                  (pointerup)="dragEnd()"
+                  (pointerup)="dragEnd($event)"
                   (pointerleave)="onLeave()"
                   (pointerenter)="onEnter()">
 
-               <div class="carousel-stage" #stage>
-                 <div class="carousel-card nb-card"
-                      *ngFor="let work of works; let i = index"
-                      [style.transform]="cardTransform(i)">
+               <div class="cf-card nb-card"
+                    *ngFor="let work of works; let i = index"
+                    [ngStyle]="cardStyle(i)"
+                    [class.active]="isActive(i)"
+                    (click)="cardClick(i, work)">
 
-                   <div class="video-player" (click)="play(work)">
-                     <iframe
-                       *ngIf="playingId === work.youtubeId"
-                       [src]="embedUrl"
-                       [title]="work.title"
-                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                       allowfullscreen>
-                     </iframe>
+                 <div class="video-player">
+                   <iframe
+                     *ngIf="playingId === work.youtubeId"
+                     [src]="embedUrl"
+                     [title]="work.title"
+                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                     allowfullscreen>
+                   </iframe>
 
-                     <ng-container *ngIf="playingId !== work.youtubeId">
-                       <img [src]="thumb(work.youtubeId)" [alt]="work.title" draggable="false">
-                       <button type="button"><i class="fa-solid fa-play"></i></button>
-                     </ng-container>
-                   </div>
-
-                   <h4 class="headline">{{ work.title }}</h4>
-                   <ul class="tags">
-                     <li *ngFor="let tag of work.tags" [class.newskill]="tag.toLowerCase() === 'newskill'">#{{ tag }}</li>
-                   </ul>
+                   <ng-container *ngIf="playingId !== work.youtubeId">
+                     <img [src]="thumb(work.youtubeId)" [alt]="work.title" draggable="false">
+                     <button type="button" *ngIf="isActive(i)"><i class="fa-solid fa-play"></i></button>
+                   </ng-container>
                  </div>
+
+                 <h4 class="cf-title">{{ work.title }}</h4>
                </div>
 
                <button class="nav prev" type="button" (click)="prev()" aria-label="Previous work">
@@ -42,6 +39,12 @@
                <button class="nav next" type="button" (click)="next()" aria-label="Next work">
                  <i class="fa-solid fa-chevron-right"></i>
                </button>
+
+               <div class="cf-dots">
+                 <span *ngFor="let work of works; let i = index"
+                       [class.on]="isActive(i)"
+                       (click)="goTo(i)"></span>
+               </div>
              </div>
 
 </article>

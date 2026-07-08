@@ -155,41 +155,43 @@ body {
    tidy vertical panel that sits next to the 3D carousel. Desktop only —
    the phone layout keeps its own stacked deck. */
 @media (min-width: 851px) {
-  .showcase #Article-second {
+  /* `app-skills` in the chain lifts specificity above Angular's own
+     encapsulated `#id[_ngcontent]` rules so these actually win. */
+  .showcase app-skills #Article-second {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    grid-template-columns: none;
-    grid-template-rows: none;
+    gap: 1.1rem;
   }
 
-  .showcase #Subtext,
-  .showcase #tools-txt,
-  .showcase #personal-txt,
-  .showcase #editing-txt,
-  .showcase #codeing-txt,
-  .showcase #editing-ul,
-  .showcase #codeing-ul,
-  .showcase #hobies-ul,
-  .showcase #languages-ul {
+  /* neutralise the old 8-column grid placement */
+  .showcase app-skills #Subtext,
+  .showcase app-skills #tools-txt,
+  .showcase app-skills #personal-txt,
+  .showcase app-skills #editing-txt,
+  .showcase app-skills #codeing-txt,
+  .showcase app-skills #editing-ul,
+  .showcase app-skills #codeing-ul,
+  .showcase app-skills #hobies-ul,
+  .showcase app-skills #languages-ul {
     grid-column: auto;
     grid-row: auto;
   }
 
-  /* the four "mindset / collaboration / …" lists become a 2×2 of glass cards */
-  .showcase #skills-deck {
+  /* the four mindset / collaboration / … lists → a 2×2 of glass cards */
+  .showcase app-skills #skills-deck {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.85rem;
   }
 
-  .showcase #skills-deck > ul,
-  .showcase #hobies-ul,
-  .showcase #languages-ul {
+  .showcase app-skills #skills-deck > ul,
+  .showcase app-skills #hobies-ul,
+  .showcase app-skills #languages-ul {
     grid-column: auto;
     grid-row: auto;
     flex-direction: column;
-    padding: 1.1rem;
+    gap: 0.3rem;
+    padding: 0.85rem 1rem;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(20px) saturate(140%);
@@ -198,22 +200,41 @@ body {
     box-shadow: 5px 5px 0 rgba(73, 4, 162, 0.4);
   }
 
-  /* tools + personal-side labels and chip rows stack full width */
-  .showcase #tools-txt,
-  .showcase #personal-txt {
-    margin-top: 0.5rem;
+  /* quieter, tighter list text — less visual noise */
+  .showcase app-skills #skills-deck ul h4,
+  .showcase app-skills #hobies-ul h4,
+  .showcase app-skills #languages-ul h4 {
+    font-size: 0.92rem;
+    margin-bottom: 0.15rem;
+  }
+  .showcase app-skills #skills-deck li,
+  .showcase app-skills #hobies-ul li,
+  .showcase app-skills #languages-ul li {
+    font-size: 0.78rem;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.58);
+  }
+  /* drop the leading "-" dashes */
+  .showcase app-skills #skills-deck li > span:first-child,
+  .showcase app-skills #hobies-ul li > span:first-child,
+  .showcase app-skills #languages-ul li > span:first-child {
+    display: none;
   }
 
-  .showcase #editing-txt,
-  .showcase #codeing-txt {
-    align-self: start;
-    margin-bottom: -0.5rem;
+  .showcase app-skills #tools-txt,
+  .showcase app-skills #personal-txt {
+    margin-top: 0.4rem;
+    font-size: 1.15rem;
   }
-
-  .showcase #editing-ul,
-  .showcase #codeing-ul {
+  .showcase app-skills #editing-txt,
+  .showcase app-skills #codeing-txt {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .showcase app-skills #editing-ul,
+  .showcase app-skills #codeing-ul {
     flex-wrap: wrap;
-    align-self: stretch;
+    gap: 0.55rem;
   }
 }
 

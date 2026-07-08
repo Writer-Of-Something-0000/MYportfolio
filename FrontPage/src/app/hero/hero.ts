@@ -44,6 +44,7 @@ fullText = "Portfolio";
         if (this.feedbacks.length) {
           this.currentIndex = (this.currentIndex + 1) % this.feedbacks.length;
         }
+        this.expanded = false; // each new testimonial starts collapsed
         // fade in
         this.fade = true;
         this.scheduleFeedbackRotation();
@@ -105,6 +106,34 @@ fullText = "Portfolio";
 
   currentIndex = 0;
   fade = true;
+
+  // long testimonials are clamped to ~5 lines with a "see full" toggle
+  expanded = false;
+
+  get isLong(): boolean {
+    return (this.feedbacks[this.currentIndex]?.text?.length ?? 0) > 200;
+  }
+
+  // the text actually rendered: truncated (ending in …) when collapsed so the
+  // "see full" link reads as an inline continuation of the sentence.
+  get shownText(): string {
+    const t = this.feedbacks[this.currentIndex]?.text ?? '';
+    if (!this.isLong || this.expanded) return t + ' ';
+    let cut = t.slice(0, 200);
+    const lastSpace = cut.lastIndexOf(' ');
+    if (lastSpace > 0) cut = cut.slice(0, lastSpace);
+    return cut + '… ';
+  }
+
+  toggleFull(): void {
+    this.expanded = !this.expanded;
+    // pause the auto-rotation while someone is reading the full text
+    if (this.expanded) {
+      clearTimeout(this.feedbackTimer);
+    } else {
+      this.scheduleFeedbackRotation();
+    }
+  }
 
   private async loadFeedbacks(): Promise<void> {
     try {

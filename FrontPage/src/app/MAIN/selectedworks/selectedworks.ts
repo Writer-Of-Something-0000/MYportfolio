@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SessionTracker } from '../../services/session-tracker';
 
@@ -14,7 +14,7 @@ interface Work {
   templateUrl: './selectedworks.html',
   styleUrl: './selectedworks.css',
 })
-export class Selectedworks implements OnInit, AfterViewInit, OnDestroy {
+export class Selectedworks implements OnInit, OnDestroy {
   // youtubeId is the part after "watch?v=" in the YouTube link
   works: Work[] = [
     {
@@ -42,119 +42,122 @@ export class Selectedworks implements OnInit, AfterViewInit, OnDestroy {
   // "UU..." = uploads playlist of the @lukagengashvili channel
   private readonly uploadsPlaylistId = 'UUiymhMkwi-AaW3XxfrhdWHg';
 
-  constructor(
-    private sanitizer: DomSanitizer,
-    private session: SessionTracker,
-    private zone: NgZone,
-  ) {}
+  constructor(private sanitizer: DomSanitizer, private session: SessionTracker) {}
 
   // ─────────────────────────────────────────────────────────────
-  //  3D circular carousel
+  //  Cover-flow: a sleek, shallow 3D carousel. The active card sits
+  //  flat & front; neighbours fan back with a slight rotation.
   // ─────────────────────────────────────────────────────────────
-  @ViewChild('stage') stage!: ElementRef<HTMLDivElement>;
+  active = 0;
 
-  // one carousel card's footprint (px)
-  readonly cardW = 300;
-
-  get count(): number {
+  private get count(): number {
     return Math.max(this.works.length, 1);
   }
-  // angle between neighbouring cards around the ring
-  get step(): number {
-    return 360 / this.count;
-  }
-  // ring radius: big enough that cards never overlap, capped so it fits the column
-  get radius(): number {
-    if (this.count <= 1) return 0;
-    const geometric = this.cardW / 2 / Math.tan(Math.PI / this.count);
-    return Math.round(Math.min(Math.max(this.cardW * 0.8, geometric), 300));
-  }
-  // static per-card placement on the ring (evaluated once by the template)
-  cardTransform(i: number): string {
-    return `rotateY(${i * this.step}deg) translateZ(${this.radius}px)`;
+
+  // signed distance from the active card, wrapped so the row feels circular
+  private offset(i: number): number {
+    const n = this.count;
+    let d = i - this.active;
+    if (d > n / 2) d -= n;
+    if (d < -n / 2) d += n;
+    return d;
   }
 
-  // motion state (driven outside Angular in a rAF loop)
-  private rotation = 0;
-  private velocity = 0;
-  private readonly auto = 0.12; // idle spin speed, deg per frame
+  isActive(i: number): boolean {
+    return this.offset(i) === 0;
+  }
+
+  // per-card 3D placement, recomputed whenever `active` changes
+  cardStyle(i: number): { [k: string]: string } {
+    const d = this.offset(i);
+    const ad = Math.abs(d);
+    const spacing = 210; // horizontal gap between neighbours
+    const depth = 240; // how far back the neighbours sit
+    const angle = 46; // fan rotation, degrees
+    const hidden = ad > 1.6; // only show the centre + one card each side
+    return {
+      transform:
+        `translateX(${(d * spacing).toFixed(0)}px) ` +
+        `translateZ(${(-ad * depth).toFixed(0)}px) ` +
+        `rotateY(${(-d * angle).toFixed(1)}deg) ` +
+        `scale(${(1 - ad * 0.05).toFixed(3)})`,
+      'z-index': `${100 - Math.round(ad * 10)}`,
+      opacity: hidden ? '0' : `${(1 - ad * 0.18).toFixed(2)}`,
+      'pointer-events': hidden ? 'none' : 'auto',
+    };
+  }
+
+  next(): void {
+    this.active = (this.active + 1) % this.count;
+  }
+  prev(): void {
+    this.active = (this.active - 1 + this.count) % this.count;
+  }
+  goTo(i: number): void {
+    this.active = i;
+  }
+
+  // clicking a side card brings it to the front; clicking the front one plays
+  cardClick(i: number, work: Work): void {
+    if (this.dragged) return;
+    if (!this.isActive(i)) {
+      this.goTo(i);
+      return;
+    }
+    this.play(work);
+  }
+
+  // ── drag / flick (mouse) + auto-advance ──
   private dragging = false;
-  private hovered = false;
-  private startX = 0;
-  private startRot = 0;
-  private lastX = 0;
   private dragged = false;
-  private rafId = 0;
+  private startX = 0;
+  private autoTimer: ReturnType<typeof setInterval> | null = null;
 
-  // where velocity eases back to when the user isn't touching it
-  private get targetVelocity(): number {
-    if (this.playingId || this.hovered) return 0; // freeze while watching / hovering
-    return this.auto;
+  ngOnInit(): void {
+    this.loadTopVideos();
+    this.startAuto();
   }
-
-  ngAfterViewInit(): void {
-    this.zone.runOutsideAngular(() => this.loop());
-  }
-
   ngOnDestroy(): void {
-    cancelAnimationFrame(this.rafId);
+    this.stopAuto();
   }
 
-  private loop = (): void => {
-    this.rafId = requestAnimationFrame(this.loop);
-    if (!this.dragging) {
-      this.velocity += (this.targetVelocity - this.velocity) * 0.06; // gentle ease
-    }
-    this.rotation += this.velocity;
-    if (this.stage) {
-      this.stage.nativeElement.style.transform =
-        `translateZ(${-this.radius}px) rotateY(${this.rotation}deg)`;
-    }
-  };
+  private startAuto(): void {
+    this.stopAuto();
+    this.autoTimer = setInterval(() => {
+      if (!this.playingId) this.next();
+    }, 4000);
+  }
+  private stopAuto(): void {
+    if (this.autoTimer) clearInterval(this.autoTimer);
+    this.autoTimer = null;
+  }
 
-  // grab & spin (mouse only; touch keeps native page scroll + tap-to-play)
+  onEnter(): void {
+    this.stopAuto();
+  }
+  onLeave(): void {
+    this.dragging = false;
+    this.startAuto();
+  }
+
   dragStart(event: PointerEvent): void {
     if (event.pointerType !== 'mouse') return;
     this.dragging = true;
     this.dragged = false;
     this.startX = event.clientX;
-    this.lastX = event.clientX;
-    this.startRot = this.rotation;
-    this.velocity = 0;
+    this.stopAuto();
   }
-
   dragMove(event: PointerEvent): void {
     if (!this.dragging) return;
+    if (Math.abs(event.clientX - this.startX) > 6) this.dragged = true;
+  }
+  dragEnd(event: PointerEvent): void {
+    if (!this.dragging) return;
+    this.dragging = false;
     const dx = event.clientX - this.startX;
-    if (Math.abs(dx) > 4) this.dragged = true;
-    this.rotation = this.startRot + dx * 0.35;
-    this.velocity = (event.clientX - this.lastX) * 0.35; // carries as fling momentum
-    this.lastX = event.clientX;
-  }
-
-  dragEnd(): void {
-    this.dragging = false;
-  }
-
-  onEnter(): void {
-    this.hovered = true;
-  }
-  onLeave(): void {
-    this.hovered = false;
-    this.dragging = false;
-  }
-
-  // arrow buttons nudge the ring one step and let it settle back to idle spin
-  prev(): void {
-    this.velocity = this.step * 0.14;
-  }
-  next(): void {
-    this.velocity = -this.step * 0.14;
-  }
-
-  // Channel videos marked with #top replace the hardcoded fallback list
-  ngOnInit(): void {
-    this.loadTopVideos();
+    if (dx > 45) this.prev();
+    else if (dx < -45) this.next();
+    this.startAuto();
   }
 
   private async loadTopVideos() {
@@ -186,6 +189,7 @@ export class Selectedworks implements OnInit, AfterViewInit, OnDestroy {
           .filter((tag) => tag.toLowerCase() !== 'top')
           .slice(0, 7),
       }));
+      this.active = 0;
     } catch {
       // network/API failure: the hardcoded fallback stays visible
     }
@@ -213,5 +217,6 @@ export class Selectedworks implements OnInit, AfterViewInit, OnDestroy {
     this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       `https://www.youtube.com/embed/${work.youtubeId}?autoplay=1&rel=0`
     );
+    this.stopAuto();
   }
 }
