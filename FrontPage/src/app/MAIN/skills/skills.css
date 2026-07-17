@@ -203,6 +203,71 @@ gap: 1rem;
 }
 
 
+/* ── brand-hinted tool chips ───────────────────────────────────
+   same frosted glass as every other chip — just a quiet brand tint
+   on the label, a faint colored edge and a soft brand-tinted shadow
+   so each tool reads at a glance without shouting over the layout. */
+.tool {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Premiere Pro — violet */
+.tool-pr {
+  border-color: rgba(157, 78, 221, 0.35) !important;
+  box-shadow: 4px 4px 0 rgba(157, 78, 221, 0.3) !important;
+  color: #c9a6f0 !important;
+}
+.tool-pr:hover { box-shadow: 1px 1px 0 rgba(157, 78, 221, 0.5) !important; }
+
+/* DaVinci Resolve — teal */
+.tool-davinci {
+  border-color: rgba(38, 198, 218, 0.35) !important;
+  box-shadow: 4px 4px 0 rgba(38, 198, 218, 0.28) !important;
+  color: #8fd6de !important;
+}
+.tool-davinci:hover { box-shadow: 1px 1px 0 rgba(38, 198, 218, 0.5) !important; }
+
+/* After Effects — periwinkle */
+.tool-ae {
+  border-color: rgba(153, 153, 255, 0.38) !important;
+  box-shadow: 4px 4px 0 rgba(153, 153, 255, 0.3) !important;
+  color: #b6b6f0 !important;
+}
+.tool-ae:hover { box-shadow: 1px 1px 0 rgba(153, 153, 255, 0.55) !important; }
+
+/* Photoshop — blue */
+.tool-ps {
+  border-color: rgba(49, 168, 255, 0.38) !important;
+  box-shadow: 4px 4px 0 rgba(49, 168, 255, 0.3) !important;
+  color: #8ec6f0 !important;
+}
+.tool-ps:hover { box-shadow: 1px 1px 0 rgba(49, 168, 255, 0.55) !important; }
+
+/* Illustrator — orange */
+.tool-ai {
+  border-color: rgba(255, 154, 0, 0.38) !important;
+  box-shadow: 4px 4px 0 rgba(255, 154, 0, 0.3) !important;
+  color: #f0b866 !important;
+}
+.tool-ai:hover { box-shadow: 1px 1px 0 rgba(255, 154, 0, 0.55) !important; }
+
+/* CapCut — cyan */
+.tool-capcut {
+  border-color: rgba(0, 213, 255, 0.35) !important;
+  box-shadow: 4px 4px 0 rgba(0, 213, 255, 0.28) !important;
+  color: #82d9ec !important;
+}
+.tool-capcut:hover { box-shadow: 1px 1px 0 rgba(0, 213, 255, 0.5) !important; }
+
+/* Video Star — pink */
+.tool-videostar {
+  border-color: rgba(255, 79, 216, 0.35) !important;
+  box-shadow: 4px 4px 0 rgba(255, 79, 216, 0.28) !important;
+  color: #f0a0dc !important;
+}
+.tool-videostar:hover { box-shadow: 1px 1px 0 rgba(255, 79, 216, 0.5) !important; }
+
 .txttxt{
   font-family: "inter", sans-serif;
   font-size: 1.6rem;

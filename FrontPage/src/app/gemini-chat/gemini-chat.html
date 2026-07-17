@@ -4,8 +4,11 @@
   [class.hidden]="open"
   (click)="toggle()"
   aria-label="Chat with Luka">
+  <span class="fab-avatar">
+    <img src="/profileIMGearpods.png" alt="Luka" />
+    <span class="fab-dot"></span>
+  </span>
   <span class="fab-label">Ask me</span>
-  <img src="/profileIMGearpods.png" alt="Luka" />
 </button>
 
 <div class="chat-panel" *ngIf="open">

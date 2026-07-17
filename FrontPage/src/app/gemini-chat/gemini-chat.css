@@ -2,77 +2,89 @@
   font-family: "Nunito Sans", sans-serif;
 }
 
-/* --- floating launcher --- */
+/* --- floating launcher: a sleek glass pill --- */
 .chat-fab {
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
   z-index: 1000;
 
-  width: 3.9rem;
-  height: 3.9rem;
-  padding: 0;
-  border-radius: 50%;
-  border: 2px solid rgba(125, 60, 240, 0.85);
-  cursor: pointer;
-
-  background: #0e0e0e;
-  box-shadow:
-    0 8px 24px rgba(73, 4, 162, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-  animation: chatPulse 2.6s ease-in-out infinite;
+  gap: 0.6rem;
+  padding: 0.4rem 0.95rem 0.4rem 0.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(14, 14, 14, 0.72);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:
+    0 10px 30px rgba(73, 4, 162, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  transition: transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.4),
+    box-shadow 0.22s ease, opacity 0.2s ease, border-color 0.22s ease;
 }
 
-.chat-fab img {
-  width: 75%;
-  height: 75%;
+/* avatar circle on the left, with a live "online" dot */
+.chat-fab .fab-avatar {
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.chat-fab .fab-avatar img {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
   display: block;
 }
 
-/* "ASK ME" pill sitting above the circle */
-.chat-fab .fab-label {
+.chat-fab .fab-dot {
   position: absolute;
-  bottom: calc(100% + 0.5rem);
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
+  right: 0;
+  bottom: 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: #35d07f;
+  border: 2px solid rgba(14, 14, 14, 0.9);
+  box-shadow: 0 0 8px rgba(53, 208, 127, 0.8);
+  animation: fabDot 2.4s ease-in-out infinite;
+}
 
+@keyframes fabDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(53, 208, 127, 0.5); }
+  50% { box-shadow: 0 0 0 4px rgba(53, 208, 127, 0); }
+}
+
+/* "Ask me" label — normal case, soft weight, no 90s letter-spacing */
+.chat-fab .fab-label {
   font-family: "Nunito Sans", sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.92rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: #ffffff;
-
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  background: rgba(14, 14, 14, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  pointer-events: none;
+  white-space: nowrap;
 }
 
 .chat-fab:hover {
-  transform: scale(1.08);
-  box-shadow: 0 10px 30px rgba(125, 60, 240, 0.6);
+  transform: translateY(-2px);
+  border-color: rgba(157, 78, 221, 0.55);
+  box-shadow:
+    0 14px 36px rgba(125, 60, 240, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .chat-fab.hidden {
   opacity: 0;
   pointer-events: none;
-  transform: scale(0.6);
-}
-
-@keyframes chatPulse {
-  0%, 100% { box-shadow: 0 8px 24px rgba(73, 4, 162, 0.45); }
-  50% { box-shadow: 0 8px 30px rgba(125, 60, 240, 0.75); }
+  transform: scale(0.85) translateY(6px);
 }
 
 /* --- chat panel --- */
@@ -251,7 +263,8 @@
 @media (max-width: 850px) {
   .chat-fab {
     right: 1rem;
-    bottom: 1rem;
+    /* sit above the home indicator / gesture bar on notched phones */
+    bottom: calc(1rem + env(safe-area-inset-bottom));
   }
 }
 

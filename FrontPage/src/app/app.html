@@ -2,15 +2,6 @@
 
 </div>
 
-<div id="mobile-notice" *ngIf="showMobileNotice" (click)="dismissMobileNotice()">
-  <div id="mobile-notice-card" (click)="$event.stopPropagation()">
-    <i class="fa-solid fa-desktop"></i>
-    <h3>Best viewed on desktop</h3>
-    <p>This portfolio is designed for a larger screen. For the full experience, open it on desktop.</p>
-    <button type="button" (click)="dismissMobileNotice()">Got it</button>
-  </div>
-</div>
-
 <header>
   <app-navigation></app-navigation>
 </header>

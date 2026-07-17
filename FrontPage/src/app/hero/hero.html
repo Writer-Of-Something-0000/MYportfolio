@@ -48,7 +48,14 @@
 
         </div>
 <div id="background">
-    <div id="video"></div>
+    <!-- webm is ~1.4MB vs the old 65MB gif; mp4 fallback for browsers without webm.
+         videoSrc switches to the 767KB smallsizeportfolio.webm on slow connections.
+         [muted]="true" is required — the plain muted attribute doesn't reliably set the
+         property in Angular, and unmuted videos get their autoplay blocked on mobile -->
+    <video id="video" autoplay muted [muted]="true" loop playsinline>
+      <source [src]="videoSrc" type="video/webm">
+      <source src="/portfolio.mp4" type="video/mp4">
+    </video>
 
     <i class="fa-solid fa-arrow-down"
       [class.no-animation]="scrolled"></i>

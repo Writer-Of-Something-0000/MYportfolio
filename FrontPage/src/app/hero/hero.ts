@@ -9,6 +9,22 @@ import { FeedbackService, Feedback } from '../services/feedback';
 })
 export class Hero {
   constructor(private feedbackService: FeedbackService) {}
+
+  // Background video source picked by connection quality (Network Information API).
+  // Slow connection / data-saver → 767KB small version; otherwise the 1.4MB full one.
+  // Browsers without the API (Safari/Firefox) simply get the full version.
+  readonly videoSrc = Hero.pickVideoSrc();
+
+  private static pickVideoSrc(): string {
+    const conn = (navigator as any).connection;
+    if (conn) {
+      const slowType = /(^|-)2g$|^3g$/.test(conn.effectiveType ?? '');
+      const slowLink = typeof conn.downlink === 'number' && conn.downlink > 0 && conn.downlink < 1.5;
+      if (conn.saveData || slowType || slowLink) return '/smallsizeportfolio.webm';
+    }
+    return '/portfolio.webm';
+  }
+
 fullText = "Portfolio";
   displayedText = "";
   index = 0;

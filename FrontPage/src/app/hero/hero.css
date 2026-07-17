@@ -26,10 +26,8 @@ background: #0E0E0E;
   height: 100vh;
   position: absolute;
 opacity: 0.6;
-  background-image: url("/portfolio.gif");
-  background-size: cover;  
-  background-repeat: no-repeat;
-  background-position: center;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Arrow animation */
@@ -584,7 +582,8 @@ background: none;
   #feadback {
     display: none;
   }
-  /* on mobile the video background stays behind the whole page */
+  /* on mobile the motion-design video background stays fixed behind the
+     whole page — intentional design, do not contain it to the hero */
   #background {
     position: fixed;
   }
