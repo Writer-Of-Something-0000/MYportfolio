@@ -52,7 +52,8 @@
          videoSrc switches to the 767KB smallsizeportfolio.webm on slow connections.
          [muted]="true" is required — the plain muted attribute doesn't reliably set the
          property in Angular, and unmuted videos get their autoplay blocked on mobile -->
-    <video id="video" autoplay muted [muted]="true" loop playsinline>
+    <video id="video" autoplay muted [muted]="true" loop playsinline
+           preload="auto" poster="/portfolio-poster.jpg">
       <source [src]="videoSrc" type="video/webm">
       <source src="/portfolio.mp4" type="video/mp4">
     </video>

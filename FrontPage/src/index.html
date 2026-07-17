@@ -6,6 +6,28 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link class="icon" rel="icon" type="image/x-icon" href="profileIMG.jpg">
+  <!-- hero background: preload the poster + the right-sized video BEFORE Angular
+       boots, so the background appears instantly instead of black → grey → video.
+       hero.ts reads window.__bgVideoSrc so the <video> uses the same file. -->
+  <link rel="preload" as="image" href="/portfolio-poster.jpg" fetchpriority="high">
+  <script>
+    (function () {
+      var src = '/portfolio.webm';
+      var c = navigator.connection || {};
+      var t = c.effectiveType || '';
+      if (c.saveData || /(^|-)2g$/.test(t)) src = '/smallestportfolio.webm';
+      else if (t === '3g') src = '/smallsizeportfolio.webm';
+      if (!document.createElement('video').canPlayType('video/webm')) src = '/portfolio.mp4';
+      window.__bgVideoSrc = src;
+      // <link rel="preload" as="video"> is ignored by Chrome, so buffer through a
+      // detached muted video element instead — the real <video> then plays from cache.
+      var pv = document.createElement('video');
+      pv.muted = true;
+      pv.preload = 'auto';
+      pv.src = src;
+      pv.load();
+    })();
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>

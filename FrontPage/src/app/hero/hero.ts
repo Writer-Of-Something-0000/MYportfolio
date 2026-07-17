@@ -11,16 +11,33 @@ export class Hero {
   constructor(private feedbackService: FeedbackService) {}
 
   // Background video source picked by connection quality (Network Information API).
-  // Slow connection / data-saver → 767KB small version; otherwise the 1.4MB full one.
+  //   very slow / data-saver → 404KB smallestportfolio.webm
+  //   slow                   → 767KB smallsizeportfolio.webm
+  //   otherwise              → 1.4MB portfolio.webm
   // Browsers without the API (Safari/Firefox) simply get the full version.
   readonly videoSrc = Hero.pickVideoSrc();
 
   private static pickVideoSrc(): string {
+    // index.html already picked a file and started preloading it — reuse the
+    // exact same URL so the <video> hits the warm cache instead of a new fetch.
+    const preloaded = (window as any).__bgVideoSrc;
+    if (typeof preloaded === 'string' && preloaded.endsWith('.webm')) return preloaded;
+
     const conn = (navigator as any).connection;
     if (conn) {
-      const slowType = /(^|-)2g$|^3g$/.test(conn.effectiveType ?? '');
-      const slowLink = typeof conn.downlink === 'number' && conn.downlink > 0 && conn.downlink < 1.5;
-      if (conn.saveData || slowType || slowLink) return '/smallsizeportfolio.webm';
+      // effectiveType is the stable signal (Chrome's own RTT+bandwidth composite);
+      // the raw `downlink` number is a noisy estimate that dips on idle
+      // connections, so it is deliberately NOT used here.
+      const type: string = conn.effectiveType ?? '';
+
+      // 2g (or data-saver users, who asked for minimal data) → tiniest file
+      if (conn.saveData || /(^|-)2g$/.test(type)) {
+        return '/smallestportfolio.webm';
+      }
+      // 3g → middle size
+      if (type === '3g') {
+        return '/smallsizeportfolio.webm';
+      }
     }
     return '/portfolio.webm';
   }
