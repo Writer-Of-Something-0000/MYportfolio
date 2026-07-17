@@ -54,7 +54,7 @@
          property in Angular, and unmuted videos get their autoplay blocked on mobile -->
     <video id="video" autoplay muted [muted]="true" loop playsinline
            preload="auto" poster="/portfolio-poster.jpg">
-      <source [src]="videoSrc" type="video/webm">
+      <source [src]="videoSrc" [type]="videoType">
       <source src="/portfolio.mp4" type="video/mp4">
     </video>
 

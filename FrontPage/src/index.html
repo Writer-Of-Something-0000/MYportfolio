@@ -12,12 +12,18 @@
   <link rel="preload" as="image" href="/portfolio-poster.jpg" fetchpriority="high">
   <script>
     (function () {
-      var src = '/portfolio.webm';
+      // the .webm files are AV1-encoded — Safari can't decode AV1, so it must get
+      // the H.264 .mp4 tiers instead (the generic 'video/webm' check is NOT enough:
+      // Safari says "maybe" to it, picks the webm, fails on AV1 and never falls back)
+      var av1 = document.createElement('video').canPlayType('video/webm; codecs="av01.0.08M.08"');
+      var files = av1
+        ? { full: '/portfolio.webm', mid: '/smallsizeportfolio.webm', low: '/smallestportfolio.webm' }
+        : { full: '/portfolio.mp4',  mid: '/smallsizeportfolio.mp4',  low: '/smallestportfolio.mp4' };
+      var src = files.full;
       var c = navigator.connection || {};
       var t = c.effectiveType || '';
-      if (c.saveData || /(^|-)2g$/.test(t)) src = '/smallestportfolio.webm';
-      else if (t === '3g') src = '/smallsizeportfolio.webm';
-      if (!document.createElement('video').canPlayType('video/webm')) src = '/portfolio.mp4';
+      if (c.saveData || /(^|-)2g$/.test(t)) src = files.low;
+      else if (t === '3g') src = files.mid;
       window.__bgVideoSrc = src;
       // <link rel="preload" as="video"> is ignored by Chrome, so buffer through a
       // detached muted video element instead — the real <video> then plays from cache.

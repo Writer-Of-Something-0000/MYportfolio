@@ -10,18 +10,28 @@ import { FeedbackService, Feedback } from '../services/feedback';
 export class Hero {
   constructor(private feedbackService: FeedbackService) {}
 
-  // Background video source picked by connection quality (Network Information API).
-  //   very slow / data-saver → 404KB smallestportfolio.webm
-  //   slow                   → 767KB smallsizeportfolio.webm
-  //   otherwise              → 1.4MB portfolio.webm
-  // Browsers without the API (Safari/Firefox) simply get the full version.
+  // Background video source picked by codec support + connection quality.
+  //   AV1-capable browsers (Chrome etc.) → .webm tiers (1.4MB / 604KB / 461KB)
+  //   Safari (no AV1)                    → H.264 .mp4 tiers (6.1MB / 1MB / 683KB)
+  //   very slow / data-saver → low tier, 3g → mid tier, otherwise full.
   readonly videoSrc = Hero.pickVideoSrc();
+  // precise codec string so Safari skips the AV1 source at selection time
+  // instead of choosing it and failing on decode
+  readonly videoType = this.videoSrc.endsWith('.webm')
+    ? 'video/webm; codecs="av01.0.08M.08"'
+    : 'video/mp4';
 
   private static pickVideoSrc(): string {
     // index.html already picked a file and started preloading it — reuse the
     // exact same URL so the <video> hits the warm cache instead of a new fetch.
     const preloaded = (window as any).__bgVideoSrc;
-    if (typeof preloaded === 'string' && preloaded.endsWith('.webm')) return preloaded;
+    if (typeof preloaded === 'string' && /\.(webm|mp4)$/.test(preloaded)) return preloaded;
+
+    // fallback when the index.html script didn't run (must mirror its logic)
+    const av1 = document.createElement('video').canPlayType('video/webm; codecs="av01.0.08M.08"');
+    const files = av1
+      ? { full: '/portfolio.webm', mid: '/smallsizeportfolio.webm', low: '/smallestportfolio.webm' }
+      : { full: '/portfolio.mp4',  mid: '/smallsizeportfolio.mp4',  low: '/smallestportfolio.mp4' };
 
     const conn = (navigator as any).connection;
     if (conn) {
@@ -31,15 +41,11 @@ export class Hero {
       const type: string = conn.effectiveType ?? '';
 
       // 2g (or data-saver users, who asked for minimal data) → tiniest file
-      if (conn.saveData || /(^|-)2g$/.test(type)) {
-        return '/smallestportfolio.webm';
-      }
+      if (conn.saveData || /(^|-)2g$/.test(type)) return files.low;
       // 3g → middle size
-      if (type === '3g') {
-        return '/smallsizeportfolio.webm';
-      }
+      if (type === '3g') return files.mid;
     }
-    return '/portfolio.webm';
+    return files.full;
   }
 
 fullText = "Portfolio";
