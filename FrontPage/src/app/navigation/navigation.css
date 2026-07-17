@@ -140,6 +140,27 @@ h1 {
 
 }
 
+/* full name for crawlers/screen readers — visually hidden, zero layout impact */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* the animated wrapper span must render exactly like the h1 text used to —
+   don't let the generic `span` sizing below leak into it */
+h1 span[aria-hidden] {
+  margin-top: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
 
 
 .cursor {

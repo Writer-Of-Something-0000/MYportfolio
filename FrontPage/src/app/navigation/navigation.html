@@ -5,7 +5,12 @@
 <img   src="premiere.png" alt=""> 
 </div>
 
-  <h1>{{ displayedText2 }}<span class="cursor">|</span></h1>
+  <!-- crawlers + screen readers always get the FULL name; the typewriter is
+       visual-only (Google once snapshotted it mid-typing as "Luka Gengashv") -->
+  <h1>
+    <span class="sr-only">Luka Gengashvili</span>
+    <span aria-hidden="true">{{ displayedText2 }}<span class="cursor">|</span></span>
+  </h1>
 
 </div>
 
