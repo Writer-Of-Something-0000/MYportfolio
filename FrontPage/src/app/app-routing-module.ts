@@ -4,8 +4,8 @@ import { Home } from './MAIN/home/home';
 import { Projectsfilter } from './PROJECT/projectsfilter/projectsfilter';
 
 const routes: Routes = [
-  {path:'', component:Home},
-  {path:'projects', component:Projectsfilter},
+  {path:'', component:Home, title:'Luka Gengashvili — Video Editor'},
+  {path:'projects', component:Projectsfilter, title:'Projects — Luka Gengashvili'},
   {path:'projectsfilter', redirectTo: 'projects'}
 ];
 

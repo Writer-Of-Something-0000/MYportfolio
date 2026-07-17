@@ -2,9 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>FrontPage</title>
+  <title>Luka Gengashvili — Video Editor</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ── SEO ─────────────────────────────────────────────────── -->
+  <meta name="description" content="Luka Gengashvili (ლუკა გენგაშვილი) — Video Editor & Post-Production Specialist in Tbilisi, Georgia. ვიდეო მონტაჟი, motion graphics, AI video. Adobe Premiere Pro, After Effects, DaVinci Resolve.">
+  <meta name="keywords" content="Luka Gengashvili, ლუკა გენგაშვილი, Gengashvili Luka, გენგაშვილი ლუკა, Gengashvili, გენგაშვილი, video editor, ვიდეო მონტაჟიორი, ვიდეო მონტაჟი, video editing, montage, motion graphics, post-production, AI video, Tbilisi, თბილისი, საქართველო, Georgia">
+  <meta name="author" content="Luka Gengashvili">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://gengashvili-luka.space/">
+
+  <!-- social sharing previews (Facebook / Telegram / LinkedIn) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gengashvili-luka.space/">
+  <meta property="og:title" content="Luka Gengashvili — Video Editor | ლუკა გენგაშვილი">
+  <meta property="og:description" content="Video Editor & Post-Production Specialist — video editing, motion graphics, AI-powered content. ვიდეო მონტაჟი და პოსტ-პროდაქშენი.">
+  <meta property="og:image" content="https://gengashvili-luka.space/profileIMG.jpg">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ka_GE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Luka Gengashvili — Video Editor | ლუკა გენგაშვილი">
+  <meta name="twitter:description" content="Video Editor & Post-Production Specialist in Tbilisi. ვიდეო მონტაჟი, motion graphics, AI video.">
+  <meta name="twitter:image" content="https://gengashvili-luka.space/profileIMG.jpg">
+
+  <!-- structured data: tells Google every spelling of the name in both scripts -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Luka Gengashvili",
+    "alternateName": ["ლუკა გენგაშვილი", "Gengashvili Luka", "გენგაშვილი ლუკა", "Luka", "ლუკა", "Gengashvili", "გენგაშვილი"],
+    "url": "https://gengashvili-luka.space/",
+    "image": "https://gengashvili-luka.space/profileIMG.jpg",
+    "jobTitle": "Video Editor & Post-Production Specialist",
+    "description": "Video Editor and Post-Production Specialist with 3+ years of experience: video editing, motion graphics and AI-powered content creation. ვიდეო მონტაჟიორი — ვიდეო მონტაჟი, მოუშენ გრაფიკა და AI ვიდეო.",
+    "knowsAbout": ["Video Editing", "ვიდეო მონტაჟი", "Motion Graphics", "Post-Production", "AI Video Generation", "Adobe Premiere Pro", "Adobe After Effects", "DaVinci Resolve", "Adobe Photoshop", "Adobe Illustrator"],
+    "address": { "@type": "PostalAddress", "addressLocality": "Tbilisi", "addressCountry": "GE" },
+    "sameAs": [
+      "https://www.facebook.com/luka.gengashvili.39",
+      "https://www.youtube.com/@lukagengashvili"
+    ]
+  }
+  </script>
+  <!-- ─────────────────────────────────────────────────────────── -->
+
   <link class="icon" rel="icon" type="image/x-icon" href="profileIMG.jpg">
   <!-- hero background: preload the poster + the right-sized video BEFORE Angular
        boots, so the background appears instantly instead of black → grey → video.
@@ -37,6 +79,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <!-- static fallback: crawlers read this from the raw HTML before (or without)
+         JavaScript; Angular replaces it on boot, so users see it only as a brief
+         branded splash while the app loads -->
+    <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;background:#000;color:#fff;font-family:sans-serif;text-align:center;padding:1rem">
+      <h1 style="color:gold;font-size:1.6rem">Luka Gengashvili · ლუკა გენგაშვილი</h1>
+      <p style="max-width:34rem;opacity:0.85">Video Editor &amp; Post-Production Specialist in Tbilisi, Georgia —
+        video editing, motion graphics and AI-powered content creation.</p>
+      <p style="max-width:34rem;opacity:0.85">ვიდეო მონტაჟიორი — ვიდეო მონტაჟი, მოუშენ გრაფიკა და AI ვიდეო.
+        Adobe Premiere Pro · After Effects · DaVinci Resolve.</p>
+    </div>
+  </app-root>
 </body>
 </html>
