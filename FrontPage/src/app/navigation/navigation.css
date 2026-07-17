@@ -339,6 +339,26 @@ justify-content: center;
   }
 }
 
+/* ultra-narrow (Galaxy Fold cover and below): squeeze the menu so the moon
+   fits on the SAME row; if it still has to wrap, it stretches full-width so
+   it reads as an intentional bar instead of a lonely third-row button */
+@media (max-width: 300px) {
+  nav {
+    gap: 0.5rem;
+  }
+  nav ul {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+  nav ul li {
+    font-size: 1.1rem;
+  }
+  #page-mode {
+    flex: 1 1 auto;
+    padding: 0 0.6rem;
+  }
+}
+
 .cta-btn {
 
 margin-left: 1rem;

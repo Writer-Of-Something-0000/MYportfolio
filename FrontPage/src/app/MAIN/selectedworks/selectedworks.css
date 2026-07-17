@@ -193,3 +193,21 @@
   }
   .nav { display: none; }
 }
+
+/* ultra-narrow screens (Galaxy Fold cover display and below): the fixed
+   300px card is wider than the viewport — shrink it to fit */
+@media (max-width: 300px) {
+  .coverflow {
+    height: 200px;
+  }
+  .cf-card {
+    width: 208px;
+    height: 160px;
+    margin-left: -104px;
+    margin-top: -80px;
+  }
+  .video-player {
+    width: 208px;
+    height: 117px;
+  }
+}

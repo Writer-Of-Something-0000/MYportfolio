@@ -594,3 +594,18 @@ background: none;
     flex-wrap: wrap;
   }
 }
+
+/* ultra-narrow screens (Galaxy Fold cover display and below): the social
+   icon row is the layout's minimum-width floor — shrink it so it fits */
+@media (max-width: 300px) {
+  #socials {
+    height: auto;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  #socials i {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+}
