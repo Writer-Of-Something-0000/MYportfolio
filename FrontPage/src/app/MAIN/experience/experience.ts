@@ -25,6 +25,18 @@ export class Experience {
   // month is 0-indexed: Jan = 0 … Dec = 11
   jobs: Job[] = [
     {
+      title: 'AI Image & Motion Editor',
+      org: 'Upwork',
+      type: 'Long-term Contract',
+      start: new Date(2026, 6, 1), // Jul 2026
+      location: 'United States',
+      locationTag: 'remote',
+      about:
+        'Working directly with a U.S. client on a long-term hourly contract, producing AI image and motion content with Higgsfield AI. I generate and art-direct stills, animate them into motion clips, and finish the results into delivery-ready assets that match the client’s brief.',
+      skills: ['Higgsfield AI,', 'AI Image Generation,', 'Motion Editing'],
+      moreSkills: 3,
+    },
+    {
       title: 'Stickman Animation Editor',
       org: 'YouTube Channel',
       type: 'Remote',
