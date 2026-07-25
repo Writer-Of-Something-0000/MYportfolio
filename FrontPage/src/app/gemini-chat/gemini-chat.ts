@@ -47,12 +47,35 @@ export class GeminiChat implements OnInit, OnDestroy {
     { label: 'How can I reach you?', contact: true },
   ];
 
-  // Attention-grabbing teasers that pop out of the FAB once the hero scrolls
-  // away — sized to pull visitors into the work and capabilities first.
-  readonly teasers: Suggestion[] = [
+  // Attention CTAs that pop out of the FAB once the hero scrolls away. The set
+  // adapts to the section in view so the questions match what the visitor is
+  // currently looking at.
+  readonly teasersDefault: Suggestion[] = [
     { label: '👀 Wanna see my work?', route: '/projects' },
     { label: '🎬 What do I actually do?', text: 'What kind of video work do you do?' },
     { label: '🔥 Why work with me?', text: 'Why should someone hire you?' },
+  ];
+  readonly teasersExperience: Suggestion[] = [
+    { label: '🚀 What’s your latest role?', text: 'What is your latest role and what do you do there?' },
+    { label: '🌍 Who’ve you worked with?', text: 'Which companies and clients have you worked with?' },
+    { label: '⏳ How experienced are you?', text: 'How many years of experience do you have?' },
+  ];
+  readonly teasersEducation: Suggestion[] = [
+    { label: '🎓 What did you study?', text: 'What did you study and where?' },
+    { label: '📜 Got certifications?', text: 'What certifications and courses have you completed?' },
+  ];
+  readonly teasersContact: Suggestion[] = [
+    { label: '🤝 Why me?', text: 'Why should someone choose to work with you?' },
+  ];
+
+  // Which set is showing right now — updated on scroll from the active section.
+  activeTeasers: Suggestion[] = this.teasersDefault;
+
+  // Sections mapped to their teaser set, in document order.
+  private readonly sectionMap: { sel: string; set: Suggestion[] }[] = [
+    { sel: 'app-experience', set: this.teasersExperience },
+    { sel: 'app-education', set: this.teasersEducation },
+    { sel: 'footer', set: this.teasersContact },
   ];
 
   // The social cards shown when someone taps "How can I reach you?".
@@ -81,11 +104,27 @@ export class GeminiChat implements OnInit, OnDestroy {
 
   private onScroll = () => {
     const past = window.scrollY > window.innerHeight * 0.6;
-    const shouldShow = past && !this.open && !this.dismissedTeasers && this.router.url === '/';
-    if (shouldShow !== this.teasersVisible) {
-      this.zone.run(() => (this.teasersVisible = shouldShow));
+    const show = past && !this.open && !this.dismissedTeasers && this.router.url === '/';
+    const set = show ? this.pickSectionTeasers() : this.activeTeasers;
+    if (show !== this.teasersVisible || set !== this.activeTeasers) {
+      this.zone.run(() => {
+        this.teasersVisible = show;
+        this.activeTeasers = set;
+      });
     }
   };
+
+  // The teaser set for whichever section is crossing the middle of the viewport.
+  private pickSectionTeasers(): Suggestion[] {
+    const mid = window.innerHeight / 2;
+    for (const s of this.sectionMap) {
+      const el = document.querySelector(s.sel);
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      if (r.top <= mid && r.bottom >= mid) return s.set;
+    }
+    return this.teasersDefault;
+  }
 
   toggle() {
     this.open = !this.open;

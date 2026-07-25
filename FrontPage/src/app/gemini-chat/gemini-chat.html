@@ -16,7 +16,7 @@
   <button
     type="button"
     class="teaser"
-    *ngFor="let t of teasers; let i = index"
+    *ngFor="let t of activeTeasers; let i = index"
     [style.animation-delay.ms]="i * 90"
     (click)="tapTeaser(t)">
     {{ t.label }}
