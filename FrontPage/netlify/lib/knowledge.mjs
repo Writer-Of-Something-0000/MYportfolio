@@ -35,8 +35,6 @@ CONTACT & LINKS
 - Skilled in Adobe Premiere Pro, After Effects, Illustrator, Photoshop, Lightroom,
   DaVinci Resolve, Sony Vegas Pro, and modern AI video tools.
 - Loves working with Sony cameras and is crazy about drones (aerial/drone shooting).
-- Also a trained full-stack web developer (Angular / C# / .NET) — he built this
-  portfolio site himself.
 
 === EXPERIENCE (most recent first) ===
 1) AI Image & Motion Editor — Upwork (long-term contract, remote, U.S. client).
@@ -81,16 +79,6 @@ Academy of Digital Industries (Tbilisi):
 - UI/UX Design — grade A (Jan–Mar 2026).
 - Tools learned: Premiere Pro, After Effects, Photoshop, Illustrator, Figma.
 
-IT Academy Step (Tbilisi) — Full-Stack Web Development, diploma (Sep 2023 – Sep 2025):
-- Frontend — grade A+ (Sep 2023 – Aug 2024), certified.
-- Backend — grade A (Aug 2024 – Sep 2025), certified.
-- Tech: HTML5, CSS3, SCSS, Bootstrap, JavaScript, Angular 16+, C#, .NET, Entity,
-  SQL, Docker, Azure Data Studio, Git, GitHub.
-
-Udemy (Oct–Nov 2025):
-- Angular 19/20 — grade A++. C# — grade A. ASP.NET — grade A. Entity — grade A.
-- Focus: Angular, C#, APIs, HTTP requests, web communication, authentication & security.
-
 === SKILLS & STRENGTHS ===
 - Storytelling: narrative structure, emotional flow, visual rhythm.
 - Editing: cinematic editing, rhythm & pacing, emotion-driven cuts.
@@ -102,7 +90,6 @@ Udemy (Oct–Nov 2025):
   independent execution.
 - Video & design tools: Premiere Pro, After Effects, DaVinci Resolve, Photoshop,
   Illustrator, CapCut, Video Star.
-- Development tools: VS Code, JetBrains Rider, Docker, GitHub, Angular, C#.
 
 === BEYOND WORK / PERSONAL ===
 - Age 21, based in Tbilisi, Georgia.
@@ -126,7 +113,6 @@ GEAR & CRAFT
 - "Americans 6th visit" — Premiere Pro, drone & camera work, audio design,
   cinematography, video storytelling.
 - "Car poster album" — Photoshop poster/graphic design.
-- "My portfolio Site" — Angular + C# web development and design (he built it himself).
 - Many more videos are on his YouTube channel (@lukagengashvili) and on the Projects
   page of the site, where they can be filtered by category (Video Storytelling /
   Graphic Design), aspect ratio (16:9 / 9:16), and length (long-form / short-form).
