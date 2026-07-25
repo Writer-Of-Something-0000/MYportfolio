@@ -2,11 +2,11 @@
 // The API key lives ONLY here, as the GEMINI_API_KEY environment variable
 // set in the Netlify dashboard — it is never sent to the browser.
 
-// Gemini models, tried in order. 3.5-flash is the smart pick; 3.5-flash-lite is the
-// cheaper/faster fallback. (The 2.x Flash models are not available to new API keys.)
+// Gemini models, tried in order. 3.6-flash is the primary; 3.5-flash is the fallback
+// if the first is busy. (The 2.x Flash models are not available to new API keys.)
 const MODELS = [
+  'gemini-3.6-flash',
   'gemini-3.5-flash',
-  'gemini-3.5-flash-lite',
 ];
 
 // The assistant answers ONLY from the knowledge below (Luka's CV + portfolio site).
@@ -107,7 +107,7 @@ export default async (req) => {
   const history = Array.isArray(body?.messages) ? body.messages : [];
   const contents = history
     .filter((m) => m && typeof m.text === 'string' && m.text.trim())
-    .slice(-20) // keep the payload small
+    .slice(-50) // send the whole conversation as context (cap large payloads)
     .map((m) => ({
       role: m.role === 'model' ? 'model' : 'user',
       parts: [{ text: String(m.text) }],
