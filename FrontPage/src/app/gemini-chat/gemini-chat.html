@@ -11,18 +11,23 @@
   <span class="fab-label">Ask me</span>
 </button>
 
-<!-- floating CTAs glued to the FAB: section teasers + Catch UP (hidden at the footer) -->
-<div class="teasers" *ngIf="(teasersVisible || (showCatchUp && !atFooter)) && !open">
+<!-- floating CTAs glued to the FAB: section teasers + Feedbacks (mobile) + Catch UP -->
+<div class="teasers" *ngIf="(teasersVisible || showFeedbacksBtn || (showCatchUp && !atFooter)) && !open">
   <ng-container *ngIf="teasersVisible">
     <button
       type="button"
       class="teaser"
-      *ngFor="let t of activeTeasers; let i = index"
+      *ngFor="let t of shownTeasers; let i = index"
       [style.animation-delay.ms]="i * 90"
       (click)="tapTeaser(t)">
       {{ t.label }}
     </button>
   </ng-container>
+
+  <!-- mobile-only: the on-page feedback section is hidden on phones, so surface it here -->
+  <button *ngIf="showFeedbacksBtn" type="button" class="teaser feedbacks" (click)="showFeedbacks()">
+    ⭐ Feedbacks
+  </button>
 
   <!-- Catch UP sticks right above the FAB, but never at the footer (the contact form is already there) -->
   <button *ngIf="showCatchUp && !atFooter" type="button" class="teaser catch-up" (click)="catchUp()">
@@ -49,7 +54,7 @@
       *ngFor="let m of messages"
       [class.user]="m.role === 'user'"
       [class.model]="m.role === 'model'"
-      [class.has-cards]="m.cards?.length">
+      [class.has-cards]="m.cards?.length || m.feedbacks?.length">
       {{ m.text }}
 
       <div class="social-cards" *ngIf="m.cards?.length">
@@ -63,6 +68,21 @@
           <i [class]="c.icon"></i>
           <span>{{ c.label }}</span>
         </a>
+      </div>
+
+      <div class="fb-block" *ngIf="m.feedbacks?.length">
+        <h4 class="fb-heading">Feadback's</h4>
+        <div class="fb-item" *ngFor="let f of m.feedbacks">
+          <h5 class="fb-name">{{ f.name }}</h5>
+          <label class="fb-role" *ngIf="f.role">{{ f.role }}</label>
+          <div class="fb-stars">
+            <i
+              *ngFor="let s of [0, 1, 2, 3, 4]"
+              class="fa-star"
+              [ngClass]="s < f.stars ? 'fa-solid' : 'fa-regular'"></i>
+          </div>
+          <p class="fb-text">{{ f.text }}</p>
+        </div>
       </div>
     </div>
 

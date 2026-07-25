@@ -381,6 +381,70 @@
   color: #b98cff;
 }
 
+/* --- feedback cards inside a reply — styled exactly like the desktop feedback --- */
+.fb-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+
+.fb-heading {
+  align-self: flex-start;
+  margin: 0;
+  color: #4904a2;
+  font-family: "Jersey 10", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  padding: 0.5rem 0.9rem;
+  width: fit-content;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.fb-item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* clear separation between one testimonial and the next */
+.fb-item + .fb-item {
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.fb-name {
+  margin: 0;
+  font-family: "Nunito Sans", sans-serif;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.fb-role {
+  font-family: "Nunito Sans", sans-serif;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.fb-stars {
+  color: gold;
+  margin-top: 0.7rem;
+  font-size: 1rem;
+}
+
+.fb-text {
+  color: #ffffff;
+  font-family: "Nunito Sans", sans-serif;
+  margin: 1rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
 /* --- composer --- */
 .chat-composer {
   display: flex;

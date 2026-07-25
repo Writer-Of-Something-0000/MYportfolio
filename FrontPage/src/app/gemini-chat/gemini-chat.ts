@@ -1,6 +1,7 @@
-import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatService } from '../services/chat';
+import { FeedbackService, Feedback } from '../services/feedback';
 
 // A clickable contact/social card shown inside a chat reply.
 interface SocialCard {
@@ -23,6 +24,7 @@ interface ChatMsg {
   role: 'user' | 'model';
   text: string;
   cards?: SocialCard[];
+  feedbacks?: Feedback[]; // testimonial cards (shown on mobile via the Feedbacks teaser)
 }
 
 @Component({
@@ -38,6 +40,7 @@ export class GeminiChat implements OnInit, OnDestroy {
   teasersVisible = false; // attention CTAs popped out of the FAB
   showCatchUp = false; // persistent "Catch UP" CTA glued to the FAB
   atFooter = false; // true when the contact footer is the active section
+  isMobile = false; // the feedback section is hidden on mobile, so we surface it here
   private dismissedTeasers = false;
   messages: ChatMsg[] = [];
 
@@ -90,14 +93,42 @@ export class GeminiChat implements OnInit, OnDestroy {
 
   @ViewChild('scroll') private scrollRef?: ElementRef<HTMLDivElement>;
 
-  constructor(private chat: ChatService, private router: Router, private zone: NgZone) {}
+  constructor(
+    private chat: ChatService,
+    private router: Router,
+    private zone: NgZone,
+    private feedback: FeedbackService
+  ) {}
 
   ngOnInit() {
+    this.isMobile = this.matchMobile();
     // Listen outside Angular so scrolling stays smooth; only re-enter the zone
     // when the teasers actually need to show or hide.
     this.zone.runOutsideAngular(() => {
       window.addEventListener('scroll', this.onScroll, { passive: true });
     });
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    const mobile = this.matchMobile();
+    if (mobile !== this.isMobile) this.isMobile = mobile;
+  }
+
+  private matchMobile(): boolean {
+    return typeof matchMedia === 'function' && matchMedia('(max-width: 850px)').matches;
+  }
+
+  // teasers actually rendered: on mobile we trim them to leave room for the
+  // Feedbacks button (+ Catch UP off the footer) so the stack never exceeds 4.
+  get shownTeasers(): Suggestion[] {
+    if (!this.isMobile) return this.activeTeasers;
+    return this.activeTeasers.slice(0, this.atFooter ? 3 : 2);
+  }
+
+  // the Feedbacks button only appears on mobile, where the feedback section is hidden.
+  get showFeedbacksBtn(): boolean {
+    return this.isMobile && this.showCatchUp;
   }
 
   ngOnDestroy() {
@@ -234,6 +265,30 @@ export class GeminiChat implements OnInit, OnDestroy {
     const ka =
       /(ნომერ|დაგიკავშირ|დაუკავშირ|დავუკავშირ|დაკავშირ|კონტაქტ|ტელეფონ|მეილ|ელ\.?\s?ფოსტ|როგორ.*(ვნახ|გნახ|დაგიკავშირ|მოგნახ|დავუკავშირ))/;
     return en.test(t) || ka.test(text);
+  }
+
+  // Show the testimonials as cards in the chat. The on-page feedback section is
+  // hidden on mobile, so the Feedbacks teaser surfaces them here.
+  async showFeedbacks() {
+    this.dismissedTeasers = true;
+    this.teasersVisible = false;
+    this.open = true;
+    this.messages.push({ role: 'user', text: 'Show me the feedback' });
+    this.sending = true;
+    this.scrollDown();
+    try {
+      const list = await this.feedback.load();
+      this.messages.push(
+        list.length
+          ? { role: 'model', text: 'Here’s what people say about working with Luka:', feedbacks: list }
+          : { role: 'model', text: 'No feedback to show just yet — check back soon! 🎬' }
+      );
+    } catch {
+      this.messages.push({ role: 'model', text: 'Couldn’t load the feedback right now. Please try again.' });
+    } finally {
+      this.sending = false;
+      this.scrollDown();
+    }
   }
 
   private sleep(ms: number) {
