@@ -29,12 +29,33 @@
       class="msg"
       *ngFor="let m of messages"
       [class.user]="m.role === 'user'"
-      [class.model]="m.role === 'model'">
+      [class.model]="m.role === 'model'"
+      [class.has-cards]="m.cards?.length">
       {{ m.text }}
+
+      <div class="social-cards" *ngIf="m.cards?.length">
+        <a
+          class="social-card"
+          *ngFor="let c of m.cards"
+          [href]="c.href"
+          target="_blank"
+          rel="noopener"
+          [attr.aria-label]="c.label">
+          <i [class]="c.icon"></i>
+          <span>{{ c.label }}</span>
+        </a>
+      </div>
     </div>
 
     <div class="msg model typing" *ngIf="sending">
       <span></span><span></span><span></span>
+    </div>
+
+    <!-- preset quick-question chips -->
+    <div class="chip-row" *ngIf="!sending">
+      <button type="button" class="chip" *ngFor="let s of suggestions" (click)="pick(s)">
+        {{ s.label }}
+      </button>
     </div>
   </div>
 

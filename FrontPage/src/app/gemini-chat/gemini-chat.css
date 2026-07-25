@@ -208,6 +208,74 @@
   30% { transform: translateY(-4px); opacity: 1; }
 }
 
+/* --- preset question chips --- */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+
+.chip {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: left;
+  color: #eae2ff;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid rgba(157, 78, 221, 0.5);
+  background: rgba(73, 4, 162, 0.25);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.chip:hover {
+  background: rgba(125, 60, 240, 0.4);
+  border-color: #9d4edd;
+  transform: translateY(-1px);
+}
+
+/* --- social / contact cards inside a reply --- */
+.msg.has-cards {
+  max-width: 92%;
+}
+
+.social-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+  margin-top: 0.6rem;
+}
+
+.social-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.7rem;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.social-card:hover {
+  background: rgba(125, 60, 240, 0.28);
+  border-color: rgba(157, 78, 221, 0.6);
+  transform: translateY(-1px);
+}
+
+.social-card i {
+  font-size: 1rem;
+  width: 1.2rem;
+  text-align: center;
+  color: #b98cff;
+}
+
 /* --- composer --- */
 .chat-composer {
   display: flex;
