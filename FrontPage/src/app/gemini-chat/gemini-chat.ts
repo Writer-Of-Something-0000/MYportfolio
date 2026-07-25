@@ -63,18 +63,37 @@ export class GeminiChat {
     if (this.sending) return;
 
     if (s.contact) {
-      // Built-in reply — no AI call — so the contact links always appear.
-      this.messages.push({ role: 'user', text: 'How can I reach you?' });
-      this.messages.push({
-        role: 'model',
-        text: 'Here’s where you can reach me fastest — pick whichever works best for you:',
-        cards: this.contactCards,
-      });
-      this.scrollDown();
+      this.revealContact();
       return;
     }
 
     if (s.text) this.ask(s.text);
+  }
+
+  // Built-in contact reply — no AI call. Scrolls down and writes a first line,
+  // then (after a short "typing" pause) a second line with the clickable
+  // social cards, so the links always appear and feel like a real reply.
+  private async revealContact() {
+    this.messages.push({ role: 'user', text: 'How can I reach you?' });
+    this.sending = true; // show the typing dots while "composing"
+    this.scrollDown();
+
+    await this.sleep(700);
+    this.messages.push({ role: 'model', text: 'Here’s where you can reach me fastest' });
+    this.scrollDown();
+
+    await this.sleep(5000);
+    this.messages.push({
+      role: 'model',
+      text: 'You can also find me here:',
+      cards: this.contactCards,
+    });
+    this.sending = false;
+    this.scrollDown();
+  }
+
+  private sleep(ms: number) {
+    return new Promise<void>((resolve) => setTimeout(resolve, ms));
   }
 
   // Send whatever is typed in the composer.
