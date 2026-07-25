@@ -53,9 +53,10 @@ export class Experience {
       org: 'Georgian Ad Company',
       type: 'Full-time',
       start: new Date(2026, 3, 1), // Apr 2026
+      end: new Date(2026, 6, 1), // Jul 2026 — career ended
       location: 'Tbilisi, Georgia',
       about:
-        'Producing AI-generated commercials from 30-second spots up to 8-minute brand films. I generate voiceovers, images, and full video scenes with modern generative AI tools, then edit, grade, and sound-design them into polished, ready-to-air ads.',
+        'Produced AI-generated commercials from 30-second spots up to 8-minute brand films. Generated voiceovers, images, and full video scenes with modern generative AI tools, then edited, graded, and sound-designed them into polished, ready-to-air ads.',
       skills: ['AI Video Generation,', 'AI Voice & Image,', 'Ad Editing'],
       moreSkills: 4,
     },
@@ -64,10 +65,11 @@ export class Experience {
       org: 'PlotRoom',
       type: 'Full-time',
       start: new Date(2026, 3, 1), // Apr 2026
+      end: new Date(2026, 5, 1), // Jun 2026 — career ended
       location: 'London, United Kingdom',
       locationTag: 'remote',
       about:
-        'Video Storyteller for a UK-based creative startup, editing talking-head videos into highly engaging content for digital audiences across social media platforms. I manage end-to-end video production, including editing, audio design, and motion storytelling.',
+        'Video Storyteller for a UK-based creative startup, editing talking-head videos into highly engaging content for digital audiences across social media platforms. Managed end-to-end video production, including editing, audio design, and motion storytelling.',
       skills: ['Aobe Premiere Pro,', 'Talking-head Editing,', 'Audio Design'],
       moreSkills: 4,
     },

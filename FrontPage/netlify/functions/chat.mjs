@@ -1,11 +1,11 @@
-// Serverless proxy for the portfolio chat (Groq).
-// The API key lives ONLY here, as the GROQ_API_KEY environment variable
+// Serverless proxy for the portfolio chat (Google Gemini).
+// The API key lives ONLY here, as the GEMINI_API_KEY environment variable
 // set in the Netlify dashboard — it is never sent to the browser.
 
-// Groq free models, tried in order. 70B is smarter; 8B is the fast fallback.
+// Gemini free-tier models, tried in order. 2.5-flash is smarter; 2.0-flash is the fast fallback.
 const MODELS = [
-  'llama-3.3-70b-versatile',
-  'llama-3.1-8b-instant',
+  'gemini-2.5-flash',
+  'gemini-2.0-flash',
 ];
 
 // The assistant answers ONLY from the knowledge below (Luka's CV + portfolio site).
@@ -92,7 +92,7 @@ const json = (obj, status = 200) =>
 export default async (req) => {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
 
-  const apiKey = process.env.GROQ_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) return json({ error: 'Chat is not configured on the server.' }, 500);
 
   let body;
@@ -104,29 +104,37 @@ export default async (req) => {
 
   // client sends the conversation as [{ role: 'user' | 'model', text: string }]
   const history = Array.isArray(body?.messages) ? body.messages : [];
-  const turns = history
+  const contents = history
     .filter((m) => m && typeof m.text === 'string' && m.text.trim())
     .slice(-20) // keep the payload small
     .map((m) => ({
-      role: m.role === 'model' ? 'assistant' : 'user',
-      content: String(m.text),
+      role: m.role === 'model' ? 'model' : 'user',
+      parts: [{ text: String(m.text) }],
     }));
 
-  if (!turns.length) return json({ error: 'No message provided.' }, 400);
+  if (!contents.length) return json({ error: 'No message provided.' }, 400);
 
-  const messages = [{ role: 'system', content: SYSTEM_PROMPT }, ...turns];
+  const payload = {
+    systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+    contents,
+    generationConfig: { temperature: 0.7, maxOutputTokens: 512 },
+  };
+
   let lastDetail = '';
 
   for (const model of MODELS) {
     try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': apiKey,
+          },
+          body: JSON.stringify(payload),
         },
-        body: JSON.stringify({ model, temperature: 0.7, max_tokens: 512, messages }),
-      });
+      );
 
       if (!res.ok) {
         lastDetail = (await res.text().catch(() => '')).slice(0, 300);
@@ -134,7 +142,10 @@ export default async (req) => {
       }
 
       const data = await res.json();
-      const reply = data?.choices?.[0]?.message?.content?.trim();
+      const reply = data?.candidates?.[0]?.content?.parts
+        ?.map((p) => p?.text || '')
+        .join('')
+        .trim();
       if (reply) return json({ reply });
       lastDetail = JSON.stringify(data).slice(0, 300);
     } catch (e) {
