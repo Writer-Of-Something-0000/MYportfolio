@@ -118,7 +118,14 @@ export default async (req) => {
   const payload = {
     systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
     contents,
-    generationConfig: { temperature: 0.7, maxOutputTokens: 512 },
+    generationConfig: {
+      temperature: 0.7,
+      // Gemini 3.x counts internal "thinking" against the output budget, and
+      // Georgian is token-heavy — keep thinking low and leave ample room so the
+      // visible answer is never truncated.
+      maxOutputTokens: 2048,
+      thinkingConfig: { thinkingLevel: 'low' },
+    },
   };
 
   let lastDetail = '';
@@ -144,7 +151,8 @@ export default async (req) => {
 
       const data = await res.json();
       const reply = data?.candidates?.[0]?.content?.parts
-        ?.map((p) => p?.text || '')
+        ?.filter((p) => p && !p.thought) // drop internal thinking, keep the answer
+        .map((p) => p.text || '')
         .join('')
         .trim();
       if (reply) return json({ reply });
