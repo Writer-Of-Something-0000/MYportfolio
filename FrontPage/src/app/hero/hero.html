@@ -41,6 +41,10 @@
             <ul id="jobs">
                 <li id="justit" routerLink="/projects">Video Storytelling</li>
                 <li routerLink="/projects" [queryParams]="{ category: 'graphicdesign' }">Graphic Design</li>
+                <li routerLink="/projects" [queryParams]="{ ratio: '169' }">16:9</li>
+                <li routerLink="/projects" [queryParams]="{ ratio: '916' }">9:16</li>
+                <li routerLink="/projects" [queryParams]="{ length: 'long' }">Long Form</li>
+                <li routerLink="/projects" [queryParams]="{ length: 'short' }">Short Form</li>
             </ul>
 
         </div>

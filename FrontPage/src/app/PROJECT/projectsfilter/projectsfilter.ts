@@ -102,10 +102,14 @@ export class Projectsfilter implements OnInit {
   }
 
   ngOnInit(): void {
-    // deep link from the hero pills, e.g. /projects?category=graphicdesign
-    if (this.route.snapshot.queryParamMap.get('category') === 'graphicdesign') {
-      this.category = 'graphicdesign';
-    }
+    // deep links from the hero pills, e.g. /projects?category=graphicdesign,
+    // /projects?ratio=916, /projects?length=short
+    const q = this.route.snapshot.queryParamMap;
+    if (q.get('category') === 'graphicdesign') this.category = 'graphicdesign';
+    const ratio = q.get('ratio');
+    if (ratio === '169' || ratio === '916') this.orientation = ratio;
+    const length = q.get('length');
+    if (length === 'long' || length === 'short') this.length = length;
     this.loadChannelVideos();
   }
 
