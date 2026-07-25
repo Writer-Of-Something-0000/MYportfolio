@@ -32,6 +32,7 @@ interface ChatMsg {
 export class GeminiChat {
   open = false;
   sending = false;
+  contactPending = false; // 10s silent wait after tapping "How can I reach you?"
   messages: ChatMsg[] = [];
 
   // Preset quick-question chips shown in the chat.
@@ -60,7 +61,7 @@ export class GeminiChat {
 
   // Tap on a preset chip.
   pick(s: Suggestion) {
-    if (this.sending) return;
+    if (this.sending || this.contactPending) return;
 
     if (s.contact) {
       this.revealContact();
@@ -70,30 +71,48 @@ export class GeminiChat {
     if (s.text) this.ask(s.text);
   }
 
-  // Built-in contact reply — no AI call. Scrolls down and writes a first line,
-  // then (after a short "typing" pause) a second line with the clickable
-  // social cards, so the links always appear and feel like a real reply.
+  // Built-in contact reply — no AI call. Scrolls the page to the footer, then
+  // stays completely silent (no typing dots) for 10s before "writing" the
+  // reply with the clickable social cards.
   private async revealContact() {
     this.messages.push({ role: 'user', text: 'How can I reach you?' });
-    this.sending = true; // show the typing dots while "composing"
+    this.contactPending = true; // silent wait: no typing dots, chips/input locked
     this.scrollDown();
 
-    await this.sleep(700);
-    this.messages.push({ role: 'model', text: 'Here’s where you can reach me fastest' });
-    this.scrollDown();
+    // scroll the whole page down to the contact footer
+    this.scrollPageToFooter();
 
-    await this.sleep(5000);
+    // 10 seconds of complete silence, then start "writing"
+    await this.sleep(10000);
+
+    this.sending = true; // now the typing dots appear
+    this.scrollDown();
+    await this.sleep(1200);
+
     this.messages.push({
       role: 'model',
       text: 'You can also find me here:',
       cards: this.contactCards,
     });
     this.sending = false;
+    this.contactPending = false;
     this.scrollDown();
   }
 
   private sleep(ms: number) {
     return new Promise<void>((resolve) => setTimeout(resolve, ms));
+  }
+
+  // Scroll the main page down to the contact footer ("Catch UP"). Smooth on
+  // normal browsers; reduced-motion setups get an instant jump — either way
+  // the page actually reaches the footer.
+  private scrollPageToFooter() {
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+    const targetY = window.scrollY + footer.getBoundingClientRect().top;
+    const reduce =
+      typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: targetY, behavior: reduce ? 'auto' : 'smooth' });
   }
 
   // Send whatever is typed in the composer.

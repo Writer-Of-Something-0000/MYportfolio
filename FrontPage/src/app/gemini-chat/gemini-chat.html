@@ -52,7 +52,7 @@
     </div>
 
     <!-- preset quick-question chips -->
-    <div class="chip-row" *ngIf="!sending">
+    <div class="chip-row" *ngIf="!sending && !contactPending">
       <button type="button" class="chip" *ngFor="let s of suggestions" (click)="pick(s)">
         {{ s.label }}
       </button>
@@ -65,8 +65,8 @@
       type="text"
       placeholder="Type a message…"
       autocomplete="off"
-      [disabled]="sending" />
-    <button type="submit" [disabled]="sending" aria-label="Send message">
+      [disabled]="sending || contactPending" />
+    <button type="submit" [disabled]="sending || contactPending" aria-label="Send message">
       <i class="fa-solid fa-paper-plane"></i>
     </button>
   </form>
