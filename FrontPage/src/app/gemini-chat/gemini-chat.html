@@ -11,15 +11,27 @@
   <span class="fab-label">Ask me</span>
 </button>
 
-<!-- attention CTAs that pop out of the FAB once the hero scrolls away -->
-<div class="teasers" *ngIf="teasersVisible && !open">
-  <button
-    type="button"
-    class="teaser"
-    *ngFor="let t of activeTeasers; let i = index"
-    [style.animation-delay.ms]="i * 90"
-    (click)="tapTeaser(t)">
-    {{ t.label }}
+<!-- floating CTAs glued to the FAB: Catch UP (always, while scrolled) + section teasers -->
+<div class="teasers" *ngIf="(teasersVisible || showCatchUp) && !open">
+  <!-- at the footer, Catch UP takes first place (top of the stack) -->
+  <button *ngIf="showCatchUp && atFooter" type="button" class="teaser catch-up" (click)="catchUp()">
+    Catch UP
+  </button>
+
+  <ng-container *ngIf="teasersVisible">
+    <button
+      type="button"
+      class="teaser"
+      *ngFor="let t of activeTeasers; let i = index"
+      [style.animation-delay.ms]="i * 90"
+      (click)="tapTeaser(t)">
+      {{ t.label }}
+    </button>
+  </ng-container>
+
+  <!-- otherwise Catch UP sticks right above the FAB (bottom of the stack) -->
+  <button *ngIf="showCatchUp && !atFooter" type="button" class="teaser catch-up" (click)="catchUp()">
+    Catch UP
   </button>
 </div>
 

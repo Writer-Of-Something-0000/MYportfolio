@@ -143,6 +143,24 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
+/* the persistent Catch UP CTA is solid purple, not glass */
+.teaser.catch-up {
+  background: linear-gradient(135deg, #4904a2, #7d3cf0);
+  border-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow:
+    0 10px 26px rgba(73, 4, 162, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.teaser.catch-up:hover {
+  background: linear-gradient(135deg, #5a12c4, #8f52ff);
+  box-shadow:
+    0 14px 34px rgba(125, 60, 240, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
 @keyframes teaserPop {
   from { transform: translateY(16px) scale(0.7); }
   to { transform: translateY(0) scale(1); }

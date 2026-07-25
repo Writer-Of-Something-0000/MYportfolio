@@ -36,6 +36,8 @@ export class GeminiChat implements OnInit, OnDestroy {
   sending = false;
   contactPending = false; // 10s silent wait after tapping "How can I reach you?"
   teasersVisible = false; // attention CTAs popped out of the FAB
+  showCatchUp = false; // persistent "Catch UP" CTA glued to the FAB
+  atFooter = false; // true when the contact footer is the active section
   private dismissedTeasers = false;
   messages: ChatMsg[] = [];
 
@@ -104,15 +106,31 @@ export class GeminiChat implements OnInit, OnDestroy {
 
   private onScroll = () => {
     const past = window.scrollY > window.innerHeight * 0.6;
-    const show = past && !this.open && !this.dismissedTeasers && this.router.url === '/';
-    const set = show ? this.pickSectionTeasers() : this.activeTeasers;
-    if (show !== this.teasersVisible || set !== this.activeTeasers) {
+    const onHome = this.router.url === '/';
+    // Catch UP sticks to the FAB the whole way down; the teasers also honour dismissal.
+    const showCatchUp = past && !this.open && onHome;
+    const showTeasers = showCatchUp && !this.dismissedTeasers;
+    const set = showCatchUp ? this.pickSectionTeasers() : this.activeTeasers;
+    const atFooter = set === this.teasersContact;
+    if (
+      showCatchUp !== this.showCatchUp ||
+      showTeasers !== this.teasersVisible ||
+      set !== this.activeTeasers ||
+      atFooter !== this.atFooter
+    ) {
       this.zone.run(() => {
-        this.teasersVisible = show;
+        this.showCatchUp = showCatchUp;
+        this.teasersVisible = showTeasers;
         this.activeTeasers = set;
+        this.atFooter = atFooter;
       });
     }
   };
+
+  // "Catch UP" — smooth-scroll the page to the contact footer.
+  catchUp() {
+    this.scrollPageToFooter();
+  }
 
   // Scrollspy: the active set is the last section (in document order) whose top
   // has scrolled above the trigger line. Holding the previous section through
