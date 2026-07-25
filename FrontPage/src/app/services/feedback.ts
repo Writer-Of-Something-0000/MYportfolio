@@ -11,10 +11,11 @@ export interface Feedback {
   providedIn: 'root',
 })
 export class FeedbackService {
-  // Public read endpoint that returns the raw feedback rows (Google Form / Sheet style).
-  // Set this to your API URL. If it's empty or the request fails, the caller
-  // falls back to its built-in defaults.
-  private readonly endpoint = 'https://sheetdb.io/api/v1/gqfq2jhpj8rj4';
+  // Our own Netlify Function reads the feedback straight from the public Google
+  // Sheet (the Google Form's responses) — no SheetDB, no request limits. It
+  // returns the same raw row shape (objects keyed by column label) that mapRow
+  // expects. If the request fails, the caller falls back to its built-in defaults.
+  private readonly endpoint = '/.netlify/functions/feedback';
 
   async load(): Promise<Feedback[]> {
     if (!this.endpoint || this.endpoint.startsWith('PUT_YOUR_API_URL')) {
