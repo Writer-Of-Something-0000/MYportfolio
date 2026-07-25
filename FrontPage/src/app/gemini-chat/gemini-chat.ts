@@ -114,8 +114,14 @@ export class GeminiChat implements OnInit, OnDestroy {
     if (mobile !== this.isMobile) this.isMobile = mobile;
   }
 
+  // The Feedbacks button surfaces the feedback section wherever the site hides
+  // it — the same breakpoints as #feadback: narrow (≤850px) OR short (≤799px)
+  // screens, which covers phones and tablets in both orientations.
   private matchMobile(): boolean {
-    return typeof matchMedia === 'function' && matchMedia('(max-width: 850px)').matches;
+    return (
+      typeof matchMedia === 'function' &&
+      matchMedia('(max-width: 850px), (max-height: 799px)').matches
+    );
   }
 
   // teasers actually rendered: on mobile we trim them to leave room for the
