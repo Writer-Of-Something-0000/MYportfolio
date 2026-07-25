@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ChatService } from '../services/chat';
 
 // A clickable contact/social card shown inside a chat reply.
@@ -14,6 +15,7 @@ interface Suggestion {
   label: string;
   text?: string;
   contact?: boolean;
+  route?: string; // navigate to this route (and close the chat) instead of asking
 }
 
 // One rendered message. Extends the API turn with optional social cards.
@@ -37,6 +39,7 @@ export class GeminiChat {
 
   // Preset quick-question chips shown in the chat.
   readonly suggestions: Suggestion[] = [
+    { label: 'Show me your work', route: '/projects' },
     { label: 'Tell me about your latest experience', text: 'Tell me about your latest experience' },
     { label: 'What tools & software do you use?', text: 'What software and tools do you use?' },
     { label: 'How can I reach you?', contact: true },
@@ -52,7 +55,7 @@ export class GeminiChat {
 
   @ViewChild('scroll') private scrollRef?: ElementRef<HTMLDivElement>;
 
-  constructor(private chat: ChatService) {}
+  constructor(private chat: ChatService, private router: Router) {}
 
   toggle() {
     this.open = !this.open;
@@ -62,6 +65,14 @@ export class GeminiChat {
   // Tap on a preset chip.
   pick(s: Suggestion) {
     if (this.sending || this.contactPending) return;
+
+    if (s.route) {
+      // close the chat and take the visitor to that page (e.g. Projects)
+      this.open = false;
+      this.router.navigateByUrl(s.route);
+      window.scrollTo(0, 0);
+      return;
+    }
 
     if (s.contact) {
       this.revealContact();
