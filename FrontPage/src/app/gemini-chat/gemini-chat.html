@@ -11,13 +11,8 @@
   <span class="fab-label">Ask me</span>
 </button>
 
-<!-- floating CTAs glued to the FAB: Catch UP (always, while scrolled) + section teasers -->
-<div class="teasers" *ngIf="(teasersVisible || showCatchUp) && !open">
-  <!-- at the footer, Catch UP takes first place (top of the stack) -->
-  <button *ngIf="showCatchUp && atFooter" type="button" class="teaser catch-up" (click)="catchUp()">
-    Catch UP
-  </button>
-
+<!-- floating CTAs glued to the FAB: section teasers + Catch UP (hidden at the footer) -->
+<div class="teasers" *ngIf="(teasersVisible || (showCatchUp && !atFooter)) && !open">
   <ng-container *ngIf="teasersVisible">
     <button
       type="button"
@@ -29,7 +24,7 @@
     </button>
   </ng-container>
 
-  <!-- otherwise Catch UP sticks right above the FAB (bottom of the stack) -->
+  <!-- Catch UP sticks right above the FAB, but never at the footer (the contact form is already there) -->
   <button *ngIf="showCatchUp && !atFooter" type="button" class="teaser catch-up" (click)="catchUp()">
     Catch UP
   </button>
