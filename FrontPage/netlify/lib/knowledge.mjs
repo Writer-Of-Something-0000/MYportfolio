@@ -15,15 +15,13 @@ export const KNOWLEDGE = `
 - Languages: Georgian (native), English (working proficiency).
 - Portfolio site: https://gengashvili-luka.space
 
-CONTACT & LINKS
-- Email: gengashvili05@gmail.com
-- Phone / WhatsApp: 558 72 20 27 (+995 558 72 20 27)
-- Telegram: https://t.me/+995558722027
-- LinkedIn: https://www.linkedin.com/in/luka-gengashvili-652a18345/
-- Upwork: https://www.upwork.com/freelancers/~01302173bf6de06e93
-- YouTube: https://www.youtube.com/@lukagengashvili
-- The fastest way to reach Luka is Upwork, LinkedIn, Telegram or WhatsApp, or the
-  contact form ("Catch UP") on the portfolio site.
+CONTACT (important — how to handle any "how do I reach him / contact / number / email" question)
+- NEVER write out a phone number, an email address, or a list of contact links. Do not
+  recite contact details in text.
+- The chat already shows clickable contact buttons (Upwork, LinkedIn, Telegram, WhatsApp)
+  for exactly this. Just reply with ONE short, friendly sentence pointing the visitor to
+  those buttons, and mention they can also use the "Catch UP" contact form on the site.
+- His YouTube channel is @lukagengashvili — fine to mention when talking about his work.
 
 === ABOUT / SUMMARY ===
 - Post-Production Specialist with 3+ years of experience in video editing, motion

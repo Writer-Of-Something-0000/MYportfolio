@@ -210,6 +210,32 @@ export class GeminiChat implements OnInit, OnDestroy {
     this.scrollDown();
   }
 
+  // A typed contact question ("what's his number?", "how do I reach you?") shows the
+  // social cards instead of a plain-text answer.
+  private async showContactCards(userText: string) {
+    this.messages.push({ role: 'user', text: userText });
+    this.sending = true;
+    this.scrollDown();
+    await this.sleep(800);
+    this.messages.push({
+      role: 'model',
+      text: 'Here’s where you can reach me — just tap whichever works best for you:',
+      cards: this.contactCards,
+    });
+    this.sending = false;
+    this.scrollDown();
+  }
+
+  // Does the message ask how to reach / contact Luka (in English or Georgian)?
+  private isContactQuery(text: string): boolean {
+    const t = text.toLowerCase();
+    const en =
+      /\b(contact|reach (you|him|out)|get in touch|hire (you|him|luka)|(your|his) (number|phone|email|contact|details)|how (can|do|to) .*(reach|contact|hire)|phone number|e-?mail|whats\s?app|telegram|linkedin|upwork|get a ?hold)\b/;
+    const ka =
+      /(ნომერ|დაგიკავშირ|დაუკავშირ|დავუკავშირ|დაკავშირ|კონტაქტ|ტელეფონ|მეილ|ელ\.?\s?ფოსტ|როგორ.*(ვნახ|გნახ|დაგიკავშირ|მოგნახ|დავუკავშირ))/;
+    return en.test(t) || ka.test(text);
+  }
+
   private sleep(ms: number) {
     return new Promise<void>((resolve) => setTimeout(resolve, ms));
   }
@@ -236,7 +262,13 @@ export class GeminiChat implements OnInit, OnDestroy {
 
   // Push a user message and stream the AI reply.
   private async ask(text: string) {
-    if (this.sending) return;
+    if (this.sending || this.contactPending) return;
+
+    // contact questions get the clickable social cards, never a plain-text reply
+    if (this.isContactQuery(text)) {
+      await this.showContactCards(text);
+      return;
+    }
 
     this.messages.push({ role: 'user', text });
     this.sending = true;
