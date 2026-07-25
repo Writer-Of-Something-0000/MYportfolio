@@ -11,6 +11,18 @@
   <span class="fab-label">Ask me</span>
 </button>
 
+<!-- attention CTAs that pop out of the FAB once the hero scrolls away -->
+<div class="teasers" *ngIf="teasersVisible && !open">
+  <button
+    type="button"
+    class="teaser"
+    *ngFor="let t of teasers; let i = index"
+    [style.animation-delay.ms]="i * 90"
+    (click)="tapTeaser(t)">
+    {{ t.label }}
+  </button>
+</div>
+
 <div class="chat-panel" *ngIf="open">
 
   <div class="chat-head">

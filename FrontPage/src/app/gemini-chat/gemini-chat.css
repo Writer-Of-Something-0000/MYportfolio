@@ -87,6 +87,71 @@
   transform: scale(0.85) translateY(6px);
 }
 
+/* --- attention teasers that pop out of the FAB --- */
+.teasers {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 5.5rem; /* sit just above the FAB */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  pointer-events: none; /* only the pills catch clicks */
+  animation: teaserBob 3.5s ease-in-out infinite;
+}
+
+.teaser {
+  pointer-events: auto;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(135deg, #4904a2, #7d3cf0);
+  box-shadow:
+    0 10px 26px rgba(73, 4, 162, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  /* always visible; the entrance only moves/scales the pill, so a paused or
+     unsupported animation can never leave the CTA invisible. */
+  opacity: 1;
+  animation: teaserPop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.4) backwards;
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.teaser:hover {
+  filter: brightness(1.12);
+  box-shadow:
+    0 14px 34px rgba(125, 60, 240, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+@keyframes teaserPop {
+  from { transform: translateY(16px) scale(0.7); }
+  to { transform: translateY(0) scale(1); }
+}
+
+@keyframes teaserBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@media (max-width: 850px) {
+  .teasers {
+    right: 1rem;
+    bottom: calc(5rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teasers { animation: none; }
+  .teaser { animation: none; }
+}
+
 /* --- chat panel --- */
 .chat-panel {
   position: fixed;

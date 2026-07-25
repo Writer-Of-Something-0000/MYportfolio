@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChatService } from '../services/chat';
 
@@ -31,18 +31,28 @@ interface ChatMsg {
   templateUrl: './gemini-chat.html',
   styleUrl: './gemini-chat.css',
 })
-export class GeminiChat {
+export class GeminiChat implements OnInit, OnDestroy {
   open = false;
   sending = false;
   contactPending = false; // 10s silent wait after tapping "How can I reach you?"
+  teasersVisible = false; // attention CTAs popped out of the FAB
+  private dismissedTeasers = false;
   messages: ChatMsg[] = [];
 
-  // Preset quick-question chips shown in the chat.
+  // Preset quick-question chips shown inside the chat.
   readonly suggestions: Suggestion[] = [
     { label: 'Show me your work', route: '/projects' },
     { label: 'Tell me about your latest experience', text: 'Tell me about your latest experience' },
     { label: 'What tools & software do you use?', text: 'What software and tools do you use?' },
     { label: 'How can I reach you?', contact: true },
+  ];
+
+  // Attention-grabbing teasers that pop out of the FAB once the hero scrolls
+  // away — sized to pull visitors into the work and capabilities first.
+  readonly teasers: Suggestion[] = [
+    { label: '👀 Wanna see my work?', route: '/projects' },
+    { label: '🎬 What do I actually do?', text: 'What kind of video work do you do?' },
+    { label: '🔥 Why work with me?', text: 'Why should someone hire you?' },
   ];
 
   // The social cards shown when someone taps "How can I reach you?".
@@ -55,11 +65,43 @@ export class GeminiChat {
 
   @ViewChild('scroll') private scrollRef?: ElementRef<HTMLDivElement>;
 
-  constructor(private chat: ChatService, private router: Router) {}
+  constructor(private chat: ChatService, private router: Router, private zone: NgZone) {}
+
+  ngOnInit() {
+    // Listen outside Angular so scrolling stays smooth; only re-enter the zone
+    // when the teasers actually need to show or hide.
+    this.zone.runOutsideAngular(() => {
+      window.addEventListener('scroll', this.onScroll, { passive: true });
+    });
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.onScroll);
+  }
+
+  private onScroll = () => {
+    const past = window.scrollY > window.innerHeight * 0.6;
+    const shouldShow = past && !this.open && !this.dismissedTeasers && this.router.url === '/';
+    if (shouldShow !== this.teasersVisible) {
+      this.zone.run(() => (this.teasersVisible = shouldShow));
+    }
+  };
 
   toggle() {
     this.open = !this.open;
-    if (this.open) this.scrollDown();
+    if (this.open) {
+      this.dismissedTeasers = true; // opening the chat retires the teasers
+      this.teasersVisible = false;
+      this.scrollDown();
+    }
+  }
+
+  // Tap an attention teaser: open the chat (for ask/contact) or navigate (route).
+  tapTeaser(t: Suggestion) {
+    this.dismissedTeasers = true;
+    this.teasersVisible = false;
+    if (!t.route) this.open = true;
+    this.pick(t);
   }
 
   // Tap on a preset chip.
