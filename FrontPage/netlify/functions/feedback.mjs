@@ -13,7 +13,9 @@ const SHEET_ID =
 const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
 // Warm-instance cache so a burst of page views doesn't hit Google every time.
-const TTL_MS = 5 * 60 * 1000;
+// Kept short (60s) so a new Google Form response shows up on the site almost
+// immediately — no redeploy, no git push needed.
+const TTL_MS = 60 * 1000;
 let cache = { at: 0, rows: null };
 
 const json = (obj, status = 200, extraHeaders = {}) =>
@@ -54,7 +56,7 @@ export default async () => {
 
   // Serve fresh cache if we have it.
   if (cache.rows && now - cache.at < TTL_MS) {
-    return json(cache.rows, 200, { 'Cache-Control': 'public, max-age=300' });
+    return json(cache.rows, 200, { 'Cache-Control': 'public, max-age=60' });
   }
 
   try {
@@ -69,7 +71,7 @@ export default async () => {
     // the newest testimonials first.
     const rows = parseGviz(text).reverse();
     cache = { at: now, rows };
-    return json(rows, 200, { 'Cache-Control': 'public, max-age=300' });
+    return json(rows, 200, { 'Cache-Control': 'public, max-age=60' });
   } catch (e) {
     if (cache.rows) return json(cache.rows); // serve stale on network error
     return json({ error: 'Could not load feedback.', detail: String(e).slice(0, 200) }, 502);
