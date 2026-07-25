@@ -108,26 +108,39 @@
   font-weight: 800;
   color: #ffffff;
   white-space: nowrap;
-  padding: 0.6rem 1rem;
-  border-radius: 999px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 16px;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: linear-gradient(135deg, #4904a2, #7d3cf0);
+  /* frosted-glass pill matching the hero's category buttons — not purple */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    rgba(0, 0, 0, 0.14) 100%
+  );
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
   box-shadow:
-    0 10px 26px rgba(73, 4, 162, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   /* always visible; the entrance only moves/scales the pill, so a paused or
      unsupported animation can never leave the CTA invisible. */
   opacity: 1;
   animation: teaserPop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.4) backwards;
-  transition: filter 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .teaser:hover {
-  filter: brightness(1.12);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
   box-shadow:
-    0 14px 34px rgba(125, 60, 240, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    0 14px 34px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 @keyframes teaserPop {
