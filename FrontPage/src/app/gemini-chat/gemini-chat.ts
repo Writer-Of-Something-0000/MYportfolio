@@ -220,6 +220,15 @@ export class GeminiChat implements OnInit, OnDestroy {
   // stays completely silent (no typing dots) for 10s before "writing" the
   // reply with the clickable social cards.
   private async revealContact() {
+    // On mobile the chat is fullscreen, so scrolling the page behind it is
+    // pointless — close the chat and take the visitor down to the contact footer.
+    if (this.isMobile) {
+      this.open = false;
+      this.onScroll(); // re-evaluate the teasers for the closed state
+      this.scrollPageToFooter();
+      return;
+    }
+
     this.messages.push({ role: 'user', text: 'How can I reach you?' });
     this.contactPending = true; // silent wait: no typing dots, chips/input locked
     this.scrollDown();
