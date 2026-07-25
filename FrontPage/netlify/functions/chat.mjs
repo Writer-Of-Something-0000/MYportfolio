@@ -2,10 +2,11 @@
 // The API key lives ONLY here, as the GEMINI_API_KEY environment variable
 // set in the Netlify dashboard — it is never sent to the browser.
 
-// Gemini free-tier models, tried in order. 2.5-flash is smarter; 2.0-flash is the fast fallback.
+// Gemini models, tried in order. 2.5-flash is the smart pick; 2.5-flash-lite is the
+// cheaper/faster fallback. (2.0-flash was retired by Google in June 2026.)
 const MODELS = [
   'gemini-2.5-flash',
-  'gemini-2.0-flash',
+  'gemini-2.5-flash-lite',
 ];
 
 // The assistant answers ONLY from the knowledge below (Luka's CV + portfolio site).
