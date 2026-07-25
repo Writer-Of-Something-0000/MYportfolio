@@ -114,16 +114,17 @@ export class GeminiChat implements OnInit, OnDestroy {
     }
   };
 
-  // The teaser set for whichever section is crossing the middle of the viewport.
+  // Scrollspy: the active set is the last section (in document order) whose top
+  // has scrolled above the trigger line. Holding the previous section through
+  // the gaps between sections stops the default set from leaking back in.
   private pickSectionTeasers(): Suggestion[] {
-    const mid = window.innerHeight / 2;
+    const line = window.innerHeight * 0.6;
+    let set = this.teasersDefault;
     for (const s of this.sectionMap) {
       const el = document.querySelector(s.sel);
-      if (!el) continue;
-      const r = el.getBoundingClientRect();
-      if (r.top <= mid && r.bottom >= mid) return s.set;
+      if (el && el.getBoundingClientRect().top <= line) set = s.set;
     }
-    return this.teasersDefault;
+    return set;
   }
 
   toggle() {
