@@ -107,9 +107,20 @@ Udemy (Oct–Nov 2025):
 === BEYOND WORK / PERSONAL ===
 - Age 21, based in Tbilisi, Georgia.
 - Tech enthusiast with a music-focused editing workflow; constantly experiments with
-  new video techniques and AI tools.
-- Passionate about cinematography — especially shooting on Sony cameras and flying
-  drones for aerial footage.
+  new video techniques and AI tools. He genuinely loves music and shooting video.
+
+HOW HE STARTED
+- He first started tinkering with video editing at age 13. As a kid he only did it
+  occasionally, on and off.
+- His very first editing program was Sony Vegas Studio 13 — an old version he used
+  simply because his computer at the time couldn't handle anything heavier.
+
+GEAR & CRAFT
+- Passionate about cinematography — especially Sony cameras and DJI drones.
+- He doesn't personally own a Sony camera yet, but he's actively working to sharpen his
+  drone skills and keep growing as a shooter.
+- On shoots he works with the equipment the company provides (camera, lens, memory card,
+  lighting), or advises the client on the right gear to buy for the job.
 
 === SELECTED WORK / PROJECTS ===
 - "Americans 6th visit" — Premiere Pro, drone & camera work, audio design,
