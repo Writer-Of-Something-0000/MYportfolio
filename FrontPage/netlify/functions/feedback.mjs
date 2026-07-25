@@ -56,7 +56,7 @@ export default async () => {
 
   // Serve fresh cache if we have it.
   if (cache.rows && now - cache.at < TTL_MS) {
-    return json(cache.rows, 200, { 'Cache-Control': 'public, max-age=60' });
+    return json(cache.rows, 200, { 'Cache-Control': 'no-store' });
   }
 
   try {
@@ -71,7 +71,7 @@ export default async () => {
     // the newest testimonials first.
     const rows = parseGviz(text).reverse();
     cache = { at: now, rows };
-    return json(rows, 200, { 'Cache-Control': 'public, max-age=60' });
+    return json(rows, 200, { 'Cache-Control': 'no-store' });
   } catch (e) {
     if (cache.rows) return json(cache.rows); // serve stale on network error
     return json({ error: 'Could not load feedback.', detail: String(e).slice(0, 200) }, 502);

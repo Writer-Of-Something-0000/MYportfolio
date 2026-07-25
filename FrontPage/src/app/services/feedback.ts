@@ -22,8 +22,11 @@ export class FeedbackService {
       return [];
     }
 
+    // no-store so a freshly added Google Form response shows up on a normal
+    // reload — the browser never serves a stale cached copy of this list.
     const res = await fetch(this.endpoint, {
       headers: { Accept: 'application/json' },
+      cache: 'no-store',
     });
     if (!res.ok) throw new Error(`Feedback request failed: ${res.status}`);
 
