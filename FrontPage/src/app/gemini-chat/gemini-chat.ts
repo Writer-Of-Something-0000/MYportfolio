@@ -41,7 +41,6 @@ export class GeminiChat implements OnInit, OnDestroy {
   showCatchUp = false; // persistent "Catch UP" CTA glued to the FAB
   atFooter = false; // true when the contact footer is the active section
   isMobile = false; // the feedback section is hidden on mobile, so we surface it here
-  private dismissedTeasers = false;
   messages: ChatMsg[] = [];
 
   // Preset quick-question chips shown inside the chat.
@@ -138,20 +137,21 @@ export class GeminiChat implements OnInit, OnDestroy {
   private onScroll = () => {
     const past = window.scrollY > window.innerHeight * 0.6;
     const onHome = this.router.url === '/';
-    // Catch UP sticks to the FAB the whole way down; the teasers also honour dismissal.
-    const showCatchUp = past && !this.open && onHome;
-    const showTeasers = showCatchUp && !this.dismissedTeasers;
-    const set = showCatchUp ? this.pickSectionTeasers() : this.activeTeasers;
+    // Teasers, Feedbacks and Catch UP all ride the FAB whenever we're scrolled
+    // down on the home page and the chat is closed — so they come back every
+    // time the chat is opened and closed again.
+    const show = past && !this.open && onHome;
+    const set = show ? this.pickSectionTeasers() : this.activeTeasers;
     const atFooter = set === this.teasersContact;
     if (
-      showCatchUp !== this.showCatchUp ||
-      showTeasers !== this.teasersVisible ||
+      show !== this.showCatchUp ||
+      show !== this.teasersVisible ||
       set !== this.activeTeasers ||
       atFooter !== this.atFooter
     ) {
       this.zone.run(() => {
-        this.showCatchUp = showCatchUp;
-        this.teasersVisible = showTeasers;
+        this.showCatchUp = show;
+        this.teasersVisible = show;
         this.activeTeasers = set;
         this.atFooter = atFooter;
       });
@@ -178,18 +178,13 @@ export class GeminiChat implements OnInit, OnDestroy {
 
   toggle() {
     this.open = !this.open;
-    if (this.open) {
-      this.dismissedTeasers = true; // opening the chat retires the teasers
-      this.teasersVisible = false;
-      this.scrollDown();
-    }
+    if (this.open) this.scrollDown();
+    this.onScroll(); // re-evaluate the teasers for the new open/closed state
   }
 
   // Tap an attention teaser: open the chat (for ask/contact) or navigate (route).
   tapTeaser(t: Suggestion) {
-    this.dismissedTeasers = true;
-    this.teasersVisible = false;
-    if (!t.route) this.open = true;
+    if (!t.route) this.open = true; // ask/contact need the chat open
     this.pick(t);
   }
 
@@ -200,6 +195,8 @@ export class GeminiChat implements OnInit, OnDestroy {
     if (s.route) {
       // close the chat and take the visitor to that page (e.g. Projects)
       this.open = false;
+      this.showCatchUp = false;
+      this.teasersVisible = false;
       this.router.navigateByUrl(s.route);
       window.scrollTo(0, 0);
       return;
@@ -270,8 +267,6 @@ export class GeminiChat implements OnInit, OnDestroy {
   // Show the testimonials as cards in the chat. The on-page feedback section is
   // hidden on mobile, so the Feedbacks teaser surfaces them here.
   async showFeedbacks() {
-    this.dismissedTeasers = true;
-    this.teasersVisible = false;
     this.open = true;
     this.messages.push({ role: 'user', text: 'Show me the feedback' });
     this.sending = true;
