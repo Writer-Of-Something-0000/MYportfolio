@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SessionTracker } from '../../services/session-tracker';
 
@@ -15,6 +16,8 @@ interface ChannelVideo {
 type SortOrder = 'newest' | 'oldest';
 type Orientation = '169' | '916';
 type Length = 'long' | 'short';
+// 'all' = Video Storytelling (everything); 'graphicdesign' = only #graphicdesign videos
+type Category = 'all' | 'graphicdesign';
 
 // YouTube counts anything up to 3 minutes as a Short
 const SHORT_MAX_SECONDS = 180;
@@ -40,13 +43,23 @@ export class Projectsfilter implements OnInit {
   sortOrder: SortOrder = 'newest';
   orientation: Orientation = '169';
   length: Length | null = null; // null = show both long videos and shorts
+  category: Category = 'all'; // 'all' = Video Storytelling; 'graphicdesign' = filtered
 
-  constructor(private sanitizer: DomSanitizer, private session: SessionTracker) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private session: SessionTracker,
+    private route: ActivatedRoute
+  ) {}
 
-  // videos shown in the grid: filtered by orientation + length, then sorted by date
+  // videos shown in the grid: filtered by category + orientation + length, then sorted by date
   get visibleVideos(): ChannelVideo[] {
     return this.videos
       .filter((v) => v.orientation === this.orientation)
+      .filter(
+        (v) =>
+          this.category === 'all' ||
+          v.tags.some((t) => t.replace(/\s+/g, '').toLowerCase() === this.category)
+      )
       .filter((v) => {
         if (!this.length) return true; // no length filter → show both
         return this.length === 'short'
@@ -62,6 +75,12 @@ export class Projectsfilter implements OnInit {
 
   setSort(order: SortOrder) {
     this.sortOrder = order;
+  }
+
+  setCategory(category: Category) {
+    if (this.category === category) return;
+    this.category = category;
+    this.stopPlayback();
   }
 
   setOrientation(orientation: Orientation) {
@@ -83,6 +102,10 @@ export class Projectsfilter implements OnInit {
   }
 
   ngOnInit(): void {
+    // deep link from the hero pills, e.g. /projects?category=graphicdesign
+    if (this.route.snapshot.queryParamMap.get('category') === 'graphicdesign') {
+      this.category = 'graphicdesign';
+    }
     this.loadChannelVideos();
   }
 

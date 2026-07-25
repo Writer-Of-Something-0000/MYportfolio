@@ -522,8 +522,8 @@ background: none;
 
 }
 
-#justit {
-      cursor: pointer;
+#jobs li {
+  cursor: pointer;
 }
 
 /* job buttons appear one by one once #jobs scrolls into view */
