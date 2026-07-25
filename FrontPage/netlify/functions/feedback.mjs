@@ -65,7 +65,9 @@ export default async () => {
     }
 
     const text = await res.text();
-    const rows = parseGviz(text);
+    // Google Form appends new responses at the bottom, so reverse to show
+    // the newest testimonials first.
+    const rows = parseGviz(text).reverse();
     cache = { at: now, rows };
     return json(rows, 200, { 'Cache-Control': 'public, max-age=300' });
   } catch (e) {
