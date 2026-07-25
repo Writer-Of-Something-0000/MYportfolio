@@ -438,11 +438,22 @@ background: none;
 
 
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: transform 0.55s cubic-bezier(0.5, 0, 0.75, 0), opacity 0.55s ease,
+    filter 0.55s ease, box-shadow 0.2s ease;
 
   /* 👇 rotate / wiggle animation */
   animation: wiggle 2.5s infinite ease-in-out;
   transform-origin: center;
+}
+
+/* sink the Catch UP button away (dive underwater) as the hero scrolls off —
+   it re-surfaces next to the chat FAB */
+#portfolio-paragraph .cta-btn.diving {
+  animation: none;
+  transform: translateY(75px) scale(0.8);
+  opacity: 0;
+  filter: blur(3px);
+  pointer-events: none;
 }
 
 #portfolio-paragraph .cta-btn:hover {

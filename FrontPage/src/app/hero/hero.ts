@@ -219,11 +219,13 @@ fullText = "Portfolio";
   }
 
   scrolled = false;
+  diving = false; // the Catch UP button sinks away as the hero scrolls off
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     // toggle animation based on scroll position
     this.scrolled = window.scrollY > 1;
+    this.diving = window.scrollY > window.innerHeight * 0.35;
   }
 
 
