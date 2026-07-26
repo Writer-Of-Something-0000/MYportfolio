@@ -41,6 +41,7 @@ export class GeminiChat implements OnInit, OnDestroy {
   showCatchUp = false; // persistent "Catch UP" CTA glued to the FAB
   atFooter = false; // true when the contact footer is the active section
   isMobile = false; // the feedback section is hidden on mobile, so we surface it here
+  inputFocused = false; // a page form field has focus (mobile keyboard is up)
   messages: ChatMsg[] = [];
 
   // Preset quick-question chips shown inside the chat.
@@ -112,6 +113,22 @@ export class GeminiChat implements OnInit, OnDestroy {
   onResize() {
     const mobile = this.matchMobile();
     if (mobile !== this.isMobile) this.isMobile = mobile;
+  }
+
+  // Hide the FAB + teasers while a page form field is focused on mobile — the
+  // keyboard is up and they'd cover the contact form and its submit button.
+  @HostListener('document:focusin')
+  @HostListener('document:focusout')
+  onFocusChange() {
+    // defer so document.activeElement reflects the final focus target
+    setTimeout(() => {
+      const a = document.activeElement as HTMLElement | null;
+      this.inputFocused =
+        this.isMobile &&
+        !!a &&
+        (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') &&
+        !a.closest('app-gemini-chat');
+    });
   }
 
   // The Feedbacks button surfaces the feedback section wherever the site hides

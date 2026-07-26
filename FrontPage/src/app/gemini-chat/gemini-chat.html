@@ -1,7 +1,7 @@
 <!-- floating round launcher, bottom-right -->
 <button
   class="chat-fab"
-  [class.hidden]="open"
+  [class.hidden]="open || inputFocused"
   (click)="toggle()"
   aria-label="Chat with Luka">
   <span class="fab-avatar">
@@ -12,7 +12,7 @@
 </button>
 
 <!-- floating CTAs glued to the FAB: section teasers + Feedbacks (mobile) + Catch UP -->
-<div class="teasers" *ngIf="(teasersVisible || showFeedbacksBtn || (showCatchUp && !atFooter)) && !open">
+<div class="teasers" *ngIf="(teasersVisible || showFeedbacksBtn || (showCatchUp && !atFooter)) && !open && !inputFocused">
   <ng-container *ngIf="teasersVisible">
     <button
       type="button"

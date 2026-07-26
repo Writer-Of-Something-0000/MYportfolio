@@ -83,6 +83,9 @@ padding-right: 1rem;
 padding-top: 1rem;
 color: white;
   resize: none;
+/* 16px stops iOS Safari from auto-zooming when the field is focused */
+font-size: 16px;
+font-family: "Nunito Sans", sans-serif;
 
 
     background: rgba(0, 0, 0, 0.42);
@@ -108,6 +111,9 @@ border: 2px solid #4904A2;
 background: none;
 color: white;
 padding-left: 1rem;
+/* 16px stops iOS Safari from auto-zooming when the field is focused */
+font-size: 16px;
+font-family: "Nunito Sans", sans-serif;
 
 
   background: rgba(0, 0, 0, 0.42);
@@ -172,6 +178,10 @@ label {
   #inputs input,
   form div textarea {
     width: 100%;
+  }
+  /* keep the form compact on phones so the submit button sits above the keyboard */
+  form div textarea {
+    height: 6.5rem;
   }
   #last-info {
     flex-direction: column;
