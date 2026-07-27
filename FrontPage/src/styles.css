@@ -103,51 +103,10 @@ body {
   transition: transform 0.09s ease, box-shadow 0.09s ease;
 }
 
-/* ── Playful "toy" chips ───────────────────────────────────────
-   magnetically lean toward the cursor, boing when poked, and toggle a
-   lit/pressed state so the whole row behaves like a soundboard. */
-.toy {
-  --tx: 0px;
-  --ty: 0px;
-  transform: translate(var(--tx), var(--ty));
-  transition:
-    transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.4),
-    box-shadow 0.16s ease,
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.toy.pop {
-  animation: toyPop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.4);
-}
-
-@keyframes toyPop {
-  0%   { transform: translate(var(--tx), var(--ty)) scale(1) rotate(0); }
-  30%  { transform: translate(var(--tx), var(--ty)) scale(0.84) rotate(-5deg); }
-  60%  { transform: translate(var(--tx), var(--ty)) scale(1.14) rotate(4deg); }
-  100% { transform: translate(var(--tx), var(--ty)) scale(1) rotate(0); }
-}
-
-/* poked "on" state — button stays pressed and lit in the brand purple */
-.toy.lit {
-  background: rgba(73, 4, 162, 0.55) !important;
-  border-color: rgba(180, 130, 255, 0.65) !important;
-  color: #ffffff !important;
-  box-shadow:
-    inset 3px 3px 6px rgba(0, 0, 0, 0.4),
-    0 0 18px rgba(128, 0, 255, 0.4) !important;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .nb-card { transition: none; }
   .nb-card:hover,
   .nb-card:active { transform: none; }
-  .toy { transition: none; }
-  .toy.pop { animation: none; }
 }
 
 /* ── Skills compacted into the showcase's right-hand column ─────

@@ -87,109 +87,80 @@
   transform: scale(0.85) translateY(6px);
 }
 
-/* --- attention teasers that pop out of the FAB --- */
+/* --- quick replies stacked above the FAB ---
+   Styled as the launcher's own suggestions, not as separate candy: same dark
+   glass, same border, same radius family. Nothing loops or bounces — the stack
+   should sit quietly until it's read. */
 .teasers {
   position: fixed;
   right: 1.5rem;
-  bottom: 5.5rem; /* sit just above the FAB */
+  bottom: 5.25rem; /* sit just above the FAB */
   z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.5rem;
+  gap: 0.4rem;
   pointer-events: none; /* only the pills catch clicks */
-  animation: teaserBob 3.5s ease-in-out infinite;
 }
 
 .teaser {
   pointer-events: auto;
   font-family: "Nunito Sans", sans-serif;
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.88);
   white-space: nowrap;
-  padding: 0.6rem 1.1rem;
-  border-radius: 16px;
+  padding: 0.48rem 0.95rem;
+  border-radius: 999px;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  /* frosted-glass pill matching the hero's category buttons — not purple */
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.04) 50%,
-    rgba(0, 0, 0, 0.14) 100%
-  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(14, 14, 14, 0.72);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  /* always visible; the entrance only moves/scales the pill, so a paused or
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.34);
+  /* always visible; the entrance only moves the pill, so a paused or
      unsupported animation can never leave the CTA invisible. */
   opacity: 1;
-  animation: teaserPop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.4) backwards;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
+  animation: teaserIn 0.3s ease-out backwards;
+  transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
 }
 
 .teaser:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.2) 0%,
-    rgba(255, 255, 255, 0.08) 50%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border-color: rgba(157, 78, 221, 0.5);
+  background: rgba(26, 18, 40, 0.82);
 }
 
-/* the persistent Catch UP CTA is solid purple, not glass, and surfaces
-   (bobs up out of the water) instead of the plain teaser pop */
+/* Catch UP is the one action in a stack of questions — a purple edge and a
+   faint purple fill mark it without turning it into a separate object */
 .teaser.catch-up {
-  background: linear-gradient(135deg, #4904a2, #7d3cf0);
-  border-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  box-shadow:
-    0 10px 26px rgba(73, 4, 162, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  animation: catchUpSurface 0.6s cubic-bezier(0.2, 1.3, 0.4, 1) backwards;
-}
-
-@keyframes catchUpSurface {
-  0% { transform: translateY(48px) scale(0.8); }
-  62% { transform: translateY(-7px) scale(1.05); } /* overshoot up = surfacing bob */
-  100% { transform: translateY(0) scale(1); }
+  color: #ffffff;
+  border-color: rgba(157, 78, 221, 0.55);
+  background: rgba(46, 10, 100, 0.74);
+  box-shadow: 0 6px 20px rgba(73, 4, 162, 0.38);
 }
 
 .teaser.catch-up:hover {
-  background: linear-gradient(135deg, #5a12c4, #8f52ff);
-  box-shadow:
-    0 14px 34px rgba(125, 60, 240, 0.65),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  border-color: rgba(180, 130, 255, 0.75);
+  background: rgba(63, 14, 136, 0.88);
 }
 
-@keyframes teaserPop {
-  from { transform: translateY(16px) scale(0.7); }
-  to { transform: translateY(0) scale(1); }
-}
-
-@keyframes teaserBob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+/* rises the short distance out of the FAB, no overshoot */
+@keyframes teaserIn {
+  from { transform: translateY(8px); }
+  to { transform: translateY(0); }
 }
 
 @media (max-width: 850px) {
   .teasers {
     right: 1rem;
-    bottom: calc(5rem + env(safe-area-inset-bottom));
+    bottom: calc(4.75rem + env(safe-area-inset-bottom));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .teasers { animation: none; }
-  .teaser,
-  .teaser.catch-up { animation: none; }
+  .teaser { animation: none; }
 }
 
 /* --- chat panel --- */

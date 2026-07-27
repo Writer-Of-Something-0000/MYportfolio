@@ -91,54 +91,11 @@ export class App implements AfterViewInit {
           typeIO.observe(el);
         }
       });
-      // playful magnetic + poke-to-pop chips (skill tools + anything tagged .toy)
-      document
-        .querySelectorAll<HTMLElement>('#editing-ul li, #codeing-ul li, .toy')
-        .forEach((el) => {
-          el.classList.add('toy');
-          this.attachToy(el);
-        });
     };
 
     attach();
     // catches elements added later (route changes, videos loaded from YouTube)
     new MutationObserver(attach).observe(document.body, { childList: true, subtree: true });
-  }
-
-  // playful chip: magnetically leans toward the cursor, and a click makes it
-  // "boing" and toggles a lit/pressed state. CSS custom props feed the transform;
-  // the pop + lit look live in styles.css (.toy).
-  private attachToy(el: HTMLElement) {
-    if (el.dataset['toy']) return;
-    el.dataset['toy'] = '1';
-    let raf = 0;
-
-    el.addEventListener('pointermove', (e) => {
-      if (e.pointerType === 'touch') return;
-      if (raf) return; // one update per frame
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const r = el.getBoundingClientRect();
-        const mx = e.clientX - (r.left + r.width / 2);
-        const my = e.clientY - (r.top + r.height / 2);
-        el.style.setProperty('--tx', `${(mx * 0.35).toFixed(1)}px`);
-        el.style.setProperty('--ty', `${(my * 0.35).toFixed(1)}px`);
-      });
-    });
-
-    el.addEventListener('pointerleave', () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = 0;
-      el.style.setProperty('--tx', '0px');
-      el.style.setProperty('--ty', '0px');
-    });
-
-    el.addEventListener('click', () => {
-      el.classList.toggle('lit');
-      el.classList.remove('pop');
-      void el.offsetWidth; // reflow so the animation can replay on every click
-      el.classList.add('pop');
-    });
   }
 
   // types every text node inside the element one after another, keeping the markup

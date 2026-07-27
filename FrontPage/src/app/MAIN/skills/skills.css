@@ -104,21 +104,25 @@ article ul li {
   border-radius: 20px;
   box-shadow: 6px 6px 0 rgba(73, 4, 162, 0.45);
   padding: 1.5rem;
-  transition:
-    transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.4),
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
 }
 
+/* no press-shift on these — they aren't interactive, and on touch a tap
+   latches the hover state and leaves the card sunk into its shadow */
 #mindset-ul:hover,
 #collaboration-ul:hover,
 #Storytelling-ul:hover,
 #Editing-ul:hover,
 #hobies-ul:hover,
-#languages-ul:hover {
-  transform: translate(3px, 3px);
-  box-shadow: 2px 2px 0 rgba(73, 4, 162, 0.7);
-  border-color: rgba(255, 255, 255, 0.28);
+#languages-ul:hover,
+#mindset-ul:active,
+#collaboration-ul:active,
+#Storytelling-ul:active,
+#Editing-ul:active,
+#hobies-ul:active,
+#languages-ul:active {
+  transform: none;
+  box-shadow: 6px 6px 0 rgba(73, 4, 162, 0.45);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 
@@ -203,70 +207,15 @@ gap: 1rem;
 }
 
 
-/* ── brand-hinted tool chips ───────────────────────────────────
-   same frosted glass as every other chip — just a quiet brand tint
-   on the label, a faint colored edge and a soft brand-tinted shadow
-   so each tool reads at a glance without shouting over the layout. */
+/* ── tool chips ────────────────────────────────────────────────
+   one quiet look for the whole row: frosted glass, white label and the
+   brand-purple offset shadow used everywhere else on the page. No
+   per-brand hues — seven competing colors made the row read as noise. */
 .tool {
   font-weight: 700;
   letter-spacing: 0.3px;
+  color: #ffffff;
 }
-
-/* Premiere Pro — violet */
-.tool-pr {
-  border-color: rgba(157, 78, 221, 0.35) !important;
-  box-shadow: 4px 4px 0 rgba(157, 78, 221, 0.3) !important;
-  color: #c9a6f0 !important;
-}
-.tool-pr:hover { box-shadow: 1px 1px 0 rgba(157, 78, 221, 0.5) !important; }
-
-/* DaVinci Resolve — teal */
-.tool-davinci {
-  border-color: rgba(38, 198, 218, 0.35) !important;
-  box-shadow: 4px 4px 0 rgba(38, 198, 218, 0.28) !important;
-  color: #8fd6de !important;
-}
-.tool-davinci:hover { box-shadow: 1px 1px 0 rgba(38, 198, 218, 0.5) !important; }
-
-/* After Effects — periwinkle */
-.tool-ae {
-  border-color: rgba(153, 153, 255, 0.38) !important;
-  box-shadow: 4px 4px 0 rgba(153, 153, 255, 0.3) !important;
-  color: #b6b6f0 !important;
-}
-.tool-ae:hover { box-shadow: 1px 1px 0 rgba(153, 153, 255, 0.55) !important; }
-
-/* Photoshop — blue */
-.tool-ps {
-  border-color: rgba(49, 168, 255, 0.38) !important;
-  box-shadow: 4px 4px 0 rgba(49, 168, 255, 0.3) !important;
-  color: #8ec6f0 !important;
-}
-.tool-ps:hover { box-shadow: 1px 1px 0 rgba(49, 168, 255, 0.55) !important; }
-
-/* Illustrator — orange */
-.tool-ai {
-  border-color: rgba(255, 154, 0, 0.38) !important;
-  box-shadow: 4px 4px 0 rgba(255, 154, 0, 0.3) !important;
-  color: #f0b866 !important;
-}
-.tool-ai:hover { box-shadow: 1px 1px 0 rgba(255, 154, 0, 0.55) !important; }
-
-/* CapCut — cyan */
-.tool-capcut {
-  border-color: rgba(0, 213, 255, 0.35) !important;
-  box-shadow: 4px 4px 0 rgba(0, 213, 255, 0.28) !important;
-  color: #82d9ec !important;
-}
-.tool-capcut:hover { box-shadow: 1px 1px 0 rgba(0, 213, 255, 0.5) !important; }
-
-/* Video Star — pink */
-.tool-videostar {
-  border-color: rgba(255, 79, 216, 0.35) !important;
-  box-shadow: 4px 4px 0 rgba(255, 79, 216, 0.28) !important;
-  color: #f0a0dc !important;
-}
-.tool-videostar:hover { box-shadow: 1px 1px 0 rgba(255, 79, 216, 0.5) !important; }
 
 .txttxt{
   font-family: "inter", sans-serif;
@@ -277,23 +226,14 @@ gap: 1rem;
   color: #ffffff;
 }
 
-/* tool chips: frosted glass with a hard brutalist offset that presses in */
+/* tool chips: frosted glass with a hard brutalist offset. Static — they
+   aren't interactive, so nothing moves or shifts on hover or tap. */
 #editing-ul li,
 #codeing-ul li {
   border-radius: 14px;
   border: 1.5px solid rgba(255, 255, 255, 0.14);
   box-shadow: 4px 4px 0 rgba(73, 4, 162, 0.45);
-  transition:
-    transform 0.16s cubic-bezier(0.2, 0.9, 0.3, 1.4),
-    box-shadow 0.16s ease,
-    border-color 0.16s ease;
   cursor: default;
-}
-
-#editing-ul li:hover,
-#codeing-ul li:hover {
-  box-shadow: 1px 1px 0 rgba(73, 4, 162, 0.7);
-  border-color: rgba(255, 255, 255, 0.28);
 }
 
 
@@ -372,22 +312,16 @@ padding: 0px 10px;
     padding: 1.5rem;
   }
 
-  /* the four skill lists stack like a deck, tap brings the next one forward */
+  /* the four skill lists simply stack down the page, no tap interaction */
   #skills-deck {
-    display: block;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
   }
   #skills-deck ul {
-    position: absolute;
-    top: 42px;
-    left: 50%;
     width: 100%;
     max-width: 500px;
-    transform: translateX(-50%) translateY(calc(var(--pos, 0) * -14px)) scale(calc(1 - var(--pos, 0) * 0.05));
-    transform-origin: top center;
-    z-index: calc(10 - var(--pos, 0));
-    transition: transform 0.4s ease;
-    cursor: pointer;
   }
 }
 

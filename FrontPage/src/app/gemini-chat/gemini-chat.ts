@@ -56,21 +56,21 @@ export class GeminiChat implements OnInit, OnDestroy {
   // adapts to the section in view so the questions match what the visitor is
   // currently looking at.
   readonly teasersDefault: Suggestion[] = [
-    { label: '👀 Wanna see my work?', route: '/projects' },
-    { label: '🎬 What do I actually do?', text: 'What kind of video work do you do?' },
-    { label: '🔥 Why work with me?', text: 'Why should someone hire you?' },
+    { label: 'See my work', route: '/projects' },
+    { label: 'What do I do?', text: 'What kind of video work do you do?' },
+    { label: 'Why work with me?', text: 'Why should someone hire you?' },
   ];
   readonly teasersExperience: Suggestion[] = [
-    { label: '🚀 What’s your latest role?', text: 'What is your latest role and what do you do there?' },
-    { label: '🌍 Who’ve you worked with?', text: 'Which companies and clients have you worked with?' },
-    { label: '⏳ How experienced are you?', text: 'How many years of experience do you have?' },
+    { label: 'My latest role', text: 'What is your latest role and what do you do there?' },
+    { label: 'Who I’ve worked with', text: 'Which companies and clients have you worked with?' },
+    { label: 'Years of experience', text: 'How many years of experience do you have?' },
   ];
   readonly teasersEducation: Suggestion[] = [
-    { label: '🎓 What did you study?', text: 'What did you study and where?' },
-    { label: '📜 Got certifications?', text: 'What certifications and courses have you completed?' },
+    { label: 'What I studied', text: 'What did you study and where?' },
+    { label: 'My certifications', text: 'What certifications and courses have you completed?' },
   ];
   readonly teasersContact: Suggestion[] = [
-    { label: '🤝 Why me?', text: 'Why should someone choose to work with you?' },
+    { label: 'Why me?', text: 'Why should someone choose to work with you?' },
   ];
 
   // Which set is showing right now — updated on scroll from the active section.
