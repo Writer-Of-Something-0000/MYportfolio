@@ -1,17 +1,4 @@
-<!-- floating round launcher, bottom-right -->
-<button
-  class="chat-fab"
-  [class.hidden]="open || inputFocused"
-  (click)="toggle()"
-  aria-label="Chat with Luka">
-  <span class="fab-avatar">
-    <img src="/profileIMGearpods.png" alt="Luka" />
-    <span class="fab-dot"></span>
-  </span>
-  <span class="fab-label">Ask me</span>
-</button>
-
-<!-- floating CTAs glued to the FAB: section teasers + Feedbacks (mobile) + Catch UP -->
+<!-- floating CTAs, bottom-right: section teasers + Feedbacks (mobile) + Catch UP -->
 <div class="teasers" *ngIf="(teasersVisible || showFeedbacksBtn || (showCatchUp && !atFooter)) && !open && !inputFocused">
   <ng-container *ngIf="teasersVisible">
     <button

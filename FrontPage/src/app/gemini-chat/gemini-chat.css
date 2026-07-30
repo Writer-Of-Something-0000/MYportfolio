@@ -94,7 +94,7 @@
 .teasers {
   position: fixed;
   right: 1.5rem;
-  bottom: 5.25rem; /* sit just above the FAB */
+  bottom: 1.5rem; /* anchored to the bottom-right corner */
   z-index: 1000;
   display: flex;
   flex-direction: column;
@@ -155,7 +155,7 @@
 @media (max-width: 850px) {
   .teasers {
     right: 1rem;
-    bottom: calc(4.75rem + env(safe-area-inset-bottom));
+    bottom: calc(1rem + env(safe-area-inset-bottom));
   }
 }
 
