@@ -27,12 +27,21 @@
   gap: 0.4rem;
 }
 
+/* the global #title is fixed at height:2rem while its glyphs are 5rem tall, and
+   the scroll-reveal slides it down 24px (which the subtitle can't follow), so on
+   desktop it overlaps. Let this title fit its content and skip the reveal shift. */
+#exp-head #title {
+  height: auto;
+  transform: none;
+  opacity: 1;
+}
+
 #total-exp {
-  font-family: "Nunito Sans", sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #b98cff;
-  padding-left: 0.15rem;
+  font-family: "Jersey 10", sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.5);
+  padding-left: 0.2rem;
 }
 
 
