@@ -100,6 +100,24 @@ export class Experience {
     },
   ].sort((a, b) => b.start.getTime() - a.start.getTime()); // newest first
 
+  // Total experience, counted from the earliest role's start to today and
+  // rounded UP to the next whole year (e.g. 3 yrs + 1 day shows as 4).
+  get totalYears(): number {
+    const earliest = this.jobs.reduce(
+      (min, j) => (j.start.getTime() < min.getTime() ? j.start : min),
+      this.jobs[0].start
+    );
+    const now = new Date();
+    let years = now.getFullYear() - earliest.getFullYear();
+    const beforeAnniversary =
+      now.getMonth() < earliest.getMonth() ||
+      (now.getMonth() === earliest.getMonth() && now.getDate() < earliest.getDate());
+    if (beforeAnniversary) years--;
+    const onAnniversary =
+      now.getMonth() === earliest.getMonth() && now.getDate() === earliest.getDate();
+    return Math.max(1, onAnniversary ? years : years + 1);
+  }
+
   private readonly months = [
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',

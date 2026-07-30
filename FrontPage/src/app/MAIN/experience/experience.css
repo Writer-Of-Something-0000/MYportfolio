@@ -21,6 +21,20 @@
     gap: 5rem;
 }
 
+#exp-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+#total-exp {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #b98cff;
+  padding-left: 0.15rem;
+}
+
 
 #experience-container {
   margin-top: 2rem;

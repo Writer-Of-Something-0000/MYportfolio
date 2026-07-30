@@ -1,6 +1,9 @@
 
 <article id="Article-third">
-           <h2 id="title">Experience   <i class="fa-solid fa-fire"></i></h2>
+           <div id="exp-head">
+             <h2 id="title">Experience   <i class="fa-solid fa-fire"></i></h2>
+             <span id="total-exp">{{ totalYears }} years of experience</span>
+           </div>
 <div id="experience-container" #slider
      (pointerdown)="dragStart($event)"
      (pointermove)="dragMove($event)"
