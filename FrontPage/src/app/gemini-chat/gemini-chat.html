@@ -11,6 +11,11 @@
     </button>
   </ng-container>
 
+  <!-- guided walkthrough of the whole experience, then a detailed chat answer -->
+  <button *ngIf="showCatchUp" type="button" class="teaser" (click)="moreAboutExperience()">
+    More about experience
+  </button>
+
   <!-- mobile-only: the on-page feedback section is hidden on phones, so surface it here -->
   <button *ngIf="showFeedbacksBtn" type="button" class="teaser feedbacks" (click)="showFeedbacks()">
     Feedbacks

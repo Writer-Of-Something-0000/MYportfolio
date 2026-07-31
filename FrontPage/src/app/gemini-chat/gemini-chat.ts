@@ -141,11 +141,14 @@ export class GeminiChat implements OnInit, OnDestroy {
     );
   }
 
-  // teasers actually rendered: on mobile we trim them to leave room for the
-  // Feedbacks button (+ Catch UP off the footer) so the stack never exceeds 4.
+  // teasers actually rendered: trimmed to leave room for the fixed buttons
+  // (More about experience + Feedbacks on mobile + Catch UP off the footer) so
+  // the stack never exceeds 4.
   get shownTeasers(): Suggestion[] {
-    if (!this.isMobile) return this.activeTeasers;
-    return this.activeTeasers.slice(0, this.atFooter ? 3 : 2);
+    let reserved = 1; // More about experience (always)
+    if (this.isMobile) reserved++; // Feedbacks
+    if (!this.atFooter) reserved++; // Catch UP
+    return this.activeTeasers.slice(0, Math.max(1, 4 - reserved));
   }
 
   // the Feedbacks button only appears on mobile, where the feedback section is hidden.
@@ -316,6 +319,18 @@ export class GeminiChat implements OnInit, OnDestroy {
       this.sending = false;
       this.scrollDown();
     }
+  }
+
+  // Guided tour: scroll to the Experience section, pause, glide to the oldest
+  // role, pause, then open the chat and ask the AI to detail every experience.
+  async moreAboutExperience() {
+    document.querySelector('app-experience')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    await this.sleep(2000);
+    const slider = document.querySelector('#experience-container') as HTMLElement | null;
+    slider?.scrollTo({ left: slider.scrollWidth, behavior: 'smooth' });
+    await this.sleep(5000);
+    this.open = true;
+    this.ask('Walk me through each of your work experiences in detail.');
   }
 
   private sleep(ms: number) {
