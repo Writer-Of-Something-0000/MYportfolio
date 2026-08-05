@@ -6,6 +6,24 @@
 // Current real-world context: today is mid-2026. Roles marked "present" are
 // ongoing; roles with an end date are finished.
 
+// First professional role (freelance visual director) — the site's Experience
+// section counts from this exact date, so the years number below always matches
+// what a visitor sees on the page. Mirrors CareerService.totalYears in
+// src/app/services/career.ts (rounded UP to the next whole year).
+const CAREER_START = new Date(2023, 7, 1); // Aug 2023
+
+const totalYears = (() => {
+  const now = new Date();
+  let years = now.getFullYear() - CAREER_START.getFullYear();
+  const beforeAnniversary =
+    now.getMonth() < CAREER_START.getMonth() ||
+    (now.getMonth() === CAREER_START.getMonth() && now.getDate() < CAREER_START.getDate());
+  if (beforeAnniversary) years--;
+  const onAnniversary =
+    now.getMonth() === CAREER_START.getMonth() && now.getDate() === CAREER_START.getDate();
+  return Math.max(1, onAnniversary ? years : years + 1);
+})();
+
 export const KNOWLEDGE = `
 === IDENTITY ===
 - Full name: Luka Gengashvili.
@@ -24,7 +42,7 @@ CONTACT (important — how to handle any "how do I reach him / contact / number 
 - His YouTube channel is @lukagengashvili — fine to mention when talking about his work.
 
 === ABOUT / SUMMARY ===
-- Post-Production Specialist with 3+ years of experience in video editing, motion
+- Post-Production Specialist with ${totalYears}+ years of experience in video editing, motion
   graphics, and AI-powered content creation.
 - Creates cinematic content, trailers, commercials, and marketing videos, including
   fully AI-generated video.
@@ -35,35 +53,44 @@ CONTACT (important — how to handle any "how do I reach him / contact / number 
 - Loves working with Sony cameras and is crazy about drones (aerial/drone shooting).
 
 === EXPERIENCE (most recent first) ===
-1) AI Image & Motion Editor — Upwork (long-term contract, remote, U.S. client).
+1) Cinematic Trailer Editor (DaVinci Resolve) — Upwork (hourly contract, remote,
+   Belgian client). Aug 2026 – present. Edits a series of Hollywood-style military
+   trailers for a Belgian Defence project covering a military lead-climbing course
+   and mountain parapente operations. Works inside the client's supplied DaVinci
+   Resolve proxy project — cutting from prepared derush timelines into clean,
+   relinkable edit timelines — and delivers horizontal (16:9) and vertical (9:16)
+   versions built around speed ramps, impact transitions, AI voiceover, layered
+   sound design, and trailer-style typography.
+
+2) AI Image & Motion Editor — Upwork (long-term contract, remote, U.S. client).
    Jul 2026 – present. Works directly with a U.S. client on a long-term hourly
    contract producing AI image and motion content with Higgsfield AI: generates and
    art-directs stills, animates them into motion clips, and finishes delivery-ready
    assets that match the client's brief.
 
-2) Stickman Animation Editor — YouTube Channel (remote, Tbilisi).
+3) Stickman Animation Editor — YouTube Channel (remote, Tbilisi).
    Jun 2026 – present. Turns ready-made voiceovers into long-form YouTube animation:
    illustrates stickman frames in Adobe Illustrator and assembles them into hard-cut
    animation where one frame equals one idea. Episodes run 8–10 minutes, with full
    creative freedom over visual jokes, pacing, and SFX-driven sound design.
 
-3) Generative AI Video Editor — Georgian Ad Company (full-time, Tbilisi).
+4) Generative AI Video Editor — Georgian Ad Company (full-time, Tbilisi).
    Apr 2026 – Jul 2026. Produced AI-generated commercials from 30-second spots up to
    8-minute brand films. Generated voiceovers, images, and full video scenes with
    modern generative AI tools, then edited, graded, and sound-designed them into
    polished, ready-to-air ads.
 
-4) Visual Story Editor — PlotRoom (full-time, London UK, remote).
+5) Visual Story Editor — PlotRoom (full-time, London UK, remote).
    Apr 2026 – Jun 2026. Video storyteller for a UK-based creative startup, editing
    talking-head videos into highly engaging content for social platforms; end-to-end
    video production, audio design, and motion storytelling.
 
-5) Visual Story Editor — TalesBox (full-time, London UK, remote).
+6) Visual Story Editor — TalesBox (full-time, London UK, remote).
    Nov 2025 – Apr 2026. Video storyteller for a UK-based creative startup, producing
    highly engaging content for digital audiences; end-to-end video production, audio
    design, and motion storytelling.
 
-6) Visual Director (Post & Production) — Freelance (project-based, Tbilisi, on-site).
+7) Visual Director (Post & Production) — Freelance (project-based, Tbilisi, on-site).
    Aug 2023 – present. Films construction processes for U.S. clients on short-term
    contracts, managing end-to-end production: script development, copywriting, audio
    design, and professional color correction, using drone & Canon cameras with gimbal

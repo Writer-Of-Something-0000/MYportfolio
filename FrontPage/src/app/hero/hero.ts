@@ -1,5 +1,6 @@
 import { Component, HostListener  } from '@angular/core';
 import { FeedbackService, Feedback } from '../services/feedback';
+import { CareerService } from '../services/career';
 
 @Component({
   selector: 'app-hero',
@@ -8,7 +9,12 @@ import { FeedbackService, Feedback } from '../services/feedback';
   styleUrl: './hero.css',
 })
 export class Hero {
-  constructor(private feedbackService: FeedbackService) {}
+  constructor(private feedbackService: FeedbackService, private career: CareerService) {}
+
+  /** same number the Experience section shows, derived from the roles list */
+  get totalYears(): number {
+    return this.career.totalYears;
+  }
 
   // Background video source picked by codec support + connection quality.
   //   AV1-capable browsers (Chrome etc.) → .webm tiers (1.4MB / 604KB / 461KB)
