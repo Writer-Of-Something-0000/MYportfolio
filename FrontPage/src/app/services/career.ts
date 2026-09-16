@@ -10,9 +10,27 @@ export interface Job {
   end?: Date;
   location: string;
   locationTag?: string;
-  about: string;
-  skills: string[];
+  /** optional — a few short contracts have no write-up yet */
+  about?: string;
+  skills?: string[];
   moreSkills?: number;
+}
+
+/**
+ * One card in the Experience slider. A single role becomes an entry of its own;
+ * several roles at the same org (Upwork) collapse into ONE grouped entry, the
+ * way LinkedIn stacks multiple positions under a company.
+ */
+export interface TimelineEntry {
+  org: string;
+  /** newest first; length > 1 means the card renders as a group */
+  roles: Job[];
+  /** earliest start across `roles` */
+  start: Date;
+  /** latest end, or undefined while any role is still running */
+  end?: Date;
+  /** Font Awesome brand class for the org, when one exists */
+  brandIcon?: string;
 }
 
 /**
@@ -24,6 +42,14 @@ export interface Job {
 export class CareerService {
   // month is 0-indexed: Jan = 0 … Dec = 11
   readonly jobs: Job[] = [
+    {
+      title: 'AI Video Editor / Stickmans',
+      org: 'Upwork',
+      type: 'Part-time',
+      start: new Date(2026, 8, 1), // Sep 2026
+      location: 'United States',
+      locationTag: 'hybrid',
+    },
     {
       title: 'Cinematic Trailer Editor (DaVinci Resolve)',
       org: 'Upwork',
@@ -46,6 +72,41 @@ export class CareerService {
       about:
         'Working directly with a U.S. client on a long-term hourly contract, producing AI image and motion content with Higgsfield AI. I generate and art-direct stills, animate them into motion clips, and finish the results into delivery-ready assets that match the client’s brief.',
       skills: ['Higgsfield AI,', 'AI Image Generation,', 'Motion Editing'],
+      moreSkills: 3,
+    },
+    {
+      title: 'AI Video Editor / Animator',
+      org: 'Upwork',
+      type: 'Part-time',
+      start: new Date(2026, 7, 1), // Aug 2026
+      end: new Date(2026, 8, 1), // Sep 2026
+      location: 'United States',
+      locationTag: 'remote',
+    },
+    {
+      title: 'Beta Tester — AI Editing Tools for Adobe Premiere Pro',
+      org: 'Upwork',
+      type: 'Part-time',
+      start: new Date(2026, 7, 1), // Aug 2026
+      end: new Date(2026, 8, 1), // Sep 2026
+      location: 'San Francisco, California, United States',
+      locationTag: 'hybrid',
+      about:
+        'Testing new builds of an AI-assisted editing tool inside Adobe Premiere Pro, working with interview-driven footage, B-roll and large volumes of raw material. Ran regression passes over existing workflows and reported bugs, UX friction and behaviour that doesn\u2019t match how an editor actually works, delivering structured feedback through written notes, screen recordings and feedback calls.',
+      skills: ['Adobe Premiere Pro,', 'QA & Regression Testing,', 'UX Feedback'],
+      moreSkills: 2,
+    },
+    {
+      title: 'AI Content Creator & Video Editor',
+      org: 'Upwork',
+      type: 'Contract',
+      start: new Date(2026, 7, 1), // Aug 2026
+      end: new Date(2026, 7, 1), // Aug 2026
+      location: 'St Gallen, Switzerland',
+      locationTag: 'remote',
+      about:
+        'End-to-end AI video creation and production for YouTube Automation, built around engaging storytelling and high-quality visuals. Generated AI images, visual assets and voiceovers (ElevenLabs, AI image generation), handled full editing, prompt engineering and script writing, and designed custom thumbnails optimised for high CTR.',
+      skills: ['AI Content Creation,', 'Prompt Engineering,', 'Thumbnail Design'],
       moreSkills: 3,
     },
     {
@@ -111,6 +172,48 @@ export class CareerService {
       moreSkills: 5,
     },
   ].sort((a, b) => b.start.getTime() - a.start.getTime()); // newest first
+
+  /** brand icons for orgs that have one in Font Awesome */
+  private static readonly BRAND_ICONS: Record<string, string> = {
+    upwork: 'fa-brands fa-upwork',
+  };
+
+  /**
+   * `jobs` collapsed into the cards the Experience slider renders: roles that
+   * share an org become a single grouped entry (Upwork alone is six contracts —
+   * six separate cards would drown out every other role), everything else stays
+   * a card of its own. Newest activity first, inside the group too.
+   */
+  get timeline(): TimelineEntry[] {
+    const byOrg = new Map<string, Job[]>();
+    for (const job of this.jobs) {
+      const key = job.org.toLowerCase();
+      byOrg.set(key, [...(byOrg.get(key) ?? []), job]);
+    }
+
+    // a single-role org just yields a one-role entry, which the card renders flat
+    return [...byOrg.values()]
+      .map((roles) => this.entryFor(roles))
+      .sort((a, b) => b.roles[0].start.getTime() - a.roles[0].start.getTime());
+  }
+
+  private entryFor(roles: Job[]): TimelineEntry {
+    const sorted = [...roles].sort((a, b) => b.start.getTime() - a.start.getTime());
+    const start = sorted.reduce((min, r) => (r.start < min ? r.start : min), sorted[0].start);
+    // a group is "present" while ANY of its roles is still running
+    const ongoing = sorted.some((r) => !r.end);
+    const end = ongoing
+      ? undefined
+      : sorted.reduce((max, r) => (r.end! > max ? r.end! : max), sorted[0].end!);
+
+    return {
+      org: sorted[0].org,
+      roles: sorted,
+      start,
+      end,
+      brandIcon: CareerService.BRAND_ICONS[sorted[0].org.toLowerCase()],
+    };
+  }
 
   // Total experience, counted from the earliest role's start to today and
   // rounded UP to the next whole year (e.g. 3 yrs + 1 day shows as 4).

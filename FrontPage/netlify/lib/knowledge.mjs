@@ -53,7 +53,14 @@ CONTACT (important — how to handle any "how do I reach him / contact / number 
 - Loves working with Sony cameras and is crazy about drones (aerial/drone shooting).
 
 === EXPERIENCE (most recent first) ===
-1) Cinematic Trailer Editor (DaVinci Resolve) — Upwork (hourly contract, remote,
+Note: the Upwork entries below are separate client contracts on the same platform, not
+one job. The site groups them under a single "Upwork" card for that reason.
+
+1) AI Video Editor / Stickmans — Upwork (part-time, hybrid, U.S. client).
+   Sep 2026 – present. AI video editing work on stickman-style animation content.
+   (No further detail available — don't invent any.)
+
+2) Cinematic Trailer Editor (DaVinci Resolve) — Upwork (hourly contract, remote,
    Belgian client). Aug 2026 – present. Edits a series of Hollywood-style military
    trailers for a Belgian Defence project covering a military lead-climbing course
    and mountain parapente operations. Works inside the client's supplied DaVinci
@@ -62,35 +69,54 @@ CONTACT (important — how to handle any "how do I reach him / contact / number 
    versions built around speed ramps, impact transitions, AI voiceover, layered
    sound design, and trailer-style typography.
 
-2) AI Image & Motion Editor — Upwork (long-term contract, remote, U.S. client).
+3) AI Image & Motion Editor — Upwork (long-term contract, remote, U.S. client).
    Jul 2026 – present. Works directly with a U.S. client on a long-term hourly
    contract producing AI image and motion content with Higgsfield AI: generates and
    art-directs stills, animates them into motion clips, and finishes delivery-ready
    assets that match the client's brief.
 
-3) Stickman Animation Editor — YouTube Channel (remote, Tbilisi).
+4) AI Video Editor / Animator — Upwork (part-time, remote, U.S. client).
+   Aug 2026 – Sep 2026. AI video editing and animation work.
+   (No further detail available — don't invent any.)
+
+5) Beta Tester, AI Editing Tools for Adobe Premiere Pro — Upwork (part-time, hybrid,
+   San Francisco, California). Aug 2026 – Sep 2026. Tested new builds of an
+   AI-assisted editing tool inside Adobe Premiere Pro, working with interview-driven
+   footage, B-roll, and large volumes of raw material. Ran regression passes over
+   existing workflows and reported bugs, UX friction, and behaviour that doesn't
+   match how an editor actually works — delivering structured feedback through
+   written notes, screen recordings, and feedback calls.
+
+6) AI Content Creator & Video Editor — Upwork (contract, remote, St Gallen,
+   Switzerland). Aug 2026. End-to-end AI video creation and production for YouTube
+   Automation, built around engaging storytelling and high-quality visuals.
+   Generated AI images, visual assets, and voiceovers (ElevenLabs, AI image
+   generation), handled full editing, prompt engineering, and script writing, and
+   designed custom thumbnails optimized for high CTR.
+
+7) Stickman Animation Editor — YouTube Channel (remote, Tbilisi).
    Jun 2026 – present. Turns ready-made voiceovers into long-form YouTube animation:
    illustrates stickman frames in Adobe Illustrator and assembles them into hard-cut
    animation where one frame equals one idea. Episodes run 8–10 minutes, with full
    creative freedom over visual jokes, pacing, and SFX-driven sound design.
 
-4) Generative AI Video Editor — Georgian Ad Company (full-time, Tbilisi).
+8) Generative AI Video Editor — Georgian Ad Company (full-time, Tbilisi).
    Apr 2026 – Jul 2026. Produced AI-generated commercials from 30-second spots up to
    8-minute brand films. Generated voiceovers, images, and full video scenes with
    modern generative AI tools, then edited, graded, and sound-designed them into
    polished, ready-to-air ads.
 
-5) Visual Story Editor — PlotRoom (full-time, London UK, remote).
+9) Visual Story Editor — PlotRoom (full-time, London UK, remote).
    Apr 2026 – Jun 2026. Video storyteller for a UK-based creative startup, editing
    talking-head videos into highly engaging content for social platforms; end-to-end
    video production, audio design, and motion storytelling.
 
-6) Visual Story Editor — TalesBox (full-time, London UK, remote).
+10) Visual Story Editor — TalesBox (full-time, London UK, remote).
    Nov 2025 – Apr 2026. Video storyteller for a UK-based creative startup, producing
    highly engaging content for digital audiences; end-to-end video production, audio
    design, and motion storytelling.
 
-7) Visual Director (Post & Production) — Freelance (project-based, Tbilisi, on-site).
+11) Visual Director (Post & Production) — Freelance (project-based, Tbilisi, on-site).
    Aug 2023 – present. Films construction processes for U.S. clients on short-term
    contracts, managing end-to-end production: script development, copywriting, audio
    design, and professional color correction, using drone & Canon cameras with gimbal
