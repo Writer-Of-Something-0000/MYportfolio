@@ -17,6 +17,17 @@ export class Experience {
     return this.career.timeline;
   }
 
+  // Identity tracking for both loops. CareerService hands back the same objects
+  // every pass, so this is belt-and-braces — but without it any future change
+  // that rebuilds the list would silently recreate the DOM mid-click again.
+  trackEntry(_: number, entry: TimelineEntry): string {
+    return entry.org;
+  }
+
+  trackRole(_: number, job: Job): string {
+    return `${job.org}|${job.title}|${job.start.getTime()}`;
+  }
+
   get totalYears(): number {
     return this.career.totalYears;
   }
@@ -78,7 +89,10 @@ export class Experience {
   }
 
   showRole(entry: TimelineEntry, index: number): void {
-    if (this.dragMoved) return; // a drag across the card must not switch the role
+    // No drag guard here: the dots stop pointerdown from reaching the slider, so
+    // they never take part in a drag and every click on one is deliberate. The
+    // guard used to live here and ate the click whenever a hand drifted the few
+    // pixels between press and release — which is most clicks.
     this.activeByOrg.set(entry.org, index);
   }
 

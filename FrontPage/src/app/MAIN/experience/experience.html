@@ -13,7 +13,7 @@
            <!-- One card per org. Several contracts at the same org (Upwork) share a
                 card: the org is named once and the dots switch between the roles, so
                 the card stays the same size as the single-role ones beside it. -->
-           <div class="experience nb-card" *ngFor="let entry of timeline">
+           <div class="experience nb-card" *ngFor="let entry of timeline; trackBy: trackEntry">
 
             <div class="exp-org" [class.is-group]="entry.roles.length > 1">
               <i [ngClass]="entry.brandIcon || 'fa-solid fa-fire'" class="exp-org-icon"></i>
@@ -27,12 +27,18 @@
               </div>
             </div>
 
-            <!-- role switcher — same dots as the Selected Works carousel -->
-            <div class="exp-dots" *ngIf="entry.roles.length > 1">
-              <span *ngFor="let job of entry.roles; let i = index"
-                    [class.on]="i === activeIndex(entry)"
-                    [title]="job.title"
-                    (click)="showRole(entry, i)"></span>
+            <!-- role switcher — same dots as the Selected Works carousel.
+                 pointerdown stops here so pressing a dot never starts a drag of
+                 the card row, which would otherwise swallow the click. -->
+            <div class="exp-dots" *ngIf="entry.roles.length > 1"
+                 (pointerdown)="$event.stopPropagation()">
+              <button type="button"
+                      *ngFor="let job of entry.roles; let i = index; trackBy: trackRole"
+                      [class.on]="i === activeIndex(entry)"
+                      [title]="job.title"
+                      [attr.aria-label]="job.title"
+                      [attr.aria-current]="i === activeIndex(entry) ? 'true' : null"
+                      (click)="showRole(entry, i)"></button>
             </div>
 
             <!-- Every role is rendered, stacked into ONE grid cell, with the
@@ -42,7 +48,7 @@
                  off at any screen width. Layout inside is identical whether or not
                  the card is grouped. -->
             <div class="exp-stack">
-              <div class="exp-role" *ngFor="let job of entry.roles; let i = index"
+              <div class="exp-role" *ngFor="let job of entry.roles; let i = index; trackBy: trackRole"
                    [class.on]="i === activeIndex(entry)"
                    [attr.aria-hidden]="i === activeIndex(entry) ? null : 'true'">
                 <div class="experience-settings">

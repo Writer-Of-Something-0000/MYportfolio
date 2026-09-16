@@ -178,13 +178,25 @@ export class CareerService {
     upwork: 'fa-brands fa-upwork',
   };
 
+  private cachedTimeline?: TimelineEntry[];
+
   /**
    * `jobs` collapsed into the cards the Experience slider renders: roles that
    * share an org become a single grouped entry (Upwork alone is six contracts —
    * six separate cards would drown out every other role), everything else stays
    * a card of its own. Newest activity first, inside the group too.
+   *
+   * Built once and cached. `jobs` never changes, and the template binds to this
+   * on every change-detection pass — handing back fresh objects each time made
+   * *ngFor tear down and rebuild every card's DOM, which broke the role dots:
+   * the browser fires no click when mousedown and mouseup land on what are,
+   * by then, two different elements.
    */
   get timeline(): TimelineEntry[] {
+    return (this.cachedTimeline ??= this.buildTimeline());
+  }
+
+  private buildTimeline(): TimelineEntry[] {
     const byOrg = new Map<string, Job[]>();
     for (const job of this.jobs) {
       const key = job.org.toLowerCase();
