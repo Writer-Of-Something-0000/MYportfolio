@@ -14,7 +14,6 @@ import { Education } from './MAIN/education/education';
 import { Skills } from './MAIN/skills/skills';
 import { Projectsfilter } from './PROJECT/projectsfilter/projectsfilter';
 import { GeminiChat } from './gemini-chat/gemini-chat';
-import { News } from './news/news';
 
 @NgModule({
   declarations: [
@@ -30,7 +29,6 @@ import { News } from './news/news';
     Skills,
     Projectsfilter,
     GeminiChat,
-    News,
   ],
   imports: [
     BrowserModule,
