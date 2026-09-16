@@ -62,28 +62,24 @@ export class Experience {
     return parts.join(' ');
   }
 
-  // --- grouped cards: one role can be opened at a time, per card ---
-  // key is "<org>|<role title>"; nothing is open until a visitor asks for it, so a
-  // six-contract Upwork card stays the same height as the single-role cards next to it.
-  private openRole: string | null = null;
+  // --- grouped cards: one role on screen at a time ---
+  // A grouped card shows a single role laid out exactly like a single-role card and
+  // switches between them with dots, so six Upwork contracts occupy the same space
+  // as every other card in the row instead of stretching it to twice the height.
+  private activeByOrg = new Map<string, number>();
 
-  /** a role with neither a write-up nor skills has nothing to reveal, so it doesn't open */
-  hasDetail(job: Job): boolean {
-    return !!job.about || !!job.skills?.length;
+  activeIndex(entry: TimelineEntry): number {
+    return this.activeByOrg.get(entry.org) ?? 0;
   }
 
-  private roleKey(entry: TimelineEntry, job: Job): string {
-    return `${entry.org}|${job.title}`;
+  /** the role a card is currently showing */
+  activeRole(entry: TimelineEntry): Job {
+    return entry.roles[this.activeIndex(entry)] ?? entry.roles[0];
   }
 
-  isOpen(entry: TimelineEntry, job: Job): boolean {
-    return this.hasDetail(job) && this.openRole === this.roleKey(entry, job);
-  }
-
-  toggleRole(entry: TimelineEntry, job: Job): void {
-    if (this.dragMoved || !this.hasDetail(job)) return; // a drag must not open a role
-    const key = this.roleKey(entry, job);
-    this.openRole = this.openRole === key ? null : key;
+  showRole(entry: TimelineEntry, index: number): void {
+    if (this.dragMoved) return; // a drag across the card must not switch the role
+    this.activeByOrg.set(entry.org, index);
   }
 
   // --- drag-to-scroll slider (same behaviour as Selected Works) ---

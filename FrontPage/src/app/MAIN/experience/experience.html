@@ -10,12 +10,11 @@
      (pointerup)="dragEnd()"
      (pointerleave)="dragEnd()">
 
-           <!-- One card per org. A single-role org renders the role flat; an org with
-                several contracts (Upwork) renders its name once and stacks the roles
-                on a rail below it, each one opening to reveal its detail. -->
+           <!-- One card per org. Several contracts at the same org (Upwork) share a
+                card: the org is named once and the dots switch between the roles, so
+                the card stays the same size as the single-role ones beside it. -->
            <div class="experience nb-card" *ngFor="let entry of timeline">
 
-            <!-- ── org header ───────────────────────────────────────── -->
             <div class="exp-org" [class.is-group]="entry.roles.length > 1">
               <i [ngClass]="entry.brandIcon || 'fa-solid fa-fire'" class="exp-org-icon"></i>
               <div class="exp-org-text">
@@ -28,52 +27,30 @@
               </div>
             </div>
 
-            <!-- ── single role: the original flat card ──────────────── -->
-            <ng-container *ngIf="entry.roles.length === 1">
-              <ng-container *ngFor="let job of entry.roles">
-                <div class="experience-settings">
-                  <h4 class="experience-title">{{ job.title }}</h4>
-                  <p class="experience-time"><span>{{ job.type }}</span><span> · {{ rangeLabel(job) }}</span></p>
-                  <p class="experience-time"><span>{{ job.location }}</span><span *ngIf="job.locationTag"> · {{ job.locationTag }}</span></p>
-                </div>
-                <p class="experience-about" *ngIf="job.about">{{ job.about }}</p>
+            <!-- role switcher — same dots as the Selected Works carousel -->
+            <div class="exp-dots" *ngIf="entry.roles.length > 1">
+              <span *ngFor="let job of entry.roles; let i = index"
+                    [class.on]="i === activeIndex(entry)"
+                    [title]="job.title"
+                    (click)="showRole(entry, i)"></span>
+            </div>
 
-                <div class="used-skills" *ngIf="job.skills?.length">
-                  <i class="fa-solid fa-fire"></i>
-                  <h5 *ngFor="let skill of job.skills">{{ skill }}</h5>
-                  <h5 *ngIf="job.moreSkills">+{{ job.moreSkills }} skills</h5>
-                </div>
-              </ng-container>
+            <!-- the role on screen: identical layout whether or not the card is grouped -->
+            <ng-container *ngIf="activeRole(entry) as job">
+              <div class="experience-settings">
+                <h4 class="experience-title">{{ job.title }}</h4>
+                <p class="experience-time"><span>{{ job.type }}</span><span> · {{ rangeLabel(job) }}</span><span> · {{ duration(job) }}</span></p>
+                <p class="experience-time"><span>{{ job.location }}</span><span *ngIf="job.locationTag"> · {{ job.locationTag }}</span></p>
+              </div>
+
+              <p class="experience-about" *ngIf="job.about">{{ job.about }}</p>
+
+              <div class="used-skills" *ngIf="job.skills?.length">
+                <i class="fa-solid fa-fire"></i>
+                <h5 *ngFor="let skill of job.skills">{{ skill }}</h5>
+                <h5 *ngIf="job.moreSkills">+{{ job.moreSkills }} skills</h5>
+              </div>
             </ng-container>
-
-            <!-- ── grouped roles: stacked on a rail, click to expand ── -->
-            <ul class="exp-roles" *ngIf="entry.roles.length > 1">
-              <li class="exp-role" *ngFor="let job of entry.roles"
-                  [class.open]="isOpen(entry, job)"
-                  [class.plain]="!hasDetail(job)">
-                <button type="button" class="exp-role-head"
-                        [disabled]="!hasDetail(job)"
-                        (click)="toggleRole(entry, job)"
-                        [attr.aria-expanded]="hasDetail(job) ? isOpen(entry, job) : null">
-                  <span class="exp-role-dot"></span>
-                  <span class="exp-role-headings">
-                    <span class="experience-title">{{ job.title }}</span>
-                    <span class="experience-time">{{ job.type }} · {{ rangeLabel(job) }} · {{ duration(job) }}</span>
-                    <span class="experience-time">{{ job.location }}<span *ngIf="job.locationTag"> · {{ job.locationTag }}</span></span>
-                  </span>
-                  <i class="fa-solid fa-chevron-down exp-role-chevron" *ngIf="hasDetail(job)"></i>
-                </button>
-
-                <div class="exp-role-body" *ngIf="isOpen(entry, job)">
-                  <p class="experience-about" *ngIf="job.about">{{ job.about }}</p>
-                  <div class="used-skills" *ngIf="job.skills?.length">
-                    <i class="fa-solid fa-fire"></i>
-                    <h5 *ngFor="let skill of job.skills">{{ skill }}</h5>
-                    <h5 *ngIf="job.moreSkills">+{{ job.moreSkills }} skills</h5>
-                  </div>
-                </div>
-              </li>
-            </ul>
 
            </div>
 </div>

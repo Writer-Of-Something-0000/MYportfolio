@@ -49,9 +49,6 @@
   margin-top: 2rem;
   width: 100%;
   display: flex;
-  /* cards keep their own height: an opened role grows only its own card
-     instead of stretching every card in the row to match */
-  align-items: flex-start;
   gap: 3rem;
   overflow-x: auto;
   cursor: grab;
@@ -89,6 +86,26 @@
 
 }
 
+/* takes the space left between the meta block and the pinned skills row, and
+   scrolls on its own when a write-up is longer than the card */
+.experience-about {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+  /* a drag inside the text still scrolls the card row sideways */
+  overscroll-behavior: contain;
+}
+
+.experience-about::-webkit-scrollbar {
+  width: 5px;
+}
+
+.experience-about::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+}
+
 .experience-settings{
 display: flex;
 flex-direction: column;
@@ -105,6 +122,13 @@ gap: 0.1rem;
   flex: 0 0 500px;
   width: 500px;
   padding: 2rem;
+
+  /* Fixed height, not just a min: the grouped card swaps roles in place, and
+     write-ups differ in length, so an auto height would make the whole row
+     jump every time someone clicked a dot. Sized to clear the longest current
+     write-up; anything longer scrolls inside .experience-about rather than
+     resizing the row. Desktop only — see the mobile query. */
+  height: 28rem;
 }
 
 
@@ -173,126 +197,36 @@ color: #ffffff;
   color: rgba(255, 255, 255, 0.55);
 }
 
-/* ── grouped roles: a rail with one row per contract ─────────────── */
-.exp-roles {
+/* ── role switcher ───────────────────────────────────────────────
+   the same dots as the Selected Works carousel, so switching contracts
+   inside a card reads like every other pager on the site */
+.exp-dots {
   display: flex;
-  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
 }
 
-.exp-role {
-  position: relative;
-  /* the rail: a hairline running down the left of every role */
-  padding-left: 1.5rem;
-}
-
-.exp-role::before {
-  content: '';
-  position: absolute;
-  left: 0.32rem;
-  top: 0;
-  bottom: 0;
-  width: 1.5px;
-  background: rgba(255, 255, 255, 0.14);
-}
-
-/* the last role's rail stops at its own dot instead of running past it */
-.exp-role:last-child::before {
-  bottom: auto;
-  height: 1.15rem;
-}
-
-.exp-role-head {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.85rem 0;
-  background: none;
-  text-align: left;
-  cursor: pointer;
-  font: inherit;
-  color: inherit;
-}
-
-.exp-role-dot {
-  position: absolute;
-  left: 0;
-  top: 1.05rem;
-  width: 0.7rem;
-  height: 0.7rem;
+.exp-dots span {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  transition: background 0.18s ease, border-color 0.18s ease;
+  background: rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-.exp-role.open .exp-role-dot,
-.exp-role-head:hover .exp-role-dot {
-  background: #ffffff;
-  border-color: #ffffff;
+.exp-dots span:hover {
+  background: rgba(255, 255, 255, 0.45);
 }
 
-.exp-role-headings {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-  flex: 1;
-}
-
-/* inside the rail the role title steps down from the card-level size */
-.exp-role .experience-title {
-  font-size: 1.05rem;
-}
-
-.exp-role .experience-time {
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.exp-role-chevron {
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 0.8rem;
-  margin-top: 0.35rem;
-  transition: transform 0.18s ease, color 0.18s ease;
-}
-
-.exp-role.open .exp-role-chevron {
-  transform: rotate(180deg);
-  color: #ffffff;
-}
-
-.exp-role-body {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding-bottom: 1.1rem;
-}
-
-.exp-role-body .experience-about {
-  font-size: 0.92rem;
-  line-height: 1.55;
-}
-
-.exp-role.plain .exp-role-head {
-  cursor: default;
-}
-
-/* inside a role the skills row sits right under the text, not pushed to the
-   card's bottom the way the flat card's row is */
-.exp-role-body .used-skills {
-  margin-top: 0;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.exp-role-body .used-skills h5 {
-  font-size: 0.82rem;
+.exp-dots span.on {
+  width: 22px;
+  border-radius: 5px;
+  background: #7d3cf0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .exp-role-chevron,
-  .exp-role-dot { transition: none; }
+  .exp-dots span { transition: none; }
 }
 
 /* Mobile Responsiveness: one full card + a peek of the next, swipe horizontally */
@@ -300,10 +234,20 @@ color: #ffffff;
   #experience-container {
     gap: 1.2rem;
   }
+  /* Phones swipe through one card at a time, so a uniform height buys nothing
+     here and a narrow card wraps the same text into far more lines — pinning it
+     would hide several lines behind a scroll. Let each card size to its role. */
+  #experience-container {
+    align-items: flex-start;
+  }
   .experience {
     flex: 0 0 85%;
     width: auto;
     padding: 1.5rem;
+    height: auto;
+  }
+  .experience-about {
+    overflow-y: visible;
   }
   /* the skills row must wrap, otherwise it forces the card wider than the screen */
   .used-skills {
