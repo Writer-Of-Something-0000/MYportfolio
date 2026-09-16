@@ -35,22 +35,31 @@
                     (click)="showRole(entry, i)"></span>
             </div>
 
-            <!-- the role on screen: identical layout whether or not the card is grouped -->
-            <ng-container *ngIf="activeRole(entry) as job">
-              <div class="experience-settings">
-                <h4 class="experience-title">{{ job.title }}</h4>
-                <p class="experience-time"><span>{{ job.type }}</span><span> · {{ rangeLabel(job) }}</span><span> · {{ duration(job) }}</span></p>
-                <p class="experience-time"><span>{{ job.location }}</span><span *ngIf="job.locationTag"> · {{ job.locationTag }}</span></p>
-              </div>
+            <!-- Every role is rendered, stacked into ONE grid cell, with the
+                 inactive ones hidden via visibility (so they still take up their
+                 space). The stack is therefore always as tall as the longest role:
+                 switching roles never resizes the card, and no write-up gets cut
+                 off at any screen width. Layout inside is identical whether or not
+                 the card is grouped. -->
+            <div class="exp-stack">
+              <div class="exp-role" *ngFor="let job of entry.roles; let i = index"
+                   [class.on]="i === activeIndex(entry)"
+                   [attr.aria-hidden]="i === activeIndex(entry) ? null : 'true'">
+                <div class="experience-settings">
+                  <h4 class="experience-title">{{ job.title }}</h4>
+                  <p class="experience-time"><span>{{ job.type }}</span><span> · {{ rangeLabel(job) }}</span><span> · {{ duration(job) }}</span></p>
+                  <p class="experience-time"><span>{{ job.location }}</span><span *ngIf="job.locationTag"> · {{ job.locationTag }}</span></p>
+                </div>
 
-              <p class="experience-about" *ngIf="job.about">{{ job.about }}</p>
+                <p class="experience-about" *ngIf="job.about">{{ job.about }}</p>
 
-              <div class="used-skills" *ngIf="job.skills?.length">
-                <i class="fa-solid fa-fire"></i>
-                <h5 *ngFor="let skill of job.skills">{{ skill }}</h5>
-                <h5 *ngIf="job.moreSkills">+{{ job.moreSkills }} skills</h5>
+                <div class="used-skills" *ngIf="job.skills?.length">
+                  <i class="fa-solid fa-fire"></i>
+                  <h5 *ngFor="let skill of job.skills">{{ skill }}</h5>
+                  <h5 *ngIf="job.moreSkills">+{{ job.moreSkills }} skills</h5>
+                </div>
               </div>
-            </ng-container>
+            </div>
 
            </div>
 </div>
