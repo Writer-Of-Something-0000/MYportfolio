@@ -66,7 +66,7 @@
   cursor: grabbing;
 }
 
-#experience-title {
+.experience-title {
   font-size: 1.3rem;
   font-weight: 800;
   color: #ffffff;
@@ -77,22 +77,23 @@
 
 
 
-#experience-about,
-#experience-time,
-#experience-where  {
+.experience-about,
+.experience-time,
+.experience-where  {
 
       color: rgba(255, 255, 255, 0.956);
           font-family: "Nunito Sans", sans-serif;
 
 }
 
-#experience-settings{
+
+.experience-settings{
 display: flex;
 flex-direction: column;
 gap: 0.1rem;
 }
 
-#experience {
+.experience {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -105,21 +106,142 @@ gap: 0.1rem;
 }
 
 
-#used-skills {
+.used-skills {
   display: flex;
 gap: 1rem;
 margin-top: auto;
 }
 
 
-#used-skills i{
+.used-skills i{
 color: #ffffff;
 
 }
-#used-skills h5{
+.used-skills h5{
 color: #ffffff;
           font-family: "Nunito Sans", sans-serif;
 
+}
+
+/* ── org header ──────────────────────────────────────────────────
+   the company line every card opens with. On a grouped card it is the
+   card's title, so it gets a rule under it to separate it from the roles. */
+.exp-org {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.exp-org.is-group {
+  padding-bottom: 1rem;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.exp-org-icon {
+  font-size: 1.5rem;
+  color: #ffffff;
+  /* a small glass tile so brand marks and the fire icon read the same size */
+  flex: 0 0 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+}
+
+.exp-org-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.exp-org-name {
+  font-family: "Jersey 10", sans-serif;
+  font-size: 1.9rem;
+  letter-spacing: 1px;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.exp-org-meta {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ── the role stack ──────────────────────────────────────────────
+   All of a card's roles share one grid cell, so the cell is as tall as the
+   LONGEST role and stays that height whichever one is on screen. The hidden
+   ones keep their space (visibility, not display), which is the whole trick:
+   no fixed height to guess at, no clipped text, and every card in the row
+   ends up the same size as the tallest card — grouped or not. */
+.exp-stack {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+}
+
+.exp-stack > .exp-role {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  visibility: hidden;
+}
+
+.exp-stack > .exp-role.on {
+  visibility: visible;
+}
+
+/* ── role switcher ───────────────────────────────────────────────
+   the same dots as the Selected Works carousel, so switching contracts
+   inside a card reads like every other pager on the site */
+.exp-dots {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  /* room for the oversized hit areas so they never reach a neighbouring row */
+  padding: 0.35rem 0;
+}
+
+.exp-dots button {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* an 8px dot is far too small to hit reliably, with a mouse or a thumb, so each
+   one carries an invisible target around it — the visual size stays the same */
+.exp-dots button::after {
+  content: '';
+  position: absolute;
+  inset: -11px -5px;
+}
+
+.exp-dots button:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.exp-dots button.on {
+  width: 22px;
+  border-radius: 5px;
+  background: #7d3cf0;
+}
+
+.exp-dots button:focus-visible {
+  outline: 2px solid #7d3cf0;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exp-dots button { transition: none; }
 }
 
 /* Mobile Responsiveness: one full card + a peek of the next, swipe horizontally */
@@ -127,14 +249,16 @@ color: #ffffff;
   #experience-container {
     gap: 1.2rem;
   }
-  #experience {
+  .experience {
     flex: 0 0 85%;
     width: auto;
     padding: 1.5rem;
   }
   /* the skills row must wrap, otherwise it forces the card wider than the screen */
-  #used-skills {
+  .used-skills {
     flex-wrap: wrap;
   }
+  .exp-org-name {
+    font-size: 1.6rem;
+  }
 }
-

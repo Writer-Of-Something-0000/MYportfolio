@@ -10,22 +10,62 @@
      (pointerup)="dragEnd()"
      (pointerleave)="dragEnd()">
 
-           <div id="experience" class="nb-card" *ngFor="let job of jobs">
-            <div id="experience-settings">
+           <!-- One card per org. Several contracts at the same org (Upwork) share a
+                card: the org is named once and the dots switch between the roles, so
+                the card stays the same size as the single-role ones beside it. -->
+           <div class="experience nb-card" *ngFor="let entry of timeline; trackBy: trackEntry">
 
+            <div class="exp-org" [class.is-group]="entry.roles.length > 1">
+              <i [ngClass]="entry.brandIcon || 'fa-solid fa-fire'" class="exp-org-icon"></i>
+              <div class="exp-org-text">
+                <h3 class="exp-org-name">{{ entry.org }}</h3>
+                <p class="exp-org-meta">
+                  <span *ngIf="entry.roles.length > 1">{{ entry.roles.length }} roles · </span>
+                  <span>{{ rangeLabel(entry) }}</span>
+                  <span> · {{ duration(entry) }}</span>
+                </p>
+              </div>
+            </div>
 
-            <h4 id="experience-title"> {{ job.title }}</h4>
-            <h4 id="experience-where"> <span>{{ job.org }}</span>-<span>{{ job.type }}</span></h4>
-            <p id="experience-time"><span>{{ monthLabel(job.start) }} </span>-<span>{{ job.end ? monthLabel(job.end) : 'present' }} </span> <span> · {{ duration(job) }}</span> </p>
-            <p id="experience-time"><span>{{ job.location }} </span><span *ngIf="job.locationTag"> · {{ job.locationTag }}</span> </p>
-           </div>
-           <p id="experience-about">{{ job.about }}</p>
+            <!-- role switcher — same dots as the Selected Works carousel.
+                 pointerdown stops here so pressing a dot never starts a drag of
+                 the card row, which would otherwise swallow the click. -->
+            <div class="exp-dots" *ngIf="entry.roles.length > 1"
+                 (pointerdown)="$event.stopPropagation()">
+              <button type="button"
+                      *ngFor="let job of entry.roles; let i = index; trackBy: trackRole"
+                      [class.on]="i === activeIndex(entry)"
+                      [title]="job.title"
+                      [attr.aria-label]="job.title"
+                      [attr.aria-current]="i === activeIndex(entry) ? 'true' : null"
+                      (click)="showRole(entry, i)"></button>
+            </div>
 
-           <div id="used-skills">
-            <i class="fa-solid fa-fire"></i>
-            <h5 *ngFor="let skill of job.skills">{{ skill }}</h5>
-            <h5 *ngIf="job.moreSkills">+{{ job.moreSkills }} skills</h5>
-           </div>
+            <!-- Every role is rendered, stacked into ONE grid cell, with the
+                 inactive ones hidden via visibility (so they still take up their
+                 space). The stack is therefore always as tall as the longest role:
+                 switching roles never resizes the card, and no write-up gets cut
+                 off at any screen width. Layout inside is identical whether or not
+                 the card is grouped. -->
+            <div class="exp-stack">
+              <div class="exp-role" *ngFor="let job of entry.roles; let i = index; trackBy: trackRole"
+                   [class.on]="i === activeIndex(entry)"
+                   [attr.aria-hidden]="i === activeIndex(entry) ? null : 'true'">
+                <div class="experience-settings">
+                  <h4 class="experience-title">{{ job.title }}</h4>
+                  <p class="experience-time"><span>{{ job.type }}</span><span> · {{ rangeLabel(job) }}</span><span> · {{ duration(job) }}</span></p>
+                  <p class="experience-time"><span>{{ job.location }}</span><span *ngIf="job.locationTag"> · {{ job.locationTag }}</span></p>
+                </div>
+
+                <p class="experience-about" *ngIf="job.about">{{ job.about }}</p>
+
+                <div class="used-skills" *ngIf="job.skills?.length">
+                  <i class="fa-solid fa-fire"></i>
+                  <h5 *ngFor="let skill of job.skills">{{ skill }}</h5>
+                  <h5 *ngIf="job.moreSkills">+{{ job.moreSkills }} skills</h5>
+                </div>
+              </div>
+            </div>
 
            </div>
 </div>
