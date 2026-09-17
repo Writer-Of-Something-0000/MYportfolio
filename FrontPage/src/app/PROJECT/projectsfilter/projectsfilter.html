@@ -13,13 +13,10 @@
     <div class="switch-group">
       <div class="ratio-switch" role="group" aria-label="Category">
         <button
+          *ngFor="let c of categories"
           type="button"
-          [class.active]="category === 'all'"
-          (click)="setCategory('all')">Video Storytelling</button>
-        <button
-          type="button"
-          [class.active]="category === 'graphicdesign'"
-          (click)="setCategory('graphicdesign')">Graphic Design</button>
+          [class.active]="category === c.id"
+          (click)="setCategory(c.id)">{{ c.label }}</button>
       </div>
 
       <div class="ratio-switch" role="group" aria-label="Aspect ratio">
@@ -54,7 +51,7 @@
   <p class="state" *ngIf="loading">Loading videos…</p>
   <p class="state" *ngIf="!loading && !videos.length">New videos are on the way 🎬</p>
   <p class="state" *ngIf="!loading && videos.length && !visibleVideos.length">
-    No {{ category === 'graphicdesign' ? 'graphic design ' : '' }}{{ orientation === '916' ? '9:16' : '16:9' }}
+    No {{ categoryLabel }}{{ orientation === '916' ? '9:16' : '16:9' }}
     {{ length === 'short' ? 'shorts' : length === 'long' ? 'long videos' : 'videos' }} yet 🎬
   </p>
 

@@ -16,8 +16,28 @@ interface ChannelVideo {
 type SortOrder = 'newest' | 'oldest';
 type Orientation = '169' | '916';
 type Length = 'long' | 'short';
-// 'all' = Video Storytelling (everything); 'graphicdesign' = only #graphicdesign videos
-type Category = 'all' | 'graphicdesign';
+type Category = 'all' | 'stickman';
+
+interface CategoryDef {
+  readonly id: Category;
+  readonly label: string;
+  /** YouTube tag spellings that put a video in this category; empty = everything */
+  readonly tags: readonly string[];
+}
+
+/**
+ * The category switch above the grid. The label is deliberately separate from the
+ * tags it matches: the button can be renamed freely, and a category can accept
+ * several spellings, without the filter depending on one exact hashtag.
+ */
+const CATEGORIES: readonly CategoryDef[] = [
+  { id: 'all', label: 'Video Storytelling', tags: [] },
+  {
+    id: 'stickman',
+    label: '2D Stickman',
+    tags: ['stickman', 'stickmans', '2dstickman', 'stickmananimation', '2danimation'],
+  },
+];
 
 // YouTube counts anything up to 3 minutes as a Short
 const SHORT_MAX_SECONDS = 180;
@@ -43,7 +63,9 @@ export class Projectsfilter implements OnInit {
   sortOrder: SortOrder = 'newest';
   orientation: Orientation = '169';
   length: Length | null = null; // null = show both long videos and shorts
-  category: Category = 'all'; // 'all' = Video Storytelling; 'graphicdesign' = filtered
+  category: Category = 'all';
+
+  readonly categories = CATEGORIES;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -55,11 +77,7 @@ export class Projectsfilter implements OnInit {
   get visibleVideos(): ChannelVideo[] {
     return this.videos
       .filter((v) => v.orientation === this.orientation)
-      .filter(
-        (v) =>
-          this.category === 'all' ||
-          v.tags.some((t) => t.replace(/\s+/g, '').toLowerCase() === this.category)
-      )
+      .filter((v) => this.matchesCategory(v))
       .filter((v) => {
         if (!this.length) return true; // no length filter → show both
         return this.length === 'short'
@@ -75,6 +93,19 @@ export class Projectsfilter implements OnInit {
 
   setSort(order: SortOrder) {
     this.sortOrder = order;
+  }
+
+  /** "2D Stickman " for the empty state, blank while every video is in scope */
+  get categoryLabel(): string {
+    const active = CATEGORIES.find((c) => c.id === this.category);
+    return active && active.tags.length ? `${active.label} ` : '';
+  }
+
+  /** a category with no tags of its own (Video Storytelling) takes every video */
+  private matchesCategory(video: ChannelVideo): boolean {
+    const accepted = CATEGORIES.find((c) => c.id === this.category)?.tags ?? [];
+    if (!accepted.length) return true;
+    return video.tags.some((t) => accepted.includes(t.replace(/\s+/g, '').toLowerCase()));
   }
 
   setCategory(category: Category) {
@@ -102,10 +133,12 @@ export class Projectsfilter implements OnInit {
   }
 
   ngOnInit(): void {
-    // deep links from the hero pills, e.g. /projects?category=graphicdesign,
-    // /projects?ratio=916, /projects?length=short
+    // deep links from the hero pills, e.g. /projects?category=stickman,
+    // /projects?ratio=916, /projects?length=short. An unknown category (an old
+    // ?category=graphicdesign link) just leaves the default in place.
     const q = this.route.snapshot.queryParamMap;
-    if (q.get('category') === 'graphicdesign') this.category = 'graphicdesign';
+    const category = q.get('category');
+    if (CATEGORIES.some((c) => c.id === category)) this.category = category as Category;
     const ratio = q.get('ratio');
     if (ratio === '169' || ratio === '916') this.orientation = ratio;
     const length = q.get('length');
