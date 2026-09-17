@@ -49,7 +49,12 @@ export default async (req) => {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
 
   const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return json({ error: 'Chat is not configured on the server.' }, 500);
+  if (!apiKey) {
+    // Shows up in the Netlify function log, where the cause is actually findable —
+    // the browser only ever sees the friendly message.
+    console.error('[chat] GEMINI_API_KEY is not set on this deploy');
+    return json({ error: 'Chat is not configured on the server.', code: 'no_key' }, 500);
+  }
 
   let body;
   try {
@@ -84,6 +89,7 @@ export default async (req) => {
   };
 
   let lastDetail = '';
+  let lastStatus = 0;
 
   for (const model of MODELS) {
     try {
@@ -100,7 +106,9 @@ export default async (req) => {
       );
 
       if (!res.ok) {
+        lastStatus = res.status;
         lastDetail = (await res.text().catch(() => '')).slice(0, 300);
+        console.error(`[chat] ${model} → HTTP ${res.status}: ${lastDetail}`);
         continue; // rate-limited or unavailable → try the next model
       }
 
@@ -112,10 +120,36 @@ export default async (req) => {
         .trim();
       if (reply) return json({ reply });
       lastDetail = JSON.stringify(data).slice(0, 300);
+      console.error(`[chat] ${model} returned no usable text: ${lastDetail}`);
     } catch (e) {
       lastDetail = String(e).slice(0, 300);
+      console.error(`[chat] ${model} threw: ${lastDetail}`);
     }
   }
 
-  return json({ error: 'All models are busy right now.', detail: lastDetail }, 502);
+  // Name the actual failure instead of blaming load for everything: an invalid key
+  // and an exhausted quota both used to read "All models are busy right now."
+  const { error, code } = describeFailure(lastStatus, lastDetail);
+  console.error(`[chat] giving up — ${code} (last status ${lastStatus || 'none'})`);
+  return json({ error, code, detail: lastDetail }, 502);
 };
+
+/** Turns the last upstream status + body into a cause we can act on. */
+function describeFailure(status, detail) {
+  const d = String(detail);
+  // A disabled API also answers 403, so it has to be matched before the key check
+  // or it gets misreported as a bad key — which sends you fixing the wrong thing.
+  if (/SERVICE_DISABLED|has not been used in project|is disabled/i.test(d)) {
+    return { error: 'The assistant is not set up correctly.', code: 'api_disabled' };
+  }
+  if (status === 401 || status === 403 || /API_KEY_INVALID|API key not valid/i.test(d)) {
+    return { error: 'The assistant is not set up correctly.', code: 'bad_key' };
+  }
+  if (status === 429 || /RESOURCE_EXHAUSTED|quota/i.test(d)) {
+    return { error: 'The assistant has hit its daily limit. Please try again later.', code: 'rate_limited' };
+  }
+  if (status === 404 || /not found for API version|NOT_FOUND/i.test(d)) {
+    return { error: 'The assistant is not set up correctly.', code: 'model_missing' };
+  }
+  return { error: 'All models are busy right now.', code: 'upstream_busy' };
+}

@@ -374,8 +374,14 @@ export class GeminiChat implements OnInit, OnDestroy {
     try {
       const reply = await this.chat.send(this.messages.map((m) => ({ role: m.role, text: m.text })));
       this.messages.push({ role: 'model', text: reply });
-    } catch {
-      this.messages.push({ role: 'model', text: 'Something went wrong. Please try again.' });
+    } catch (err: any) {
+      // The server phrases these for a visitor; the code and upstream detail go to
+      // the console so a real cause is one glance away instead of invisible.
+      console.error('[chat]', err?.code ?? 'unknown', err?.detail ?? err);
+      this.messages.push({
+        role: 'model',
+        text: err?.message || 'Something went wrong. Please try again.',
+      });
     } finally {
       this.sending = false;
       this.scrollDown();
