@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SessionTracker } from '../../services/session-tracker';
+import {
+  FEATURED_WORKS,
+  FeaturedWork,
+  durationToSeconds,
+  publishedToTimestamp,
+} from './featured-works';
 
 interface ChannelVideo {
   id: string;
@@ -133,6 +139,10 @@ export class Projectsfilter implements OnInit {
   }
 
   ngOnInit(): void {
+    // Seed the grid with the hand-listed work first, so videos that live on a
+    // client's channel are there whether or not the API call succeeds.
+    this.videos = FEATURED_WORKS.map((w) => this.fromFeatured(w));
+
     // deep links from the hero pills, e.g. /projects?category=stickman,
     // /projects?ratio=916, /projects?length=short. An unknown category (an old
     // ?category=graphicdesign link) just leaves the default in place.
@@ -144,6 +154,19 @@ export class Projectsfilter implements OnInit {
     const length = q.get('length');
     if (length === 'long' || length === 'short') this.length = length;
     this.loadChannelVideos();
+  }
+
+  private fromFeatured(work: FeaturedWork): ChannelVideo {
+    return {
+      id: work.youtubeId,
+      title: work.title,
+      // the standard thumbnail path works for any public video, whoever owns it
+      thumbnail: `https://img.youtube.com/vi/${work.youtubeId}/hqdefault.jpg`,
+      tags: work.tags.slice(0, 7),
+      publishedAt: publishedToTimestamp(work.published),
+      orientation: work.orientation,
+      durationSec: durationToSeconds(work.duration),
+    };
   }
 
   private async loadChannelVideos() {
@@ -163,7 +186,7 @@ export class Projectsfilter implements OnInit {
         `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${ids.join(',')}&key=${this.apiKey}`
       ).then((res) => res.json());
 
-      this.videos = (details.items ?? []).map((item: any) => {
+      const scanned: ChannelVideo[] = (details.items ?? []).map((item: any) => {
         const allTags: string[] = item.snippet.tags?.length
           ? item.snippet.tags
           : this.hashtagsFrom(item.snippet.description ?? '');
@@ -186,8 +209,13 @@ export class Projectsfilter implements OnInit {
           tags: allTags.filter((t) => t !== '169' && t !== '916').slice(0, 7),
         };
       });
+
+      // A hand-listed entry wins over the scan: if the same video also turns up
+      // on the channel, the wording written by hand is the one that was chosen.
+      const listed = new Set(this.videos.map((v) => v.id));
+      this.videos = [...this.videos, ...scanned.filter((v) => !listed.has(v.id))];
     } catch {
-      // network/API failure: the empty state stays visible
+      // network/API failure: whatever was hand-listed still shows
     } finally {
       this.loading = false;
     }
