@@ -1,0 +1,108 @@
+.foundation {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 12vh 1.25rem 20vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.foundation .phase {
+  font-family: var(--font-display);
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  font-size: 1.1rem;
+}
+
+.foundation h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  line-height: 0.9;
+}
+
+.foundation .role {
+  color: var(--text-muted);
+  margin-top: -1.5rem;
+}
+
+.foundation section {
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: var(--glass);
+  border: 1.5px solid var(--glass-edge);
+  box-shadow: 6px 6px 0 rgba(73, 4, 162, 0.45);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+}
+
+.foundation h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.6rem 1rem;
+}
+
+.swatches li {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.swatches .chip {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--glass-edge);
+}
+
+.swatches code {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.stats b {
+  color: var(--gold);
+}
+
+.courses li {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--glass-edge);
+  font-size: 0.9rem;
+}
+
+.courses em {
+  color: var(--brand-light);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.courses small {
+  color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+  .courses li {
+    grid-template-columns: 1fr 1fr;
+  }
+  .courses small {
+    display: none;
+  }
+}
