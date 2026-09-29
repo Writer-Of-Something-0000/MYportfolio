@@ -1,7 +1,7 @@
 import { Billing } from './cinema/Billing';
 import { CinemaHero } from './cinema/CinemaHero';
+import { AboutText } from './cinema/AboutText';
 import { useSmoothScroll } from './scroll/useSmoothScroll';
-import { AboutText } from './ui/Intro';
 
 export default function App() {
   useSmoothScroll();

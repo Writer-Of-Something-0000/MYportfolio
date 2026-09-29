@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { profile } from '../data/profile';
-import { pickShowreel } from '../scene/videoSource';
+import { pickShowreel } from './videoSource';
 import './CinemaHero.css';
 
 /** Tbilisi local time, for clients in other time zones */

@@ -26,17 +26,6 @@ a {
   color: inherit;
 }
 
-/* the 3D world sits fixed behind the real, scrollable HTML content */
-.world-canvas {
-  position: fixed !important;
-  inset: 0;
-  z-index: 0;
-}
-
-.overlay {
-  position: relative;
-  z-index: 1;
-}
 
 .sr-only {
   position: absolute;
