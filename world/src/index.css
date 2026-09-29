@@ -46,3 +46,8 @@ a {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* scroll length for the flight along the timeline */
+.reel {
+  height: 40svh;
+}

@@ -1,0 +1,103 @@
+.intro {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 6rem clamp(1rem, 4vw, 3.5rem) clamp(2rem, 6vh, 4rem);
+}
+
+.title {
+  max-width: 64rem;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 100%;
+  font-size: clamp(2.6rem, 8.6vw, 9rem);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  /* the width axis changes every frame while scrolling; keep it off the layout path */
+  will-change: font-stretch;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+}
+
+.role {
+  margin-top: 1rem;
+  max-width: 34rem;
+  font-size: clamp(1.02rem, 1.6vw, 1.25rem);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.86);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.6rem;
+  margin-top: 1.6rem;
+}
+
+.cv {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1.15rem;
+  border-radius: 3px;
+  background: var(--brand);
+  color: var(--text);
+  font-weight: 650;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.cv:hover {
+  background: var(--brand-light);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.2rem;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  /* 44px tall hit area on touch screens, without changing how the row looks */
+  min-height: 44px;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+}
+
+.links a:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.cv:focus-visible,
+.links a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.hint {
+  position: absolute;
+  right: clamp(1rem, 4vw, 3.5rem);
+  bottom: clamp(2rem, 6vh, 4rem);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 700px) {
+  .hint {
+    display: none;
+  }
+}

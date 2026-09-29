@@ -1,0 +1,242 @@
+/* ── the pinned title sequence ─────────────────────────────────────
+   --frame-ratio  the picture's aspect: 2.39:1 scope on wide screens,
+                  square on tall ones — the footage isn't a sliver and the
+                  bars still have room for the title card
+   --bar-open     letterbox bar height once the picture is open
+   --close        0 → 1 as the visitor scrolls through (set from JS)      */
+
+.cinema {
+  position: relative;
+  height: 210svh;
+  --frame-ratio: 2.39;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .cinema {
+    --frame-ratio: 1;
+  }
+}
+
+.cinema-stage {
+  --bar-open: max(64px, calc((100svh - 100vw / var(--frame-ratio)) / 2));
+  --bar: calc(var(--bar-open) + (50svh - var(--bar-open)) * var(--close, 0));
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: #000;
+}
+
+/* ── picture ──────────────────────────────────────────────────── */
+.cinema-media {
+  position: absolute;
+  inset: var(--bar-open) 0;
+  overflow: hidden;
+}
+
+.cinema-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* the picture leans in slightly as the bars close on it */
+  transform: scale(calc(1 + var(--close, 0) * 0.08));
+}
+
+.cinema-grade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+/* film grain: tiled noise, jumping a few frames a second like real stock */
+.cinema-grain {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.5s steps(4) infinite;
+  pointer-events: none;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3%, 2%); }
+  50% { transform: translate(2%, -4%); }
+  75% { transform: translate(-1%, 3%); }
+}
+
+/* ── letterbox bars ───────────────────────────────────────────── */
+.bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: 50svh; /* shut until the picture plays */
+  background: #000;
+}
+
+.bar-top {
+  top: 0;
+}
+
+.bar-bottom {
+  bottom: 0;
+}
+
+.is-open .bar {
+  height: var(--bar);
+}
+
+/* the shutter opens once; after that the bars follow the scroll directly */
+.is-open:not(.is-settled) .bar {
+  transition: height 1.7s cubic-bezier(0.76, 0, 0.18, 1);
+}
+
+.bar-inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0 clamp(1rem, 3.4vw, 3rem);
+}
+
+.bar-top .bar-inner {
+  top: 0;
+  align-items: center;
+  min-height: min(var(--bar-open), 5.5rem);
+}
+
+.bar-bottom .bar-inner {
+  bottom: 0;
+  align-items: flex-end;
+  padding-bottom: clamp(0.9rem, 2.4vh, 1.8rem);
+}
+
+/* ── top bar: where and when, and the way around ───────────────── */
+.clock {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.clock span {
+  margin-left: 0.4rem;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.4vw, 2.2rem);
+}
+
+.menu a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.menu a:hover {
+  color: var(--text);
+}
+
+.menu .menu-cv {
+  padding: 0 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 2px;
+  color: var(--text);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.menu .menu-cv:hover {
+  border-color: var(--gold);
+  background: rgba(255, 215, 0, 0.08);
+}
+
+.menu a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ── bottom bar: the title card ───────────────────────────────── */
+.title-card {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 125%;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.9;
+  font-size: min(6.4vw, calc(var(--bar-open) * 0.58));
+  white-space: nowrap;
+}
+
+.now-showing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.now-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* the one gold thing on screen: the live dot */
+.now-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.now-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* ── tall screens: stack the title card, trim the menu ────────── */
+@media (max-aspect-ratio: 1/1) {
+  .bar-bottom .bar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+  .title-card {
+    white-space: normal;
+    font-size: min(10.5vw, calc(var(--bar-open) * 0.34));
+  }
+  .now-showing {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .menu a:not(.menu-cv) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinema-grain {
+    animation: none;
+  }
+  .is-open:not(.is-settled) .bar {
+    transition: none;
+  }
+}

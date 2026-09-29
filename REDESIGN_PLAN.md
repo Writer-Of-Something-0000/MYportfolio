@@ -19,9 +19,20 @@
 | 6. Feedback | audio waveform track, შეფასებები სუბტიტრებად | Google Sheet (`feedback` fn) |
 | 7. Contact | timeline-ის ბოლო = **Export / Render** დიალოგი; გაგზავნა = render progress bar | `contact` fn |
 
-ვიზუალი: შავი სიცარიელე + იისფერი ნისლი · მინის track-ები მკვეთრი იისფერი კიდით
-(ახლანდელი `.nb-card`-ის 3D ვერსია) · **ოქროსფერი playhead** · Jersey 10 timecode HUD-ში ·
-🔥 იისფერი ნაპერწკლები · post: bloom, film grain, vignette, მსუბუქი chromatic aberration.
+### დიზაინის სისტემა (frontend-design skill-ის მიხედვით, v2)
+
+- **ერთი დასამახსოვრებელი რამ — თვითონ timeline:** ვიდეო კლიპებზე showreel-ის ნამდვილი
+  კადრები filmstrip-ად, audio კლიპებზე waveform, ruler-ზე timecode-ები, track header-ები
+  (V3…A2), NLE-ს მარკერები. დანარჩენი ყველაფერი ჩუმია.
+- **ფერის როლები:** შავი = სივრცე · `#4904A2` = ვიდეო კლიპი (Premiere-ის default Violet) ·
+  `#7D3CF0` = playing კლიპის კიდე · `#B98CFF` = waveform · **ოქროსფერი = "ახლა"**
+  (მხოლოდ playhead + timecode) · თეთრი = ტექსტი.
+- **ტიპოგრაფია:** Anybody Variable (width 50–150%) — სახელი, timecode, მარკერები;
+  სახელი scroll-ის სიჩქარეზე იკუმშება (speed ramp). Instrument Sans — ტექსტი, სუბტიტრები.
+- **მოძრაობა — cut-ები, არა fade-ები:** ტექსტი timecode-ზე მკვეთრად ჩნდება/ქრება
+  (სუბტიტრების .srt ლოგიკა). არანაირი fade-and-slide.
+- **აკრძალული:** ALL-CAPS label-ები, "A · B" meta, ნომრიანი eyebrow-ები, მინის ბარათები
+  ყველგან, ნეონი/ნაპერწკლები/მტვერი, chromatic aberration. bloom მხოლოდ ოქროსფერზე.
 
 ## პალიტრა (უცვლელი)
 

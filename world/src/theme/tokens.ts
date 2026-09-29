@@ -17,7 +17,7 @@ export const palette = {
   glow: '#9000ff',
   /** chat and icon accents */
   lilac: '#b98cff',
-  /** playhead, timecode, stars */
+  /** "now" — the playhead and the timecode, nothing else */
   gold: '#ffd700',
   text: '#ffffff',
   textMuted: 'rgba(255, 255, 255, 0.55)',
@@ -29,10 +29,10 @@ export const palette = {
 export type PaletteKey = keyof typeof palette;
 
 export const fonts = {
-  /** pixel display face — titles, timecode */
-  display: '"Jersey 10", sans-serif',
-  /** body copy */
-  body: '"Nunito Sans", sans-serif',
+  /** variable width 50–150%: the name, the timecode, markers */
+  display: "'Anybody Variable', sans-serif",
+  /** body copy and subtitles */
+  body: "'Instrument Sans Variable', sans-serif",
 } as const;
 
 /** camelCase key → --kebab-case custom property on :root */

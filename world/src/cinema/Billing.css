@@ -1,0 +1,52 @@
+/* a film poster's billing block: tall, thin, tightly packed capitals with
+   tiny connecting words set between them */
+.billing {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35em;
+  padding: 18vh clamp(1rem, 6vw, 5rem);
+  background: #000;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.9vw, 3.4rem);
+  text-align: center;
+}
+
+.billing-line {
+  max-width: 24em;
+  text-wrap: balance;
+  line-height: 1.02;
+  font-weight: 300;
+  font-stretch: 50%;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.billing-line span {
+  margin: 0 0.12em;
+}
+
+.billing-line small {
+  display: inline-block;
+  margin: 0 0.1em 0 0.25em;
+  /* never below 11px: the connecting words must stay readable on phones */
+  font-size: max(11px, 0.36em);
+  font-weight: 500;
+  font-stretch: 75%;
+  letter-spacing: 0.08em;
+  vertical-align: 0.8em;
+  color: var(--text-muted);
+}
+
+/* the name heads the block, in the only warm colour on the page */
+.billing-lead span:first-child {
+  display: block;
+  margin-bottom: 0.15em;
+  font-weight: 700;
+  font-size: 1.35em;
+  color: var(--gold);
+}

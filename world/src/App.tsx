@@ -1,21 +1,18 @@
-import { Canvas } from '@react-three/fiber';
-import { FoundationScene } from './scene/FoundationScene';
-import { FoundationCheck } from './ui/FoundationCheck';
+import { Billing } from './cinema/Billing';
+import { CinemaHero } from './cinema/CinemaHero';
+import { useSmoothScroll } from './scroll/useSmoothScroll';
+import { AboutText } from './ui/Intro';
 
 export default function App() {
+  useSmoothScroll();
+
   return (
-    <>
-      <Canvas
-        className="world-canvas"
-        dpr={[1, 2]}
-        camera={{ position: [0, 0, 6], fov: 45 }}
-        gl={{ antialias: true }}
-      >
-        <FoundationScene />
-      </Canvas>
-      <div className="overlay">
-        <FoundationCheck />
-      </div>
-    </>
+    <main>
+      <CinemaHero />
+      <Billing />
+      <AboutText />
+      {/* the next chapters (work, experience, education, contact) come in after this */}
+      <div className="reel" aria-hidden="true" />
+    </main>
   );
 }

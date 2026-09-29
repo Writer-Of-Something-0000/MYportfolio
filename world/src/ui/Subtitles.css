@@ -1,0 +1,21 @@
+.subtitles {
+  position: fixed;
+  left: 50%;
+  bottom: calc(9vh + env(safe-area-inset-bottom));
+  z-index: 5;
+  width: min(40rem, calc(100vw - 2rem));
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+/* one black box per line, like broadcast subtitles */
+.subtitles span {
+  font-weight: 600;
+  font-size: clamp(1.02rem, 2vw, 1.35rem);
+  line-height: 1.7;
+  padding: 0.12em 0.45em;
+  background: rgba(0, 0, 0, 0.78);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
