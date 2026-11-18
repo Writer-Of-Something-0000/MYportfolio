@@ -43,6 +43,17 @@ export class CareerService {
   // month is 0-indexed: Jan = 0 … Dec = 11
   readonly jobs: Job[] = [
     {
+      title: 'Documentary Film Editor — “LRW”',
+      org: 'Aquamar Media',
+      type: 'Hourly Contract',
+      start: new Date(2026, 8, 1),
+      location: 'Tbilisi, Georgia',
+      locationTag: 'remote',
+      about:
+        'Editing “LRW”, a documentary film for Aquamar Media. Hired through Upwork on a long-running hourly contract, I shape the raw material into the film: building the story structure, cutting interviews and footage into scenes, and refining pacing and sound toward the final edit.',
+      skills: ['Film Editing', 'Documentary Video', 'Video Editing & Production'],
+    },
+    {
       title: 'AI Video Editor / Stickmans',
       org: 'Upwork',
       type: 'Part-time',
